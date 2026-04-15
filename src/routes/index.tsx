@@ -1,10 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import cardExperience from "@/assets/card-experience.jpg";
 import cardVision from "@/assets/card-vision.png";
 import cardStem from "@/assets/card-stem.png";
 import profileImage from "@/assets/michal-profile.png";
 import logo from "@/assets/logo-white.svg";
+
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("revealed");
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
