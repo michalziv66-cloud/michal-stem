@@ -7,9 +7,8 @@ import imgGeometry from "@/assets/tools/geometry.jpg";
 import imgWaterBill from "@/assets/tools/water-bill.jpg";
 import imgEquations from "@/assets/tools/equations.jpg";
 import imgReel from "@/assets/tools/reel.jpg";
-import imgPres1 from "@/assets/tools/presentation1.jpg";
+import imgPresPythagoras from "@/assets/tools/presentation-pythagoras.jpg";
 import imgPresHashvaat from "@/assets/tools/presentation-hashvaat-mekadmim.jpg";
-import imgPres3 from "@/assets/tools/presentation3.jpg";
 import imgPresMeshulash from "@/assets/tools/presentation4.jpg";
 
 export const Route = createFileRoute("/tools")({
@@ -91,11 +90,11 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
     subtitle: "מצגות שיעור אינטראקטיביות ב-Canva",
     items: [
       {
-        title: "מצגת 1",
-        description: "מצגת שיעור אינטראקטיבית",
+        title: "הצופן הסודי של העולם הפיזי",
+        description: "משפט פיתגורס: מתיאוריה למציאות",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHDRpLL3yI/OA2WICgnu4Y31LrTX8ZX2g/view",
-        image: imgPres1,
+        image: imgPresPythagoras,
       },
       {
         title: "שיטת השוואת מקדמים",
@@ -105,11 +104,11 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         image: imgPresHashvaat,
       },
       {
-        title: "מצגת 3",
-        description: "מצגת שיעור אינטראקטיבית",
+        title: "שיטת השוואת מקדמים — חלק 2",
+        description: "הנגדת מקדמים — המשך",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHD0eKpqVY/piio0DQXICikQqljLoQYPQ/view",
-        image: imgPres3,
+        image: imgPresHashvaat,
       },
       {
         title: "מטלה במתמטיקה — משולש ש״ש",
