@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.svg";
 
 const navItems = [
   { to: "/", label: "בית" },
@@ -19,8 +20,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        <Link to="/" className="font-display text-xl font-bold text-primary">
-          מיכל זיו
+        <Link to="/">
+          <img src={logo} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="h-10 w-auto" />
         </Link>
 
         {/* Desktop nav */}

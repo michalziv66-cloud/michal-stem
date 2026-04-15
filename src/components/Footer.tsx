@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import logo from "@/assets/logo.svg";
 
 export function Footer() {
   return (
@@ -6,8 +7,8 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-3">
           <div>
-            <h3 className="font-display text-lg font-bold">מיכל זיו</h3>
-            <p className="mt-2 text-sm text-primary-foreground/70">מתמטיקה מחוץ לסוגריים</p>
+            <img src={logo} alt="מיכל זיו" className="h-12 w-auto brightness-0 invert" />
+          </div>
           </div>
           <div>
             <h4 className="font-semibold">ניווט</h4>
