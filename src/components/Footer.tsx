@@ -17,11 +17,15 @@ export function Footer() {
               <Link to="/contact" className="text-sm text-primary-foreground/70 hover:text-primary-foreground">צור קשר</Link>
             </div>
           </div>
-          <div>
+          <div className="text-center sm:text-right">
             <h4 className="font-semibold">צור קשר</h4>
-            <div className="mt-2 flex flex-col gap-1.5 text-sm text-primary-foreground/70">
-              <span>michalziv66@gmail.com</span>
-              <span dir="ltr">050-901-7802</span>
+            <div className="mt-2 flex flex-col items-center gap-1.5 text-sm text-primary-foreground/70 sm:items-start">
+              <a href="mailto:michalziv66@gmail.com" dir="ltr" className="block [unicode-bidi:plaintext] hover:text-primary-foreground">
+                michalziv66@gmail.com
+              </a>
+              <a href="tel:+972509017802" dir="ltr" className="block [unicode-bidi:plaintext] hover:text-primary-foreground">
+                050-901-7802
+              </a>
             </div>
           </div>
         </div>
