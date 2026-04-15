@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import profileImage from "@/assets/michal-profile.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -15,7 +16,12 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <div className="section-container">
-      <h1 className="section-title">אודות</h1>
+      <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
+        <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg">
+          <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
+        </div>
+        <h1 className="section-title">אודות</h1>
+      </div>
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
         <div className="lg:col-span-3 space-y-5 text-lg leading-relaxed text-foreground/90">
           <p>
