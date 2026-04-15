@@ -115,8 +115,8 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         title: "לפצח את קוד הממ״ד",
         description: "הסבר מרתק על מתמטיקה.",
         icon: "🎧",
-        url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
-        isVideo: true,
+        url: "https://math-versatile-path-pro.base44.app",
+        image: "/notebook-lm/לפצח_את_קוד_הממ_ד_thumb.jpg",
       },
       {
         title: "פתרון מערכת משוואות – שיטת הנגדת המקדמים",
