@@ -50,7 +50,7 @@ function HomePage() {
       <section className="section-container">
         <div className="grid gap-8 sm:grid-cols-3">
           {[
-            { num: "14+", label: "שנות ניסיון בהוראה", image: cardExperience },
+            { label: "יזמית פדגוגית במתמטיקה", image: cardExperience },
             { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false },
             { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
           ].map((item) => (
