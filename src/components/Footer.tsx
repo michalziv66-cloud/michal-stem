@@ -9,7 +9,6 @@ export function Footer() {
           <div>
             <img src={logo} alt="מיכל זיו" className="h-12 w-auto brightness-0 invert" />
           </div>
-          </div>
           <div>
             <h4 className="font-semibold">ניווט</h4>
             <div className="mt-2 flex flex-col gap-1.5">
