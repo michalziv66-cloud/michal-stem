@@ -35,6 +35,16 @@ const toolCategories = [
   },
 ];
 
+const standaloneTools = [
+  {
+    title: "חשבון מים – דף עבודה אינטראקטיבי",
+    description: "דף עבודה אינטראקטיבי בנושא חשבון מים: חישוב תעריפים, בניית מערכת משוואות ופתרונה. כולל שלבים מודרכים ושאלת בונוס.",
+    icon: "💧",
+    color: "bg-primary/10 text-primary",
+    url: "/tools/water-bill.html",
+  },
+];
+
 function ToolsPage() {
   return (
     <div className="section-container">
@@ -68,6 +78,34 @@ function ToolsPage() {
           </Card>
         ))}
       </div>
+
+      {standaloneTools.length > 0 && (
+        <>
+          <h2 className="mt-14 text-2xl font-display font-bold">דפי עבודה אינטראקטיביים</h2>
+          <p className="mt-2 text-muted-foreground">כלים עצמאיים מבוססי HTML לתרגול ולמידה</p>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {standaloneTools.map((tool) => (
+              <Card key={tool.title} className="card-hover overflow-hidden">
+                <CardHeader>
+                  <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${tool.color}`}>
+                    {tool.icon}
+                  </div>
+                  <CardTitle className="font-display text-xl">{tool.title}</CardTitle>
+                  <CardDescription className="text-sm leading-relaxed">{tool.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <iframe
+                    src={tool.url}
+                    title={tool.title}
+                    className="h-[500px] w-full rounded-lg border"
+                    allow="fullscreen"
+                  />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
