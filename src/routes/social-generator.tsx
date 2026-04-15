@@ -34,6 +34,14 @@ const postTypeLabels: Record<PostType, string> = {
   free: "פוסט חופשי",
 };
 
+const defaultHashtags: Record<PostType, string[]> = {
+  tool: ["#מתמטיקה", "#חינוך", "#STEM", "#טכנולוגיהבחינוך", "#הוראהחדשנית", "#כליםדיגיטליים"],
+  tip: ["#מתמטיקה", "#חינוך", "#טיפיםלמורים", "#STEM", "#פדגוגיה", "#פיתוחמקצועי"],
+  challenge: ["#אתגרמתמטי", "#חשיבה", "#מתמטיקה", "#STEM", "#חידה", "#למידהמהנה"],
+  promotion: ["#מתמטיקה", "#חינוך", "#פיתוחמקצועי", "#STEM", "#הרצאות", "#סדנאות"],
+  free: ["#מתמטיקה", "#חינוך", "#STEM"],
+};
+
 function generatePosts(type: PostType, title: string, body: string, audience: string) {
   const signature = `\n\n📐 מיכל זיו — מתמטיקה מחוץ לסוגריים\n📧 michalziv66@gmail.com | 📱 0509017802`;
 
