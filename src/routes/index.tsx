@@ -62,21 +62,28 @@ function HomePage() {
             { label: "יזמית פדגוגית במתמטיקה", image: cardExperience },
             { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false },
             { label: "אודות", image: cardVision, link: "/about" },
-          ].map((item, i) => (
-            <div
-              key={item.label}
-              className="card-hover overflow-hidden rounded-xl border bg-card text-center"
-              style={{ transitionDelay: `${i * 150}ms` }}
-            >
-              <div className={`mx-auto mt-4 overflow-hidden border-2 border-gold/30 ${item.round !== false ? "h-20 w-20 rounded-full" : "h-20 w-32 rounded-lg"}`}>
-                <img src={item.image} alt={item.label} className={`h-full w-full ${item.round !== false ? "object-cover" : "object-contain"}`} />
+          ].map((item, i) => {
+            const content = (
+              <div
+                key={item.label}
+                className="card-hover overflow-hidden rounded-xl border bg-card text-center"
+                style={{ transitionDelay: `${i * 150}ms` }}
+              >
+                <div className={`mx-auto mt-4 overflow-hidden border-2 border-gold/30 ${item.round !== false ? "h-20 w-20 rounded-full" : "h-20 w-32 rounded-lg"}`}>
+                  <img src={item.image} alt={item.label} className={`h-full w-full ${item.round !== false ? "object-cover" : "object-contain"}`} />
+                </div>
+                <div className="p-4 pt-3">
+                  {"num" in item && item.num && <div className="font-display text-2xl font-bold text-primary">{item.num}</div>}
+                  <p className={`text-sm text-muted-foreground ${"num" in item && item.num ? "mt-1" : "mt-0 font-display text-base font-semibold text-primary"}`}>{item.label}</p>
+                </div>
               </div>
-              <div className="p-4 pt-3">
-                {"num" in item && item.num && <div className="font-display text-2xl font-bold text-primary">{item.num}</div>}
-                <p className={`text-sm text-muted-foreground ${"num" in item && item.num ? "mt-1" : "mt-0 font-display text-base font-semibold text-primary"}`}>{item.label}</p>
-              </div>
-            </div>
-          ))}
+            );
+            return "link" in item && item.link ? (
+              <Link key={item.label} to={item.link as "/"} className="block">
+                {content}
+              </Link>
+            ) : content;
+          })}
         </div>
       </section>
     </>
