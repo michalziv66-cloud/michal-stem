@@ -183,7 +183,7 @@ function ToolsPage() {
         <section key={section.title} className="mt-12 first:mt-8">
           <h2 className="text-2xl font-display font-bold">{section.title}</h2>
           <p className="mt-1 text-muted-foreground">{section.subtitle}</p>
-          <div className={`mt-6 grid gap-6 ${"isVideo" in (section.items[0] ?? {}) && section.items[0]?.isVideo ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+          <div className={`mt-6 grid gap-6 ${section.items.some((i) => i.isVideo) ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
             {section.items.map((item) => (
               <ToolCard key={item.title} item={item} />
             ))}
