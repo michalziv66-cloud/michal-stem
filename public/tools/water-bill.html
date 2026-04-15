@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חשבון מים – דף עבודה אינטראקטיבי</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2b45;
+  --blue: #1565c0;
+  --teal: #00838f;
+  --accent: #00acc1;
+  --light: #e3f2fd;
+  --success: #2e7d32;
+  --success-bg: #e8f5e9;
+  --error: #c62828;
+  --error-bg: #ffebee;
+  --warn-bg: #fff8e1;
+  --text: #1a1a2e;
+  --muted: #546e7a;
+  --border: #b0bec5;
+  --shadow: 0 2px 14px rgba(0,0,0,0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: linear-gradient(150deg, #dff0ff 0%, #d0f4f7 100%);
+  min-height: 100vh;
+  color: var(--text);
+  padding: 20px 16px 60px;
+}
+
+.header {
+  background: var(--navy);
+  border-radius: 16px;
+  padding: 22px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(13,43,69,0.35);
+}
+.header-icon { font-size: 44px; line-height: 1; }
+.header h1 { color: #fff; font-size: 24px; font-weight: 900; letter-spacing: -0.3px; }
+.header p  { color: #90caf9; font-size: 13px; margin-top: 3px; }
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.pdot {
+  width: 36px; height: 8px; border-radius: 4px;
+  background: #b0bec5;
+  transition: background 0.4s, transform 0.2s;
+}
+.pdot.active  { background: var(--accent); transform: scaleY(1.4); }
+.pdot.done    { background: var(--success); }
+.plabel { font-size: 12px; color: var(--muted); margin: 0 4px; }
+
+.context-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  border-right: 5px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+.context-box h3 { color: var(--navy); font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+.rule-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; font-size: 13.5px; line-height: 1.6; }
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.badge-low  { background: #e3f2fd; color: #1565c0; }
+.badge-high { background: #fce4ec; color: #c62828; }
+
+.bills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+@media (max-width: 680px) { .bills-grid { grid-template-columns: 1fr; } }
+
+.bill-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid #d0dde8;
+}
+.bill-head {
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 16px;
+}
+.bill-head .fn  { font-size: 16px; font-weight: 700; }
+.bill-head .fi  { color: #90caf9; font-size: 12px; margin-top: 1px; }
+.bill-head .ft  { font-size: 11px; color: #7fb3d3; margin-bottom: 2px; }
+
+.bill-sum {
+  background: #f5f7fa;
+  padding: 9px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid #e0e8f0;
+}
+.bill-sum-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
+.bill-sum-row strong { color: var(--navy); font-weight: 700; }
+
+.meter-row-wrap {
+  padding: 8px 16px;
+  font-size: 12px;
+  border-bottom: 1px solid #eef2f6;
+  background: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.meter-row { display: flex; justify-content: space-between; }
+.mv { font-weight: 700; color: var(--blue); }
+
+.tariff-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tariff-table th {
+  background: #eceff1;
+  padding: 7px 10px;
+  text-align: right;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.tariff-table td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+.tariff-table tr:last-child td { border-bottom: none; }
+.tl-low  { color: var(--blue); font-weight: 700; font-size: 12.5px; }
+.tl-high { color: var(--error); font-weight: 700; font-size: 12.5px; }
+
+.ci {
+  display: inline-block;
+  width: 72px; height: 28px;
+  border: none;
+  border-bottom: 2.5px solid #cfd8dc;
+  background: transparent;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--teal);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ci:focus     { border-color: var(--accent); }
+.ci.correct   { border-color: var(--success); color: var(--success); background: #f0faf1; border-radius: 4px; }
+.ci.wrong     { border-color: var(--error);   color: var(--error);   }
+
+.step-card {
+  background: #fff;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: opacity 0.4s, filter 0.4s;
+}
+.step-card.locked { opacity: 0.45; pointer-events: none; filter: blur(1.5px); }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-card.unlocking { animation: slideIn 0.5s ease forwards; }
+
+.step-head {
+  background: var(--teal);
+  color: #fff;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.step-num {
+  background: rgba(255,255,255,0.22);
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 17px;
+  flex-shrink: 0;
+}
+.step-title { font-size: 16px; font-weight: 700; }
+.bonus-head { background: linear-gradient(135deg, #6a1b9a, #ad1457); }
+
+.step-body { padding: 20px 24px; }
+
+.in-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
+  flex-wrap: wrap;
+}
+.in-label { font-size: 14px; min-width: 220px; }
+.ni {
+  width: 80px; height: 36px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ni:focus   { border-color: var(--accent); }
+.ni.correct { border-color: var(--success); background: var(--success-bg); }
+.ni.wrong   { border-color: var(--error);   background: var(--error-bg); }
+.unit { font-size: 13px; color: var(--muted); }
+
+.eq-box {
+  background: #f5f8fb;
+  border: 1px solid #dce5ef;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+.eq-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.eq-lbl { font-size: 12px; color: var(--muted); min-width: 65px; font-weight: 600; }
+.eq-var { font-style: italic; font-weight: 700; color: var(--teal); font-size: 15px; }
+.eq-const { font-weight: 700; color: var(--navy); font-size: 15px; }
+.eqi {
+  width: 50px; height: 30px;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.eqi:focus   { border-color: var(--accent); }
+.eqi.correct { border-color: var(--success); background: var(--success-bg); }
+.eqi.wrong   { border-color: var(--error);   background: var(--error-bg); }
+
+.btn-check {
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 26px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 14px;
+  display: inline-block;
+}
+.btn-check:hover  { background: #006874; transform: translateY(-1px); }
+.btn-check:active { transform: translateY(0); }
+
+.btn-hint {
+  background: none;
+  border: 1.5px dashed var(--border);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 8px;
+  transition: all 0.2s;
+  display: none;
+}
+.btn-hint:hover    { border-color: var(--accent); color: var(--accent); }
+.btn-hint.show     { display: inline-block; }
+
+.hint-box {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--warn-bg);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #5d4037;
+  border-right: 3px solid #ffd54f;
+  line-height: 1.7;
+  display: none;
+}
+.hint-box.show { display: block; }
+
+.feedback {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  display: none;
+}
+.feedback.ok  { background: var(--success-bg); color: var(--success); display: block; }
+.feedback.bad { background: var(--error-bg);   color: var(--error);   display: block; }
+
+.note { font-size: 13.5px; color: var(--muted); margin-bottom: 14px; font-style: italic; line-height: 1.6; }
+
+.given { font-weight: 700; color: var(--navy); }
+
+.formula {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--teal);
+  padding: 2px 6px;
+  background: #e0f7fa;
+  border-radius: 4px;
+}
+
+.celebrate {
+  text-align: center;
+  padding: 40px 20px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  margin-top: 20px;
+  display: none;
+}
+.celebrate.show { display: block; animation: slideIn 0.6s ease; }
+.celebrate h2 { font-size: 26px; color: var(--navy); margin: 12px 0 8px; }
+.celebrate p  { color: var(--muted); font-size: 15px; }
+@keyframes bob {
+  from { transform: translateY(0) scale(1); }
+  to   { transform: translateY(-10px) scale(1.05); }
+}
+.bob { display: inline-block; font-size: 52px; animation: bob 0.7s ease-in-out infinite alternate; }
+
+.copy-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.copy-section h3 { font-size: 16px; color: var(--navy); margin-bottom: 6px; }
+.copy-section p { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+.btn-copy {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 30px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+}
+.btn-copy:hover { background: #163d5e; }
+.copy-toast {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: var(--success-bg);
+  color: var(--success);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  display: none;
+}
+.copy-toast.show { display: inline-block; }
+
+.tariff-split {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px 16px;
+}
+.tariff-split-item {
+  flex: 1;
+  text-align: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.tariff-split-item.low { background: #e3f2fd; color: #1565c0; }
+.tariff-split-item.high { background: #fce4ec; color: #c62828; }
+.tariff-split-item .ts-val { font-size: 16px; font-weight: 900; display: block; }
+.tariff-split-item .ts-lbl { font-size: 10px; }
+
+.tariff-note {
+  padding: 4px 16px 10px;
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  gap: 16px;
+}
+
+.bonus-bill {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid #d0dde8;
+  margin-bottom: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <span class="header-icon">💧</span>
+  <div>
+    <h1>חשבון מים – דף עבודה אינטראקטיבי</h1>
+    <p>מתמטיקה אוריינית | כיתה ח׳ | מאור – אוניברסיטת חיפה</p>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <span class="plabel">התקדמות:</span>
+  <div class="pdot active" id="pd1"></div>
+  <div class="pdot" id="pd2"></div>
+  <div class="pdot" id="pd3"></div>
+  <div class="pdot" id="pd4"></div>
+  <div class="pdot" id="pd5"></div>
+</div>
+
+<!-- CONTEXT BOX -->
+<div class="context-box">
+  <h3>📋 כללי התשלום – רשות המים</h3>
+  <div class="rule-row">
+    <span class="badge badge-low">תעריף נמוך</span>
+    <span>עבור צריכה של עד 7 מ"ק לנפש לתקופה של חודשיים (60 יום), כפול מספר הנפשות הגרות בבית.</span>
+  </div>
+  <div class="rule-row">
+    <span class="badge badge-high">תעריף גבוה</span>
+    <span>עבור יתרת כמות המים שנצרכה בתקופת החשבון.</span>
+  </div>
+  <div class="rule-row">
+    <span>📌</span>
+    <span>כמות המים שנצרכה = קריאה נוכחית פחות קריאה קודמת.</span>
+  </div>
+</div>
+
+<!-- EXPLAINER -->
+<div class="context-box" style="border-color: #ffd54f; background: #fffde7;">
+  <h3>💡 מה זה תעריף נמוך ותעריף גבוה?</h3>
+  <p style="font-size:13.5px; line-height:1.7;">
+    רשות המים מחלקת את הצריכה לשתי "שכבות" מחיר:<br>
+    <span class="badge badge-low">תעריף נמוך</span> — מחיר זול יותר, עבור צריכה בסיסית (עד 7 מ"ק לנפש לחודשיים).<br>
+    <span class="badge badge-high">תעריף גבוה</span> — מחיר יקר יותר, עבור כל מ"ק שמעבר לכמות הבסיסית.
+  </p>
+</div>
+
+<!-- BILLS GRID -->
+<div class="bills-grid">
+  <!-- DAVID -->
+  <div class="bill-card">
+    <div class="bill-head">
+      <div class="ft">חשבון מים וביוב תקופתי 07-08/23</div>
+      <div class="fn">משפחת דויד</div>
+      <div class="fi">מגורים – 4 נפשות</div>
+    </div>
+    <div class="bill-sum">
+      <div class="bill-sum-row"><span>מספר ימים בתקופה:</span><strong>60</strong></div>
+      <div class="bill-sum-row"><span>כמות המים לחיוב:</span><strong>51 מ"ק</strong></div>
+      <div class="bill-sum-row"><span>סה"כ לתשלום:</span><strong>554.7 ₪</strong></div>
+    </div>
+    <div class="meter-row-wrap">
+      <div class="meter-row"><span>קריאה קודמת: <span class="mv">465.20</span> מ"ק</span><span>06/07/23</span></div>
+      <div class="meter-row"><span>קריאה נוכחית: <span class="mv">516.2</span> מ"ק</span><span>05/09/23</span></div>
+      <div style="margin-top:4px; color: var(--teal); font-weight:700;">
+        צריכה: 516.2 − 465.20 = <strong>51</strong> מ"ק
+      </div>
+    </div>
+    <div style="padding: 10px 16px; font-size: 13px; color: var(--muted);">
+      51 מ"ק מתחלקים לשתי שכבות תשלום:
+    </div>
+    <div class="tariff-split">
+      <div class="tariff-split-item low">
+        <span class="ts-val"><input class="ci" id="d_low_preview" style="width:40px;"></span>
+        <span class="ts-lbl">מ"ק</span><br><span class="ts-lbl">נמוך</span>
+      </div>
+      <div class="tariff-split-item high">
+        <span class="ts-val"><input class="ci" id="d_high_preview" style="width:40px;"></span>
+        <span class="ts-lbl">מ"ק</span><br><span class="ts-lbl">גבוה</span>
+      </div>
+    </div>
+    <div class="tariff-note">
+      <span>עד 7×נפשות</span>
+      <span>יתרה</span>
+    </div>
+  </div>
+
+  <!-- EITAN -->
+  <div class="bill-card">
+    <div class="bill-head">
+      <div class="ft">חשבון מים וביוב תקופתי 07-08/23</div>
+      <div class="fn">משפחת איתן</div>
+      <div class="fi">מגורים – 6 נפשות</div>
+    </div>
+    <div class="bill-sum">
+      <div class="bill-sum-row"><span>מספר ימים בתקופה:</span><strong>60</strong></div>
+      <div class="bill-sum-row"><span>כמות המים לחיוב:</span><strong>65 מ"ק</strong></div>
+      <div class="bill-sum-row"><span>סה"כ לתשלום:</span><strong>665.3 ₪</strong></div>
+    </div>
+    <div class="meter-row-wrap">
+      <div class="meter-row"><span>קריאה קודמת: <span class="mv">550.80</span> מ"ק</span><span>06/07/23</span></div>
+      <div class="meter-row"><span>קריאה נוכחית: <span class="mv">615.8</span> מ"ק</span><span>05/09/23</span></div>
+      <div style="margin-top:4px; color: var(--teal); font-weight:700;">
+        צריכה: 615.8 − 550.80 = <strong>65</strong> מ"ק
+      </div>
+    </div>
+    <div style="padding: 10px 16px; font-size: 13px; color: var(--muted);">
+      65 מ"ק מתחלקים לשתי שכבות תשלום:
+    </div>
+    <div class="tariff-split">
+      <div class="tariff-split-item low">
+        <span class="ts-val"><input class="ci" id="e_low_preview" style="width:40px;"></span>
+        <span class="ts-lbl">מ"ק</span><br><span class="ts-lbl">נמוך</span>
+      </div>
+      <div class="tariff-split-item high">
+        <span class="ts-val"><input class="ci" id="e_high_preview" style="width:40px;"></span>
+        <span class="ts-lbl">מ"ק</span><br><span class="ts-lbl">גבוה</span>
+      </div>
+    </div>
+    <div class="tariff-note">
+      <span>עד 7×נפשות</span>
+      <span>יתרה</span>
+    </div>
+  </div>
+</div>
+
+<!-- STEP A -->
+<div class="step-card" id="stepA">
+  <div class="step-head">
+    <div class="step-num">א</div>
+    <div class="step-title">כמה מ"ק בכל תעריף? (משפחת דויד)</div>
+  </div>
+  <div class="step-body">
+    <p class="note">רגע לפני שמתחילים:<br>
+      כל משפחה צרכה כמות מסוימת של מ"ק — אבל לא כל המ"ק עולים אותו מחיר.<br>
+      חלק משולם בתעריף נמוך וחלק בתעריף גבוה.<br>
+      הגבול: 7 מ"ק לנפש × מספר הנפשות = כמות בתעריף נמוך. מעבר לכך — תעריף גבוה.</p>
+
+    <h4 style="margin-bottom:10px;">משפחת דויד (4 נפשות, 51 מ"ק):</h4>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף נמוך:</span>
+      <input class="ni" id="a_d_low" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף גבוה:</span>
+      <input class="ni" id="a_d_high" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+
+    <h4 style="margin:16px 0 10px;">משפחת איתן (6 נפשות, 65 מ"ק):</h4>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף נמוך:</span>
+      <input class="ni" id="a_e_low" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף גבוה:</span>
+      <input class="ni" id="a_e_high" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+
+    <div>
+      <button class="btn-check" onclick="checkA()">בדוק ✓</button>
+      <button class="btn-hint" id="hintBtnA" onclick="toggleHint('hintA')">💡 רמז</button>
+    </div>
+    <div class="hint-box" id="hintA">
+      דויד: 7 × 4 = ____ מ"ק בתעריף נמוך. יתרה: 51 − ____ = ____<br>
+      איתן: 7 × 6 = ____ מ"ק בתעריף נמוך. יתרה: 65 − ____ = ____
+    </div>
+    <div class="feedback" id="fbA"></div>
+  </div>
+</div>
+
+<!-- STEP B -->
+<div class="step-card locked" id="stepB">
+  <div class="step-head">
+    <div class="step-num">ב</div>
+    <div class="step-title">בניית מערכת משוואות</div>
+  </div>
+  <div class="step-body">
+    <p class="note">מה הקשר לשלב א?<br>
+      בשלב א מצאתם כמה מ"ק כל משפחה שילמה בכל תעריף.<br>
+      עכשיו בונים משוואה לכל משפחה:<br>
+      (מ"ק בנמוך) · x  +  (מ"ק בגבוה) · y  =  סה"כ ששולם<br>
+      המקדמים הם הכמויות שחישבתם בשלב א — השתמשו בהן!</p>
+
+    <p style="margin-bottom:14px;">נסמן: <span class="formula">x</span> = תעריף נמוך (₪/מ"ק)  |  <span class="formula">y</span> = תעריף גבוה (₪/מ"ק)</p>
+
+    <div class="eq-box">
+      <div class="eq-row">
+        <span class="eq-lbl">דויד:</span>
+        <input class="eqi" id="b_d_x"> <span class="eq-var">· x  + </span>
+        <input class="eqi" id="b_d_y"> <span class="eq-var">· y  = </span>
+        <span class="eq-const">554.7</span>
+      </div>
+      <div class="eq-row">
+        <span class="eq-lbl">איתן:</span>
+        <input class="eqi" id="b_e_x"> <span class="eq-var">· x  + </span>
+        <input class="eqi" id="b_e_y"> <span class="eq-var">· y  = </span>
+        <span class="eq-const">665.3</span>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn-check" onclick="checkB()">בדוק ✓</button>
+      <button class="btn-hint" id="hintBtnB" onclick="toggleHint('hintB')">💡 רמז</button>
+    </div>
+    <div class="hint-box" id="hintB">
+      דויד: מצאתם בשלב א — ? מ"ק נמוך ו-? מ"ק גבוה. אלה הם המקדמים.<br>
+      איתן: אותו עיקרון — השתמשו בכמויות שחישבתם לאיתן.
+    </div>
+    <div class="feedback" id="fbB"></div>
+  </div>
+</div>
+
+<!-- STEP C -->
+<div class="step-card locked" id="stepC">
+  <div class="step-head">
+    <div class="step-num">ג</div>
+    <div class="step-title">פתרון המערכת – מהם התעריפים?</div>
+  </div>
+  <div class="step-body">
+    <p class="note">פתרו את מערכת המשוואות ומצאו את x ו-y. רשמו את התשובות עם ספרה אחת אחרי הנקודה.</p>
+
+    <div class="in-row">
+      <span class="in-label">תעריף נמוך (x):</span>
+      <input class="ni" id="c_x" type="number" step="0.1">
+      <span class="unit">₪/מ"ק</span>
+    </div>
+    <div class="in-row">
+      <span class="in-label">תעריף גבוה (y):</span>
+      <input class="ni" id="c_y" type="number" step="0.1">
+      <span class="unit">₪/מ"ק</span>
+    </div>
+
+    <div>
+      <button class="btn-check" onclick="checkC()">בדוק ✓</button>
+      <button class="btn-hint" id="hintBtnC" onclick="toggleHint('hintC')">💡 רמז</button>
+    </div>
+    <div class="hint-box" id="hintC">
+      חסרו בין שתי המשוואות:<br>
+      (42 − 28) · x = 665.3 − 554.7  ⟹  14x = 110.6<br>
+      לאחר מציאת x, הציבו חזרה במשוואה הראשונה כדי למצוא y.
+    </div>
+    <div class="feedback" id="fbC"></div>
+  </div>
+</div>
+
+<!-- STEP D -->
+<div class="step-card locked" id="stepD">
+  <div class="step-head">
+    <div class="step-num">ד</div>
+    <div class="step-title">מלאו את החשבונות</div>
+  </div>
+  <div class="step-body">
+    <p class="note">כעת יש לכם את כל הנתונים. מלאו את שתי טבלאות החשבון:<br>
+    עמודה 1 = התעריף שמצאתם (x או y)  |  עמודה 2 = כמות המ"ק  |  עמודה 3 = תעריף × כמות</p>
+
+    <div class="bills-grid">
+      <!-- David table -->
+      <div class="bill-card">
+        <div class="bill-head">
+          <div class="fn">משפחת דויד</div>
+          <div class="fi">4 נפשות | 51 מ"ק | סה"כ 554.7 ₪</div>
+        </div>
+        <table class="tariff-table">
+          <thead><tr><th>סוג תעריף</th><th>₪ למ"ק</th><th>כמות מ"ק</th><th>סה"כ ₪</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tl-low">תעריף נמוך</td>
+              <td><input class="ci" id="d_t_rate_low"></td>
+              <td><input class="ci" id="d_t_qty_low"></td>
+              <td><input class="ci" id="d_t_total_low"></td>
+            </tr>
+            <tr>
+              <td class="tl-high">תעריף גבוה</td>
+              <td><input class="ci" id="d_t_rate_high"></td>
+              <td><input class="ci" id="d_t_qty_high"></td>
+              <td><input class="ci" id="d_t_total_high"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Eitan table -->
+      <div class="bill-card">
+        <div class="bill-head">
+          <div class="fn">משפחת איתן</div>
+          <div class="fi">6 נפשות | 65 מ"ק | סה"כ 665.3 ₪</div>
+        </div>
+        <table class="tariff-table">
+          <thead><tr><th>סוג תעריף</th><th>₪ למ"ק</th><th>כמות מ"ק</th><th>סה"כ ₪</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tl-low">תעריף נמוך</td>
+              <td><input class="ci" id="e_t_rate_low"></td>
+              <td><input class="ci" id="e_t_qty_low"></td>
+              <td><input class="ci" id="e_t_total_low"></td>
+            </tr>
+            <tr>
+              <td class="tl-high">תעריף גבוה</td>
+              <td><input class="ci" id="e_t_rate_high"></td>
+              <td><input class="ci" id="e_t_qty_high"></td>
+              <td><input class="ci" id="e_t_total_high"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="btn-check" onclick="checkD()">בדוק את החשבונות ✓</button>
+    <div class="feedback" id="fbD"></div>
+  </div>
+</div>
+
+<!-- STEP BONUS -->
+<div class="step-card locked" id="stepE">
+  <div class="step-head bonus-head">
+    <div class="step-num">★</div>
+    <div class="step-title">בונוס – משפחת חביב</div>
+  </div>
+  <div class="step-body">
+    <p class="note">לפניכם חשבון מים של משפחת חביב. מספר הנפשות לא ידוע – נסמן אותו n.<br>
+      התעריפים ידועים. מצאו כמה נפשות יש במשפחה ומלאו את החשבון.</p>
+
+    <div class="bonus-bill">
+      <div class="bill-head">
+        <div class="ft">חשבון מים וביוב תקופתי 07-08/23</div>
+        <div class="fn">משפחת חביב</div>
+        <div class="fi">מגורים – מספר הנפשות לגילוי</div>
+      </div>
+      <div class="bill-sum">
+        <div class="bill-sum-row"><span>מספר ימים:</span><strong>60</strong></div>
+        <div class="bill-sum-row"><span>כמות לחיוב:</span><strong>45 מ"ק</strong></div>
+        <div class="bill-sum-row"><span>סה"כ לתשלום:</span><strong>397.5 ₪</strong></div>
+      </div>
+      <div class="meter-row-wrap">
+        <div class="meter-row"><span>קריאה קודמת: <span class="mv">465.20</span> מ"ק</span><span>06/07/23</span></div>
+        <div class="meter-row"><span>קריאה נוכחית: <span class="mv">510.2</span> מ"ק</span><span>05/09/23</span></div>
+      </div>
+      <table class="tariff-table">
+        <thead><tr><th>סוג תעריף</th><th>₪/מ"ק</th><th>כמות</th><th>סה"כ ₪</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tl-low">תעריף 1 נמוך</td>
+            <td>7.5</td>
+            <td><input class="ci" id="bonus_qty_low"></td>
+            <td><input class="ci" id="bonus_total_low"></td>
+          </tr>
+          <tr>
+            <td class="tl-high">תעריף 2 גבוה</td>
+            <td>13.5</td>
+            <td><input class="ci" id="bonus_qty_high"></td>
+            <td><input class="ci" id="bonus_total_high"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="eq-box">
+      <p style="font-size:13px; margin-bottom:8px;">ביטויים אלגבריים (בעזרת n):</p>
+      <p style="font-size:13px;">כמות מ"ק בתעריף נמוך = 7n<br>
+      כמות מ"ק בתעריף גבוה = 45 − 7n</p>
+      <p style="font-size:13px; margin-top:6px;">כתבו את המשוואה המתאימה ופתרו אותה כדי למצוא את n.</p>
+    </div>
+
+    <div class="in-row">
+      <span class="in-label">מספר הנפשות (n):</span>
+      <input class="ni" id="bonus_n" type="number">
+      <span class="unit">נפשות</span>
+    </div>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף נמוך:</span>
+      <input class="ni" id="bonus_low" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+    <div class="in-row">
+      <span class="in-label">כמות מ"ק בתעריף גבוה:</span>
+      <input class="ni" id="bonus_high" type="number">
+      <span class="unit">מ"ק</span>
+    </div>
+
+    <div>
+      <button class="btn-check" onclick="checkE()">בדוק ✓</button>
+      <button class="btn-hint" id="hintBtnE" onclick="toggleHint('hintE')">💡 רמז</button>
+    </div>
+    <div class="hint-box" id="hintE">
+      המשוואה: 7.5 · 7n + 13.5 · (45 − 7n) = 397.5<br>
+      פשטו: 52.5n + 607.5 − 94.5n = 397.5<br>
+      פתרו עבור n, ואז חשבו את כמות המ"ק בכל תעריף.
+    </div>
+    <div class="feedback" id="fbE"></div>
+  </div>
+</div>
+
+<!-- COPY SECTION -->
+<div class="copy-section" id="copySection">
+  <h3>📋</h3>
+  <h3>שלח למורה</h3>
+  <p>לחץ על הכפתור — התשובות יועתקו ללוח, ותוכל להדביק אותן בטופס המשימה.</p>
+  <button class="btn-copy" onclick="copyAnswers()">📋 העתק תשובות</button>
+  <div class="copy-toast" id="copyToast">✓ הועתק! כעת הדבק (Ctrl+V) בטופס המשימה.</div>
+</div>
+
+<!-- CELEBRATION -->
+<div class="celebrate" id="celebrate">
+  <div class="bob">🎉</div>
+  <h2>כל הכבוד! סיימת את כל השלבים!</h2>
+  <p>פתרת מערכת משוואות מחיי יום יום – בדיוק כמו שרשות המים מחשבת את חשבון המים שלנו.</p>
+</div>
+
+<script>
+// Answers
+const ANS = {
+  a_d_low: 28, a_d_high: 23, a_e_low: 42, a_e_high: 23,
+  b_d_x: 28, b_d_y: 23, b_e_x: 42, b_e_y: 23,
+  c_x: 7.9, c_y: 14.5,
+  // Step D
+  d_rate_low: 7.9, d_qty_low: 28, d_total_low: 221.2,
+  d_rate_high: 14.5, d_qty_high: 23, d_total_high: 333.5,
+  e_rate_low: 7.9, e_qty_low: 42, e_total_low: 331.8,
+  e_rate_high: 14.5, e_qty_high: 23, e_total_high: 333.5,
+  // Bonus
+  bonus_n: 5, bonus_low: 35, bonus_high: 10,
+  bonus_qty_low: 35, bonus_qty_high: 10,
+  bonus_total_low: 262.5, bonus_total_high: 135,
+};
+
+let attempts = {A:0, B:0, C:0, D:0, E:0};
+
+function val(id) { return parseFloat(document.getElementById(id).value); }
+
+function markField(id, ok) {
+  const el = document.getElementById(id);
+  el.classList.remove('correct','wrong');
+  el.classList.add(ok ? 'correct' : 'wrong');
+}
+
+function close(a, b, tol) { return Math.abs(a - b) <= (tol || 0.15); }
+
+function fb(id, ok, msgOk, msgBad) {
+  const el = document.getElementById(id);
+  el.className = 'feedback ' + (ok ? 'ok' : 'bad');
+  el.textContent = ok ? msgOk : msgBad;
+  el.style.display = 'block';
+}
+
+function unlock(stepId, dotId) {
+  const card = document.getElementById(stepId);
+  card.classList.remove('locked');
+  card.classList.add('unlocking');
+  document.getElementById(dotId).classList.add('done');
+  const dots = document.querySelectorAll('.pdot');
+  for (let d of dots) {
+    if (!d.classList.contains('done') && !d.classList.contains('active')) {
+      d.classList.add('active');
+      break;
+    }
+  }
+}
+
+function toggleHint(id) {
+  document.getElementById(id).classList.toggle('show');
+}
+
+function showHintBtn(step) {
+  const btn = document.getElementById('hintBtn' + step);
+  if (btn) btn.classList.add('show');
+}
+
+// STEP A
+function checkA() {
+  attempts.A++;
+  const ok1 = close(val('a_d_low'), ANS.a_d_low);
+  const ok2 = close(val('a_d_high'), ANS.a_d_high);
+  const ok3 = close(val('a_e_low'), ANS.a_e_low);
+  const ok4 = close(val('a_e_high'), ANS.a_e_high);
+  markField('a_d_low', ok1); markField('a_d_high', ok2);
+  markField('a_e_low', ok3); markField('a_e_high', ok4);
+
+  // Update preview cards
+  if (ok1) document.getElementById('d_low_preview').value = ANS.a_d_low;
+  if (ok2) document.getElementById('d_high_preview').value = ANS.a_d_high;
+  if (ok3) document.getElementById('e_low_preview').value = ANS.a_e_low;
+  if (ok4) document.getElementById('e_high_preview').value = ANS.a_e_high;
+
+  if (ok1 && ok2 && ok3 && ok4) {
+    fb('fbA', true, '✅ מצוין! חישבתם נכון את כמות המ"ק בכל תעריף לשתי המשפחות.');
+    unlock('stepB', 'pd1');
+  } else {
+    fb('fbA', false, '❌ יש שגיאה. בדקו שוב: תעריף נמוך = 7 × מספר נפשות, תעריף גבוה = יתרה.');
+    if (attempts.A >= 2) showHintBtn('A');
+  }
+}
+
+// STEP B
+function checkB() {
+  attempts.B++;
+  const ok1 = close(val('b_d_x'), ANS.b_d_x);
+  const ok2 = close(val('b_d_y'), ANS.b_d_y);
+  const ok3 = close(val('b_e_x'), ANS.b_e_x);
+  const ok4 = close(val('b_e_y'), ANS.b_e_y);
+  markField('b_d_x', ok1); markField('b_d_y', ok2);
+  markField('b_e_x', ok3); markField('b_e_y', ok4);
+
+  if (ok1 && ok2 && ok3 && ok4) {
+    fb('fbB', true, '✅ נהדר! בניתם את מערכת המשוואות. עכשיו פתרו אותה!');
+    unlock('stepC', 'pd2');
+  } else {
+    fb('fbB', false, '❌ בדקו: המקדמים צריכים להיות כמויות המ"ק שמצאתם בשלב א.');
+    if (attempts.B >= 2) showHintBtn('B');
+  }
+}
+
+// STEP C
+function checkC() {
+  attempts.C++;
+  const ok1 = close(val('c_x'), ANS.c_x, 0.2);
+  const ok2 = close(val('c_y'), ANS.c_y, 0.2);
+  markField('c_x', ok1); markField('c_y', ok2);
+
+  if (ok1 && ok2) {
+    fb('fbC', true, '✅ מדויק! מצאתם את שני התעריפים. כעת מלאו את טבלאות החשבון.');
+    unlock('stepD', 'pd3');
+  } else {
+    fb('fbC', false, '❌ בדקו את הפתרון. רשמו ספרה אחת אחרי הנקודה.');
+    if (attempts.C >= 2) showHintBtn('C');
+  }
+}
+
+// STEP D
+function checkD() {
+  attempts.D++;
+  const fields = [
+    ['d_t_rate_low', ANS.d_rate_low], ['d_t_qty_low', ANS.d_qty_low], ['d_t_total_low', ANS.d_total_low],
+    ['d_t_rate_high', ANS.d_rate_high], ['d_t_qty_high', ANS.d_qty_high], ['d_t_total_high', ANS.d_total_high],
+    ['e_t_rate_low', ANS.e_rate_low], ['e_t_qty_low', ANS.e_qty_low], ['e_t_total_low', ANS.e_total_low],
+    ['e_t_rate_high', ANS.e_rate_high], ['e_t_qty_high', ANS.e_qty_high], ['e_t_total_high', ANS.e_total_high],
+  ];
+  let allOk = true;
+  for (const [id, ans] of fields) {
+    const ok = close(val(id), ans, 0.2);
+    markField(id, ok);
+    if (!ok) allOk = false;
+  }
+  if (allOk) {
+    fb('fbD', true, '✅ מעולה! מילאתם נכון את שני החשבונות. עברו לשאלת הבונוס!');
+    unlock('stepE', 'pd4');
+  } else {
+    fb('fbD', false, '❌ יש שגיאה באחד מהשדות. בדקו: תעריף × כמות = סה"כ.');
+  }
+}
+
+// STEP E (Bonus)
+function checkE() {
+  attempts.E++;
+  const ok_n = close(val('bonus_n'), ANS.bonus_n);
+  const ok_low = close(val('bonus_low'), ANS.bonus_low);
+  const ok_high = close(val('bonus_high'), ANS.bonus_high);
+  markField('bonus_n', ok_n); markField('bonus_low', ok_low); markField('bonus_high', ok_high);
+
+  // Also check table fields if filled
+  const qt_low = val('bonus_qty_low');
+  const qt_high = val('bonus_qty_high');
+  const tot_low = val('bonus_total_low');
+  const tot_high = val('bonus_total_high');
+  if (!isNaN(qt_low)) markField('bonus_qty_low', close(qt_low, ANS.bonus_qty_low));
+  if (!isNaN(qt_high)) markField('bonus_qty_high', close(qt_high, ANS.bonus_qty_high));
+  if (!isNaN(tot_low)) markField('bonus_total_low', close(tot_low, ANS.bonus_total_low, 0.5));
+  if (!isNaN(tot_high)) markField('bonus_total_high', close(tot_high, ANS.bonus_total_high, 0.5));
+
+  if (ok_n && ok_low && ok_high) {
+    fb('fbE', true, '✅ פתרתם את הבונוס! משפחת חביב = 5 נפשות.');
+    document.getElementById('pd5').classList.add('done');
+    document.getElementById('celebrate').classList.add('show');
+    document.getElementById('celebrate').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    fb('fbE', false, '❌ בדקו שוב. פתרו את המשוואה: 7.5·7n + 13.5·(45−7n) = 397.5');
+    if (attempts.E >= 2) showHintBtn('E');
+  }
+}
+
+// Copy answers
+function copyAnswers() {
+  let txt = '=== תשובות חשבון מים ===\n\n';
+  txt += 'שלב א:\n';
+  txt += 'דויד נמוך: ' + (document.getElementById('a_d_low').value || '—') + ' מ"ק\n';
+  txt += 'דויד גבוה: ' + (document.getElementById('a_d_high').value || '—') + ' מ"ק\n';
+  txt += 'איתן נמוך: ' + (document.getElementById('a_e_low').value || '—') + ' מ"ק\n';
+  txt += 'איתן גבוה: ' + (document.getElementById('a_e_high').value || '—') + ' מ"ק\n\n';
+  txt += 'שלב ב:\n';
+  txt += 'דויד: ' + (document.getElementById('b_d_x').value||'—') + 'x + ' + (document.getElementById('b_d_y').value||'—') + 'y = 554.7\n';
+  txt += 'איתן: ' + (document.getElementById('b_e_x').value||'—') + 'x + ' + (document.getElementById('b_e_y').value||'—') + 'y = 665.3\n\n';
+  txt += 'שלב ג:\n';
+  txt += 'x = ' + (document.getElementById('c_x').value || '—') + '\n';
+  txt += 'y = ' + (document.getElementById('c_y').value || '—') + '\n\n';
+  txt += 'שלב ד: טבלאות מולאו\n\n';
+  txt += 'בונוס:\n';
+  txt += 'n = ' + (document.getElementById('bonus_n').value || '—') + '\n';
+  txt += 'נמוך = ' + (document.getElementById('bonus_low').value || '—') + '\n';
+  txt += 'גבוה = ' + (document.getElementById('bonus_high').value || '—') + '\n';
+
+  navigator.clipboard.writeText(txt).then(() => {
+    document.getElementById('copyToast').classList.add('show');
+    setTimeout(() => document.getElementById('copyToast').classList.remove('show'), 4000);
+  });
+}
+</script>
+</body>
+</html>
