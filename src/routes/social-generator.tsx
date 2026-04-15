@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   Select,
   SelectContent,
@@ -83,6 +83,21 @@ function SocialGeneratorPage() {
   const [audience, setAudience] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setImage(ev.target?.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const handleGenerate = () => {
     if (!title.trim() || !body.trim() || !audience.trim()) return;
@@ -126,6 +141,37 @@ function SocialGeneratorPage() {
           <label className="mb-1.5 block text-sm font-medium">קהל יעד</label>
           <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="לדוגמה: מנהלי חטיבות ביניים" />
         </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">תמונה לפוסט (אופציונלי)</label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          {image ? (
+            <div className="relative mt-2 overflow-hidden rounded-lg border border-border">
+              <img src={image} alt="תצוגה מקדימה" className="max-h-64 w-full object-cover" />
+              <Button
+                variant="destructive"
+                size="sm"
+                className="absolute top-2 left-2"
+                onClick={removeImage}
+              >
+                ✕ הסר
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              className="w-full border-dashed"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              📷 בחרו תמונה
+            </Button>
+          )}
+        </div>
         <Button onClick={handleGenerate} size="lg" className="w-full">
           ✨ צור פוסטים
         </Button>
@@ -152,6 +198,9 @@ function SocialGeneratorPage() {
                 </Button>
               </CardHeader>
               <CardContent>
+                {image && (
+                  <img src={image} alt="תמונת פוסט" className="mb-3 max-h-48 w-full rounded-lg object-cover" />
+                )}
                 <pre className="whitespace-pre-wrap rounded-lg bg-muted p-4 text-sm leading-relaxed" dir="rtl">
                   {content}
                 </pre>
