@@ -59,8 +59,8 @@ function HomePage() {
                 <img src={item.image} alt={item.label} className={`h-full w-full ${item.round !== false ? "object-cover" : "object-contain"}`} />
               </div>
               <div className="p-4 pt-3">
-                <div className="font-display text-2xl font-bold text-primary">{item.num}</div>
-                <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
+                {"num" in item && item.num && <div className="font-display text-2xl font-bold text-primary">{item.num}</div>}
+                <p className={`text-sm text-muted-foreground ${"num" in item && item.num ? "mt-1" : "mt-0 font-display text-base font-semibold text-primary"}`}>{item.label}</p>
               </div>
             </div>
           ))}
