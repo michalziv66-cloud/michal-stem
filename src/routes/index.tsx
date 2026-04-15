@@ -59,7 +59,7 @@ function HomePage() {
       <section className="section-container">
         <div ref={highlightsRef} className="scroll-reveal grid gap-8 sm:grid-cols-3">
           {[
-            { label: "הדרכת חדרי מורים", image: cardExperience, link: "/training" },
+            { label: "למנהלי חטיבות", image: cardExperience, link: "/principals" },
             { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false, link: "/tools" },
             { label: "אודות", image: cardVision, link: "/about" },
           ].map((item, i) => {
