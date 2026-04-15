@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
+import imgFunctions from "@/assets/tools/functions.jpg";
+import imgStatistics from "@/assets/tools/statistics.jpg";
+import imgGeometry from "@/assets/tools/geometry.jpg";
+import imgWaterBill from "@/assets/tools/water-bill.jpg";
+import imgEquations from "@/assets/tools/equations.jpg";
+import imgReel from "@/assets/tools/reel.jpg";
+import imgPres1 from "@/assets/tools/presentation1.jpg";
+import imgPres2 from "@/assets/tools/presentation2.jpg";
+import imgPres3 from "@/assets/tools/presentation3.jpg";
+import imgPres4 from "@/assets/tools/presentation4.jpg";
+
 export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
@@ -19,6 +30,7 @@ type ToolItem = {
   icon: string;
   url?: string;
   isVideo?: boolean;
+  image?: string;
 };
 
 const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
@@ -31,16 +43,19 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         description: "כלים לחקירת פונקציות לינאריות, ריבועיות ומעריכיות — שינוי פרמטרים בזמן אמת.",
         icon: "📈",
         url: "https://math-versatile-path-pro.base44.app",
+        image: imgFunctions,
       },
       {
         title: "סטטיסטיקה ואי וודאות",
         description: "סימולציות אינטראקטיביות להסתברות, ממוצעים, חציון וסטיית תקן.",
         icon: "📊",
+        image: imgStatistics,
       },
       {
         title: "גיאומטריה",
         description: "חקירת צורות, זוויות, שטחים והיקפים בסביבת עבודה ויזואלית.",
         icon: "📐",
+        image: imgGeometry,
       },
     ],
   },
@@ -53,18 +68,21 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         description: "חישוב תעריפים, בניית מערכת משוואות ופתרונה. כולל שלבים מודרכים ושאלת בונוס.",
         icon: "💧",
         url: "/tools/water-bill.html",
+        image: imgWaterBill,
       },
       {
         title: "משוואות הקסם",
         description: "דף עבודה אינטראקטיבי בנושא משוואות – שלבים מודרכים עם MathJax ואנימציות.",
         icon: "✨",
         url: "/tools/mishvaot_kesem_2.html",
+        image: imgEquations,
       },
       {
         title: "מתמטיקה מחוץ לסוגריים",
         description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום.",
         icon: "🎬",
         url: "/tools/reel3.html",
+        image: imgReel,
       },
     ],
   },
@@ -77,24 +95,28 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         description: "מצגת שיעור אינטראקטיבית",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHDRpLL3yI/OA2WICgnu4Y31LrTX8ZX2g/view",
+        image: imgPres1,
       },
       {
         title: "מצגת 2",
         description: "מצגת שיעור אינטראקטיבית",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHDGouuLPY/kUimQHqFzR6aAUjGiz9E6w/view",
+        image: imgPres2,
       },
       {
         title: "מצגת 3",
         description: "מצגת שיעור אינטראקטיבית",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHD0eKpqVY/piio0DQXICikQqljLoQYPQ/view",
+        image: imgPres3,
       },
       {
         title: "מצגת 4",
         description: "מצגת שיעור אינטראקטיבית",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHCzkKxydg/I5tkXslDkg8RTA-m4ap_Lg/view",
+        image: imgPres4,
       },
     ],
   },
@@ -134,8 +156,6 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   },
 ];
 
-
-
 function ToolCard({ item }: { item: ToolItem }) {
   if (item.isVideo) {
     return (
@@ -153,9 +173,18 @@ function ToolCard({ item }: { item: ToolItem }) {
   }
 
   const card = (
-    <Card className="card-hover h-full">
+    <Card className="card-hover h-full overflow-hidden">
+      {item.image && (
+        <img
+          src={item.image}
+          alt={item.title}
+          loading="lazy"
+          width={768}
+          height={512}
+          className="aspect-[3/2] w-full object-cover"
+        />
+      )}
       <CardHeader>
-        <div className="mb-2 text-2xl">{item.icon}</div>
         <CardTitle className="font-display text-lg">{item.title}</CardTitle>
         <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
       </CardHeader>
