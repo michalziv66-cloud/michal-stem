@@ -130,6 +130,34 @@ function ToolsPage() {
           </div>
         </>
       )}
+
+      {notebookLmItems.length > 0 && (
+        <>
+          <h2 className="mt-14 text-2xl font-display font-bold">NotebookLM</h2>
+          <p className="mt-2 text-muted-foreground">תכנים שנוצרו באמצעות NotebookLM של Google</p>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {notebookLmItems.map((item) => (
+              <Card key={item.title} className="card-hover overflow-hidden">
+                <CardHeader>
+                  <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <CardTitle className="font-display text-xl">{item.title}</CardTitle>
+                  <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <video
+                    src={item.url}
+                    controls
+                    className="w-full rounded-lg"
+                    preload="metadata"
+                  />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
