@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit } from "lucide-react";
 import cardExperience from "@/assets/card-experience.jpg";
 import cardVision from "@/assets/card-vision.png";
+import cardStem from "@/assets/card-stem.png";
 import profileImage from "@/assets/michal-profile.png";
 import logo from "@/assets/logo-white.svg";
 
@@ -51,19 +51,13 @@ function HomePage() {
         <div className="grid gap-8 sm:grid-cols-3">
           {[
             { num: "14+", label: "שנות ניסיון בהוראה", image: cardExperience },
-            { num: "AI", label: "כלים חכמים ל-STEM", Icon: BrainCircuit, bg: "bg-gold/10", color: "text-gold-foreground" },
+            { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem },
             { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
           ].map((item) => (
             <div key={item.label} className="card-hover overflow-hidden rounded-xl border bg-card text-center">
-              {"image" in item && item.image ? (
-                <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
-                  <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
-                </div>
-              ) : (
-                <div className={`mx-auto mt-6 flex h-14 w-14 items-center justify-center rounded-full ${"bg" in item ? item.bg : ""}`}>
-                  {"Icon" in item && item.Icon && <item.Icon className={`h-7 w-7 ${"color" in item ? item.color : ""}`} strokeWidth={1.8} />}
-                </div>
-              )}
+              <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
+                <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
+              </div>
               <div className="p-4 pt-3">
                 <div className="font-display text-2xl font-bold text-primary">{item.num}</div>
                 <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
