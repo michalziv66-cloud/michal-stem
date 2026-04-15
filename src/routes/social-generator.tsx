@@ -284,17 +284,26 @@ function SocialGeneratorPage() {
             { platform: "WhatsApp", emoji: "💬", content: posts.whatsapp },
           ].map(({ platform, emoji, content }) => (
             <Card key={platform}>
-              <CardHeader className="flex-row items-center justify-between">
+              <CardHeader className="flex-row items-center justify-between gap-2">
                 <CardTitle className="font-display text-lg">
                   {emoji} {platform}
                 </CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(content, platform)}
-                >
-                  {copied === platform ? "✓ הועתק!" : "העתק"}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => downloadPostImage(content, platform)}
+                  >
+                    ⬇ הורד תמונה
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copyToClipboard(content, platform)}
+                  >
+                    {copied === platform ? "✓ הועתק!" : "העתק"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 {image && (
