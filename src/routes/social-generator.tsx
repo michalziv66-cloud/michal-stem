@@ -70,7 +70,7 @@ function SocialGeneratorPage() {
       <h1 className="page-enter section-title">מחולל פוסטים לרשתות חברתיות</h1>
       <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">הכניסו פרטים על הכלי וקבלו 3 פוסטים מוכנים לשיתוף</p>
 
-      <div ref={formRef} className="scroll-reveal mx-auto mt-10 max-w-2xl space-y-4">
+      <div ref={formRef} className="scroll-reveal revealed mx-auto mt-10 max-w-2xl space-y-4">
         <div>
           <label className="mb-1.5 block text-sm font-medium">שם הכלי</label>
           <Input value={toolName} onChange={(e) => setToolName(e.target.value)} placeholder="לדוגמה: חוקר הפונקציות" />
