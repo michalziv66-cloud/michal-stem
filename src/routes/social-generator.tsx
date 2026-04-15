@@ -76,6 +76,41 @@ function generatePosts(type: PostType, title: string, body: string, audience: st
   return { facebook, instagram, whatsapp };
 }
 
+function wrapTextRTL(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const paragraphs = text.split("\n");
+  const lines: string[] = [];
+  for (const para of paragraphs) {
+    if (para.trim() === "") { lines.push(""); continue; }
+    const words = para.split(" ");
+    let current = "";
+    for (const word of words) {
+      const test = current ? current + " " + word : word;
+      if (ctx.measureText(test).width > maxWidth && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = test;
+      }
+    }
+    if (current) lines.push(current);
+  }
+  return lines;
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
 function SocialGeneratorPage() {
   const [postType, setPostType] = useState<PostType>("promotion");
   const [title, setTitle] = useState("");
