@@ -136,7 +136,11 @@ function SocialGeneratorPage() {
   };
 
   const handleGenerate = () => {
-    if (!title.trim() || !body.trim() || !audience.trim()) return;
+    if (!title.trim() || !body.trim() || !audience.trim()) {
+      setError("יש למלא את כל השדות: כותרת, תוכן וקהל יעד");
+      return;
+    }
+    setError(null);
     setPosts(generatePosts(postType, title, body, audience));
   };
 
