@@ -4,13 +4,19 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const Route = createFileRoute("/social-generator")({
   head: () => ({
     meta: [
       { title: "מחולל פוסטים — מיכל זיו" },
-      { name: "description", content: "צרו פוסטים מוכנים לפייסבוק, אינסטגרם וואטסאפ לשיתוף כלים חינוכיים" },
+      { name: "description", content: "צרו פוסטים מוכנים לפייסבוק, אינסטגרם וואטסאפ" },
       { property: "og:title", content: "מחולל פוסטים — מיכל זיו" },
       { property: "og:description", content: "צרו פוסטים מוכנים לפייסבוק, אינסטגרם וואטסאפ" },
     ],
@@ -18,45 +24,69 @@ export const Route = createFileRoute("/social-generator")({
   component: SocialGeneratorPage,
 });
 
-function generatePosts(toolName: string, description: string, audience: string) {
-  const facebook = `🚀 שמעתם על "${toolName}"? 🎉
+type PostType = "tool" | "tip" | "challenge" | "promotion" | "free";
 
-${description}
+const postTypeLabels: Record<PostType, string> = {
+  tool: "שיתוף כלי חינוכי",
+  tip: "טיפ מקצועי",
+  challenge: "אתגר / שאלת חשיבה",
+  promotion: "קידום שירות / הרצאה",
+  free: "פוסט חופשי",
+};
 
-✨ הכלי מיועד ל${audience} ומאפשר חוויית למידה אינטראקטיבית שמשנה את הדרך שבה מלמדים ולומדים מתמטיקה.
+function generatePosts(type: PostType, title: string, body: string, audience: string) {
+  const signature = `\n\n📐 מיכל זיו — מתמטיקה מחוץ לסוגריים\n📧 michalziv66@gmail.com | 📱 0509017802`;
 
-🔗 הכלי זמין בחינם באתר שלי — קישור בתגובה הראשונה!
+  let facebook = "";
+  let instagram = "";
+  let whatsapp = "";
 
-📐 מתמטיקה מחוץ לסוגריים — כי למידה צריכה להיות חוויה.
+  switch (type) {
+    case "tool":
+      facebook = `🚀 שמעתם על "${title}"? 🎉\n\n${body}\n\n✨ הכלי מיועד ל${audience} ומאפשר חוויית למידה אינטראקטיבית.\n\n🔗 הכלי זמין בחינם באתר שלי — קישור בתגובה הראשונה!\n\n💡 נסו, שתפו, ותגידו לי מה דעתכם! 👇${signature}`;
+      instagram = `📐 ${title} — כלי חדש ל${audience}!\n\n${body}\n\n🔗 לינק באתר — בביו!\n\n#מתמטיקה #חינוך #STEM #טכנולוגיהבחינוך #הוראהחדשנית`;
+      whatsapp = `היי 👋\nרציתי לשתף אתכם עם "${title}" — ${body}\nמתאים ל${audience}. שווה לנסות! 📐✨`;
+      break;
 
-💡 נסו, שתפו, ותגידו לי מה דעתכם! 👇`;
+    case "tip":
+      facebook = `💡 טיפ מקצועי: ${title}\n\n${body}\n\n👥 רלוונטי במיוחד ל${audience}\n\nמה דעתכם? יש לכם טיפים נוספים? 👇${signature}`;
+      instagram = `💡 ${title}\n\n${body}\n\n👥 ל${audience}\n\n#מתמטיקה #חינוך #טיפיםלמורים #STEM #פדגוגיה`;
+      whatsapp = `💡 טיפ: ${title}\n\n${body}\n\nרלוונטי ל${audience}. מה דעתכם?`;
+      break;
 
-  const instagram = `📐 ${toolName} — כלי חדש ל${audience}!
+    case "challenge":
+      facebook = `🧩 אתגר! ${title}\n\n${body}\n\n🎯 מתאים ל${audience}\n\nכתבו את התשובה בתגובות! 👇${signature}`;
+      instagram = `🧩 ${title}\n\n${body}\n\n💬 כתבו תשובה בתגובות!\n\n#אתגרמתמטי #חשיבה #מתמטיקה #STEM`;
+      whatsapp = `🧩 אתגר: ${title}\n\n${body}\n\nל${audience} — מה התשובה? 🤔`;
+      break;
 
-${description}
+    case "promotion":
+      facebook = `👋 ${title}\n\n${body}\n\n🎯 מיועד ל${audience}\n\nמוזמנים לשוחח 👇${signature}`;
+      instagram = `✨ ${title}\n\n${body}\n\n👥 ל${audience}\n\n📩 פרטים בביו!\n\n#מתמטיקה #חינוך #פיתוחמקצועי #STEM`;
+      whatsapp = `היי 👋\n\n${title}\n\n${body}\n\nמיועד ל${audience}.\nאשמח לפרטים נוספים? צרו קשר 📱`;
+      break;
 
-🔗 לינק באתר — בביו!
-
-#מתמטיקה #חינוך #STEM #טכנולוגיהבחינוך #הוראהחדשנית`;
-
-  const whatsapp = `היי 👋
-רציתי לשתף אתכם עם "${toolName}" — ${description}
-מתאים ל${audience}. שווה לנסות! 📐✨`;
+    case "free":
+      facebook = `${title}\n\n${body}\n\n👥 ל${audience}${signature}`;
+      instagram = `${title}\n\n${body}\n\n#מתמטיקה #חינוך #STEM`;
+      whatsapp = `${title}\n\n${body}`;
+      break;
+  }
 
   return { facebook, instagram, whatsapp };
 }
 
 function SocialGeneratorPage() {
-  const [toolName, setToolName] = useState("");
-  const [description, setDescription] = useState("");
+  const [postType, setPostType] = useState<PostType>("promotion");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [audience, setAudience] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  
 
   const handleGenerate = () => {
-    if (!toolName.trim() || !description.trim() || !audience.trim()) return;
-    setPosts(generatePosts(toolName, description, audience));
+    if (!title.trim() || !body.trim() || !audience.trim()) return;
+    setPosts(generatePosts(postType, title, body, audience));
   };
 
   const copyToClipboard = (text: string, platform: string) => {
@@ -68,20 +98,33 @@ function SocialGeneratorPage() {
   return (
     <div className="section-container">
       <h1 className="page-enter section-title">מחולל פוסטים לרשתות חברתיות</h1>
-      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">הכניסו פרטים על הכלי וקבלו 3 פוסטים מוכנים לשיתוף</p>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">בחרו סוג פוסט, מלאו פרטים וקבלו 3 גרסאות מוכנות</p>
 
       <div className="page-enter page-enter-delay-2 mx-auto mt-10 max-w-2xl space-y-4">
         <div>
-          <label className="mb-1.5 block text-sm font-medium">שם הכלי</label>
-          <Input value={toolName} onChange={(e) => setToolName(e.target.value)} placeholder="לדוגמה: חוקר הפונקציות" />
+          <label className="mb-1.5 block text-sm font-medium">סוג הפוסט</label>
+          <Select value={postType} onValueChange={(v) => setPostType(v as PostType)}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.entries(postTypeLabels) as [PostType, string][]).map(([key, label]) => (
+                <SelectItem key={key} value={key}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-medium">תיאור קצר</label>
-          <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="מה הכלי עושה?" rows={3} />
+          <label className="mb-1.5 block text-sm font-medium">כותרת / נושא</label>
+          <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="לדוגמה: הכלי שישנה את שיעור המתמטיקה" />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">תוכן עיקרי</label>
+          <Textarea value={body} onChange={(e) => setBody(e.target.value)} placeholder="מה רוצים לומר?" rows={4} />
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium">קהל יעד</label>
-          <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="לדוגמה: תלמידי כיתה ח׳" />
+          <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="לדוגמה: מנהלי חטיבות ביניים" />
         </div>
         <Button onClick={handleGenerate} size="lg" className="w-full">
           ✨ צור פוסטים
