@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrainingRouteImport } from './routes/training'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SocialGeneratorRouteImport } from './routes/social-generator'
 import { Route as PrincipalsRouteImport } from './routes/principals'
@@ -18,6 +19,11 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TrainingRoute = TrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
   path: '/tools',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
+  '/training': typeof TrainingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/principals'
     | '/social-generator'
     | '/tools'
+    | '/training'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/principals'
     | '/social-generator'
     | '/tools'
+    | '/training'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/principals'
     | '/social-generator'
     | '/tools'
+    | '/training'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,10 +144,18 @@ export interface RootRouteChildren {
   PrincipalsRoute: typeof PrincipalsRoute
   SocialGeneratorRoute: typeof SocialGeneratorRoute
   ToolsRoute: typeof ToolsRoute
+  TrainingRoute: typeof TrainingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/training': {
+      id: '/training'
+      path: '/training'
+      fullPath: '/training'
+      preLoaderRoute: typeof TrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools': {
       id: '/tools'
       path: '/tools'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrincipalsRoute: PrincipalsRoute,
   SocialGeneratorRoute: SocialGeneratorRoute,
   ToolsRoute: ToolsRoute,
+  TrainingRoute: TrainingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
