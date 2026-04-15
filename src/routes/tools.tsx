@@ -74,6 +74,13 @@ const notebookLmItems = [
     color: "bg-primary/10 text-primary",
     url: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1.mp4",
   },
+  {
+    title: "איך לפצח את קוד הישר",
+    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על משוואת הישר.",
+    icon: "🎧",
+    color: "bg-gold/10 text-gold-foreground",
+    url: "/notebook-lm/איך_לפצח_את_קוד_הישר.mp4",
+  },
 ];
 
 function ToolsPage() {
