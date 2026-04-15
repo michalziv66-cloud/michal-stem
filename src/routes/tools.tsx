@@ -153,7 +153,7 @@ function ToolCard({ item }: { item: ToolItem }) {
           <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <video src={item.url} controls className="w-full rounded-lg" preload="metadata" />
+          <video src={`${item.url}#t=0.1`} controls className="w-full rounded-lg" preload="metadata" />
         </CardContent>
       </Card>
     );
