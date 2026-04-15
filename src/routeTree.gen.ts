@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SocialGeneratorRouteImport } from './routes/social-generator'
 import { Route as PrincipalsRouteImport } from './routes/principals'
-import { Route as PresentationsRouteImport } from './routes/presentations'
 import { Route as MaterialsRouteImport } from './routes/materials'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -32,11 +31,6 @@ const SocialGeneratorRoute = SocialGeneratorRouteImport.update({
 const PrincipalsRoute = PrincipalsRouteImport.update({
   id: '/principals',
   path: '/principals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PresentationsRoute = PresentationsRouteImport.update({
-  id: '/presentations',
-  path: '/presentations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MaterialsRoute = MaterialsRouteImport.update({
@@ -71,7 +65,6 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/materials': typeof MaterialsRoute
-  '/presentations': typeof PresentationsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
@@ -82,7 +75,6 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/materials': typeof MaterialsRoute
-  '/presentations': typeof PresentationsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
@@ -94,7 +86,6 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/materials': typeof MaterialsRoute
-  '/presentations': typeof PresentationsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
   '/tools': typeof ToolsRoute
@@ -107,7 +98,6 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/materials'
-    | '/presentations'
     | '/principals'
     | '/social-generator'
     | '/tools'
@@ -118,7 +108,6 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/materials'
-    | '/presentations'
     | '/principals'
     | '/social-generator'
     | '/tools'
@@ -129,7 +118,6 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/materials'
-    | '/presentations'
     | '/principals'
     | '/social-generator'
     | '/tools'
@@ -141,7 +129,6 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   MaterialsRoute: typeof MaterialsRoute
-  PresentationsRoute: typeof PresentationsRoute
   PrincipalsRoute: typeof PrincipalsRoute
   SocialGeneratorRoute: typeof SocialGeneratorRoute
   ToolsRoute: typeof ToolsRoute
@@ -168,13 +155,6 @@ declare module '@tanstack/react-router' {
       path: '/principals'
       fullPath: '/principals'
       preLoaderRoute: typeof PrincipalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/presentations': {
-      id: '/presentations'
-      path: '/presentations'
-      fullPath: '/presentations'
-      preLoaderRoute: typeof PresentationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/materials': {
@@ -221,7 +201,6 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   MaterialsRoute: MaterialsRoute,
-  PresentationsRoute: PresentationsRoute,
   PrincipalsRoute: PrincipalsRoute,
   SocialGeneratorRoute: SocialGeneratorRoute,
   ToolsRoute: ToolsRoute,
