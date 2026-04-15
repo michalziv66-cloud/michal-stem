@@ -1,132 +1,66 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { createFileRoute } from "@tanstack/react-router";
 import profileImage from "@/assets/michal-profile.png";
+import artisticImage from "@/assets/michal-artistic.png";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "יזמית פדגוגית במתמטיקה — מיכל זיו" },
-      { name: "description", content: "מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים" },
-      { property: "og:title", content: "יזמית פדגוגית במתמטיקה — מיכל זיו" },
-      { property: "og:description", content: "מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים" },
+      { title: "אודות — מיכל זיו" },
+      { name: "description", content: "מורה למתמטיקה בחטיבת הביניים עם 14 שנות ניסיון, מובילת חדשנות פדגוגית" },
+      { property: "og:title", content: "אודות — מיכל זיו" },
+      { property: "og:description", content: "מורה למתמטיקה בחטיבת הביניים עם 14 שנות ניסיון" },
     ],
   }),
   component: AboutPage,
 });
 
 function AboutPage() {
-  const introRef = useScrollReveal();
-  const challengeRef = useScrollReveal(100);
-  const solutionRef = useScrollReveal(200);
-  const benefitsRef = useScrollReveal(300);
-  const coopRef = useScrollReveal(400);
+  const contentRef = useScrollReveal();
+  const expertiseRef = useScrollReveal(200);
 
   return (
     <div className="section-container">
-      {/* Header */}
       <div className="page-enter flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
         <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg">
           <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
         </div>
-        <div>
-          <h1 className="section-title">מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים</h1>
-          <p className="mt-2 text-muted-foreground">מוגש ע״י: מיכל זיו, מחנכת ומובילת פיתוח פדגוגי דיגיטלי במתמטיקה</p>
-        </div>
+        <h1 className="section-title">אודות</h1>
       </div>
-
-      {/* 1. האתגר הלאומי */}
-      <div ref={introRef} className="scroll-reveal mt-12 space-y-4">
-        <h2 className="font-display text-2xl font-bold text-primary">1. האתגר הלאומי: ״ישראל ריאלית״ (תשפ״ו)</h2>
-        <p className="text-lg leading-relaxed text-foreground/90">
-          תוכנית החומש הלאומית הציבה רף חדש: מעבר מהוראה טכנית לאוריינות מתמטית (PISA). המשמעות עבור מנהלי חטיבות היא דרישה לשינוי עומק בדרכי ההוראה, עמידה במשימות ״חלוץ״ ארציות, ודיווח שוטף על ביצועי STEM במערכות המשרד.
-        </p>
-      </div>
-
-      {/* 2. הכשל ביישום */}
-      <div ref={challengeRef} className="scroll-reveal mt-10">
-        <h2 className="font-display text-2xl font-bold text-primary">2. הכשל ביישום המסורתי</h2>
-        <p className="mt-3 text-foreground/90">בתי ספר רבים נתקלים ב״צוואר בקבוק״ בתהליך ההטמעה:</p>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <Card className="border-destructive/30 bg-destructive/5">
-            <CardHeader><CardTitle className="text-base text-destructive">סרבול טכנולוגי</CardTitle></CardHeader>
-            <CardContent className="text-sm">קושי של מורים ותלמידים בעבודה מול ממשק המודל הגולמי.</CardContent>
-          </Card>
-          <Card className="border-destructive/30 bg-destructive/5">
-            <CardHeader><CardTitle className="text-base text-destructive">חוסר בתוכן רלוונטי</CardTitle></CardHeader>
-            <CardContent className="text-sm">פער בין הספרים הישנים לדרישות האוריינות החדשות.</CardContent>
-          </Card>
-          <Card className="border-destructive/30 bg-destructive/5">
-            <CardHeader><CardTitle className="text-base text-destructive">בעיית דיווח</CardTitle></CardHeader>
-            <CardContent className="text-sm">ללא ״חתימה דיגיטלית״ של התלמידים במערכת, בית הספר אינו מזוכה במדדי החדשנות ובשכר העידוד.</CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* 3. הפתרון */}
-      <div ref={solutionRef} className="scroll-reveal mt-10 space-y-4">
-        <h2 className="font-display text-2xl font-bold text-primary">3. הפתרון: מודל ה-Hybrid</h2>
-        <p className="text-foreground/90">מודל עבודה ייחודי, המשלב בין חווית משתמש מתקדמת לבין דרישות הדיווח הפורמליות:</p>
-        <div className="space-y-3">
-          {[
-            { title: "אפליקציות חקר ייעודיות", desc: "בניית ״מיקרו-אפליקציות״ סביב משימות החלוץ של משרד החינוך (פונקציות, סטטיסטיקה וגיאומטריה), המנגישות את החומר לתלמיד בצורה אינטראקטיבית ומושכת." },
-            { title: "הטמעה מלאה ב-LMS", desc: "האפליקציות מוטמעות ישירות בתוך ״סביבת הלמידה״ של המשרד/מודל." },
-            { title: "דיווח אוטומטי", desc: "המודל כולל רכיב ״מטלת הגשה״ מובנה, המייצר לבית הספר דאטה מיידי על ביצועי התלמידים ומבטיח עמידה במדדי הדיגום של המשרד." },
-          ].map((item) => (
-            <div key={item.title} className="rounded-lg border bg-accent/50 p-4">
-              <h3 className="font-display font-bold text-primary">{item.title}</h3>
-              <p className="mt-1 text-sm text-foreground/80">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 4. יתרונות */}
-      <div ref={benefitsRef} className="scroll-reveal mt-10">
-        <h2 className="font-display text-2xl font-bold text-primary">4. יתרונות למנהלי החטיבה</h2>
-        <div className="mt-4 space-y-3">
-          {[
-            { icon: "✓", text: "עמידה ביעדי המחוז: הבטחת דיווח ביצוע של 100% ממשימות האוריינות הנדרשות בתוכנית החומש." },
-            { icon: "✓", text: "שיפור הישגים ב-PISA/TIMSS: תרגול שוטף של שאלות חקר בפורמט דיגיטלי המדמה את המבחנים הבינלאומיים." },
-            { icon: "✓", text: "תגמול ומשאבים: ביסוס הסטטוס כ״בית ספר מקדם STEM״ המזכה בשעות תוספתיות, תקציבי מעטפת והכרה מחוזית." },
-            { icon: "✓", text: "פתרון למורים: הכל מוכן — חוסך זמן יקר ומוריד את החסם הטכנולוגי." },
-          ].map((item, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <span className="mt-0.5 text-lg font-bold text-gold">{item.icon}</span>
-              <p className="text-foreground/90">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 5. הצעה לשיתוף פעולה */}
-      <div ref={coopRef} className="scroll-reveal mt-10 space-y-4">
-        <h2 className="font-display text-2xl font-bold text-primary">5. הצעה לשיתוף פעולה</h2>
-        <p className="text-foreground/90">אני מציעה מודל של ״קהילת למידה משותפת״:</p>
-        <div className="space-y-2">
-          {[
-            "הטמעת האפליקציות והמשאבים הדיגיטליים שבניתי בתוך סביבות הלמידה של חטיבתכם.",
-            "ליווי הצוות המקצועי בשימוש מדויק יותר לרמות הלימוד בתוכן (5/4 יחידות).",
-            "יצירת ״סיפור הצלחה״ משותף שיוצע בכנס החדשנות של משרד החינוך.",
-          ].map((item, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gold" />
-              <p className="text-foreground/90">{item}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 rounded-lg bg-gold/10 p-5 text-center">
-          <p className="font-display font-semibold text-primary">
-            יזמית פדגוגית שמציעה למנהלים פתרון לכאב הראש הכי גדול שלהם: איך לעמוד בדרישות ה-STEM של המשרד בלי לשבור את המערכת.
+      <div className="mt-10 grid gap-10 lg:grid-cols-5">
+        <div ref={contentRef} className="scroll-reveal lg:col-span-3 space-y-5 text-lg leading-relaxed text-foreground/90">
+          <p>
+            שמי <strong className="text-primary">מיכל זיו</strong>, מורה למתמטיקה בחטיבת הביניים עם <strong>14 שנות ניסיון</strong> בהוראה במסגרת משרד החינוך.
           </p>
+          <p>
+            אני מאמינה שמתמטיקה היא הרבה יותר מנוסחאות ותרגילים — היא דרך חשיבה, כלי להבנת העולם. מתוך אמונה זו פיתחתי את הגישה שאני מכנה <strong className="text-primary">״מתמטיקה מחוץ לסוגריים״</strong>: למידה שמתחילה מהשאלות האמיתיות של התלמידים, ומגיעה לתובנות מתמטיות עמוקות דרך חקר, ניסוי וטעייה.
+          </p>
+          <p>
+            בשנים האחרונות אני מובילת פיתוח פדגוגי דיגיטלי במתמטיקה — בונה <strong>כלי AI ומיקרו-אפליקציות אינטראקטיביות</strong> לתלמידי חטיבת הביניים. העבודה שלי שזורה ברפורמת <strong>״ישראל ריאלית 2026״</strong>, הכוללת גם את תחום אי הוודאות — תחום חדש שנוסף לתוכנית הלימודים במתמטיקה, ומציב בפני המורים והתלמידים אתגרים ואפשרויות חדשות.
+          </p>
+          <p className="rounded-lg bg-gold/10 p-4 font-medium text-primary">
+            💡 החזון שלי: תלמיד שיוצא מהכיתה עם כלים לחשוב, לחקור ולפתור בעיות בעצמו — בדיוק מה שישראל ריאלית 2026 מבקשת.
+          </p>
+          <div className="mt-6 overflow-hidden rounded-xl border-2 border-gold/20 shadow-lg">
+            <img src={artisticImage} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="h-auto w-full object-cover" />
+          </div>
         </div>
-
-        <div className="mt-8 text-center">
-          <Button asChild size="lg">
-            <Link to="/contact">צרו קשר לשיתוף פעולה</Link>
-          </Button>
+        <div ref={expertiseRef} className="scroll-reveal lg:col-span-2">
+          <div className="rounded-xl border bg-accent/50 p-6 space-y-4">
+            <h3 className="font-display text-lg font-bold text-primary">תחומי מומחיות</h3>
+            {[
+              "הוראת מתמטיקה בחטיבת הביניים",
+              "פיתוח פדגוגי דיגיטלי",
+              "כלי AI ל-STEM",
+              "הטמעת טכנולוגיה בכיתה",
+              "הכשרת מורים",
+            ].map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-gold" />
+                <span className="text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
