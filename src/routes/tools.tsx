@@ -36,26 +36,14 @@ type ToolItem = {
 const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   {
     title: "אפליקציות אינטראקטיביות",
-    subtitle: "מיקרו-אפליקציות לחקירה עצמאית",
+    subtitle: "אפליקציות שפיתחתי להוראת מתמטיקה",
     items: [
       {
-        title: "פונקציות",
-        description: "כלים לחקירת פונקציות לינאריות, ריבועיות ומעריכיות — שינוי פרמטרים בזמן אמת.",
+        title: "חקירת פונקציות",
+        description: "אפליקציה אינטראקטיבית לחקירת פונקציות לינאריות, ריבועיות ומעריכיות — שינוי פרמטרים בזמן אמת.",
         icon: "📈",
         url: "https://math-versatile-path-pro.base44.app",
         image: imgFunctions,
-      },
-      {
-        title: "סטטיסטיקה ואי וודאות",
-        description: "סימולציות אינטראקטיביות להסתברות, ממוצעים, חציון וסטיית תקן.",
-        icon: "📊",
-        image: imgStatistics,
-      },
-      {
-        title: "גיאומטריה",
-        description: "חקירת צורות, זוויות, שטחים והיקפים בסביבת עבודה ויזואלית.",
-        icon: "📐",
-        image: imgGeometry,
       },
     ],
   },
