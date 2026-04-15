@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+
 import { Button } from "@/components/ui/button";
 import cardExperience from "@/assets/card-experience.jpg";
 import cardVision from "@/assets/card-vision.png";
