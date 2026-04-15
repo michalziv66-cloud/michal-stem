@@ -6,10 +6,9 @@ import logo from "@/assets/logo.svg";
 const navItems = [
   { to: "/", label: "בית" },
   { to: "/about", label: "אודות" },
-  { to: "/tools", label: "כלים אינטראקטיביים" },
+  { to: "/tools", label: "כלי עבודה" },
   { to: "/principals", label: "למנהלים" },
   { to: "/materials", label: "חומרי לימוד" },
-  { to: "/presentations", label: "מצגות" },
   { to: "/blog", label: "בלוג" },
   { to: "/social-generator", label: "מחולל פוסטים" },
   { to: "/contact", label: "צור קשר" },
