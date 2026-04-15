@@ -34,41 +34,51 @@ const postTypeLabels: Record<PostType, string> = {
   free: "פוסט חופשי",
 };
 
-function generatePosts(type: PostType, title: string, body: string, audience: string) {
+const defaultHashtags: Record<PostType, string[]> = {
+  tool: ["#מתמטיקה", "#חינוך", "#STEM", "#טכנולוגיהבחינוך", "#הוראהחדשנית", "#כליםדיגיטליים"],
+  tip: ["#מתמטיקה", "#חינוך", "#טיפיםלמורים", "#STEM", "#פדגוגיה", "#פיתוחמקצועי"],
+  challenge: ["#אתגרמתמטי", "#חשיבה", "#מתמטיקה", "#STEM", "#חידה", "#למידהמהנה"],
+  promotion: ["#מתמטיקה", "#חינוך", "#פיתוחמקצועי", "#STEM", "#הרצאות", "#סדנאות"],
+  free: ["#מתמטיקה", "#חינוך", "#STEM"],
+};
+
+function generatePosts(type: PostType, title: string, body: string, audience: string, hashtags: string[] = []) {
   const signature = `\n\n📐 מיכל זיו — מתמטיקה מחוץ לסוגריים\n📧 michalziv66@gmail.com | 📱 0509017802`;
 
   let facebook = "";
   let instagram = "";
   let whatsapp = "";
 
+  const hashtagStr = hashtags.join(" ");
+
   switch (type) {
     case "tool":
       facebook = `🚀 שמעתם על "${title}"? 🎉\n\n${body}\n\n✨ הכלי מיועד ל${audience} ומאפשר חוויית למידה אינטראקטיבית.\n\n🔗 הכלי זמין בחינם באתר שלי — קישור בתגובה הראשונה!\n\n💡 נסו, שתפו, ותגידו לי מה דעתכם! 👇${signature}`;
-      instagram = `📐 ${title} — כלי חדש ל${audience}!\n\n${body}\n\n🔗 לינק באתר — בביו!\n\n#מתמטיקה #חינוך #STEM #טכנולוגיהבחינוך #הוראהחדשנית`;
+      instagram = `📐 ${title} — כלי חדש ל${audience}!\n\n${body}\n\n🔗 לינק באתר — בביו!\n\n${hashtagStr}`;
       whatsapp = `היי 👋\nרציתי לשתף אתכם עם "${title}" — ${body}\nמתאים ל${audience}. שווה לנסות! 📐✨`;
       break;
 
     case "tip":
       facebook = `💡 טיפ מקצועי: ${title}\n\n${body}\n\n👥 רלוונטי במיוחד ל${audience}\n\nמה דעתכם? יש לכם טיפים נוספים? 👇${signature}`;
-      instagram = `💡 ${title}\n\n${body}\n\n👥 ל${audience}\n\n#מתמטיקה #חינוך #טיפיםלמורים #STEM #פדגוגיה`;
+      instagram = `💡 ${title}\n\n${body}\n\n👥 ל${audience}\n\n${hashtagStr}`;
       whatsapp = `💡 טיפ: ${title}\n\n${body}\n\nרלוונטי ל${audience}. מה דעתכם?`;
       break;
 
     case "challenge":
       facebook = `🧩 אתגר! ${title}\n\n${body}\n\n🎯 מתאים ל${audience}\n\nכתבו את התשובה בתגובות! 👇${signature}`;
-      instagram = `🧩 ${title}\n\n${body}\n\n💬 כתבו תשובה בתגובות!\n\n#אתגרמתמטי #חשיבה #מתמטיקה #STEM`;
+      instagram = `🧩 ${title}\n\n${body}\n\n💬 כתבו תשובה בתגובות!\n\n${hashtagStr}`;
       whatsapp = `🧩 אתגר: ${title}\n\n${body}\n\nל${audience} — מה התשובה? 🤔`;
       break;
 
     case "promotion":
       facebook = `👋 ${title}\n\n${body}\n\n🎯 מיועד ל${audience}\n\nמוזמנים לשוחח 👇${signature}`;
-      instagram = `✨ ${title}\n\n${body}\n\n👥 ל${audience}\n\n📩 פרטים בביו!\n\n#מתמטיקה #חינוך #פיתוחמקצועי #STEM`;
+      instagram = `✨ ${title}\n\n${body}\n\n👥 ל${audience}\n\n📩 פרטים בביו!\n\n${hashtagStr}`;
       whatsapp = `היי 👋\n\n${title}\n\n${body}\n\nמיועד ל${audience}.\nאשמח לפרטים נוספים? צרו קשר 📱`;
       break;
 
     case "free":
       facebook = `${title}\n\n${body}\n\n👥 ל${audience}${signature}`;
-      instagram = `${title}\n\n${body}\n\n#מתמטיקה #חינוך #STEM`;
+      instagram = `${title}\n\n${body}\n\n${hashtagStr}`;
       whatsapp = `${title}\n\n${body}`;
       break;
   }
@@ -116,11 +126,33 @@ function SocialGeneratorPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [audience, setAudience] = useState("");
+  const [hashtags, setHashtags] = useState<string[]>(defaultHashtags["promotion"]);
+  const [newHashtag, setNewHashtag] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePostTypeChange = (v: string) => {
+    const type = v as PostType;
+    setPostType(type);
+    setHashtags(defaultHashtags[type]);
+  };
+
+  const addHashtag = () => {
+    const tag = newHashtag.trim();
+    if (!tag) return;
+    const formatted = tag.startsWith("#") ? tag : `#${tag}`;
+    if (!hashtags.includes(formatted)) {
+      setHashtags([...hashtags, formatted]);
+    }
+    setNewHashtag("");
+  };
+
+  const removeHashtag = (index: number) => {
+    setHashtags(hashtags.filter((_, i) => i !== index));
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -141,7 +173,7 @@ function SocialGeneratorPage() {
       return;
     }
     setError(null);
-    setPosts(generatePosts(postType, title, body, audience));
+    setPosts(generatePosts(postType, title, body, audience, hashtags));
   };
 
   const copyToClipboard = (text: string, platform: string) => {
@@ -225,7 +257,7 @@ function SocialGeneratorPage() {
       <div className="page-enter page-enter-delay-2 mx-auto mt-10 max-w-2xl space-y-4">
         <div>
           <label className="mb-1.5 block text-sm font-medium">סוג הפוסט</label>
-          <Select value={postType} onValueChange={(v) => setPostType(v as PostType)}>
+          <Select value={postType} onValueChange={handlePostTypeChange}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -278,6 +310,38 @@ function SocialGeneratorPage() {
               📷 בחרו תמונה
             </Button>
           )}
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">האשטגים (אינסטגרם)</label>
+          <div className="flex flex-wrap gap-2 rounded-lg border border-border bg-muted/50 p-3">
+            {hashtags.map((tag, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm text-primary"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => removeHashtag(i)}
+                  className="mr-1 text-primary/60 hover:text-destructive"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="mt-2 flex gap-2">
+            <Input
+              value={newHashtag}
+              onChange={(e) => setNewHashtag(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addHashtag())}
+              placeholder="הוסיפו האשטג..."
+              className="flex-1"
+            />
+            <Button variant="outline" size="sm" onClick={addHashtag}>
+              + הוסף
+            </Button>
+          </div>
         </div>
         {error && (
           <p className="text-sm font-medium text-destructive">{error}</p>
