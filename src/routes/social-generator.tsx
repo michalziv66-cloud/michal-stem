@@ -141,6 +141,37 @@ function SocialGeneratorPage() {
           <label className="mb-1.5 block text-sm font-medium">קהל יעד</label>
           <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="לדוגמה: מנהלי חטיבות ביניים" />
         </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">תמונה לפוסט (אופציונלי)</label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          {image ? (
+            <div className="relative mt-2 overflow-hidden rounded-lg border border-border">
+              <img src={image} alt="תצוגה מקדימה" className="max-h-64 w-full object-cover" />
+              <Button
+                variant="destructive"
+                size="sm"
+                className="absolute top-2 left-2"
+                onClick={removeImage}
+              >
+                ✕ הסר
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              className="w-full border-dashed"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              📷 בחרו תמונה
+            </Button>
+          )}
+        </div>
         <Button onClick={handleGenerate} size="lg" className="w-full">
           ✨ צור פוסטים
         </Button>
