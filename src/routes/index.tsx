@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, BrainCircuit, Lightbulb } from "lucide-react";
+import { BrainCircuit, Lightbulb } from "lucide-react";
+import cardExperience from "@/assets/card-experience.jpg";
 import profileImage from "@/assets/michal-profile.png";
 import logo from "@/assets/logo-white.svg";
 
@@ -48,16 +49,24 @@ function HomePage() {
       <section className="section-container">
         <div className="grid gap-8 sm:grid-cols-3">
           {[
-            { num: "14+", label: "שנות ניסיון בהוראה", Icon: GraduationCap, bg: "bg-primary/10", color: "text-primary" },
+            { num: "14+", label: "שנות ניסיון בהוראה", image: cardExperience },
             { num: "AI", label: "כלים חכמים ל-STEM", Icon: BrainCircuit, bg: "bg-gold/10", color: "text-gold-foreground" },
             { num: "∞", label: "חזון: לומדים עצמאיים", Icon: Lightbulb, bg: "bg-accent", color: "text-primary" },
           ].map((item) => (
-            <div key={item.label} className="card-hover rounded-xl border bg-card p-6 text-center">
-              <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full ${item.bg}`}>
-                <item.Icon className={`h-7 w-7 ${item.color}`} strokeWidth={1.8} />
+            <div key={item.label} className="card-hover overflow-hidden rounded-xl border bg-card text-center">
+              {"image" in item && item.image ? (
+                <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
+                  <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
+                </div>
+              ) : (
+                <div className={`mx-auto mt-6 flex h-14 w-14 items-center justify-center rounded-full ${"bg" in item ? item.bg : ""}`}>
+                  {"Icon" in item && item.Icon && <item.Icon className={`h-7 w-7 ${"color" in item ? item.color : ""}`} strokeWidth={1.8} />}
+                </div>
+              )}
+              <div className="p-4 pt-3">
+                <div className="font-display text-2xl font-bold text-primary">{item.num}</div>
+                <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
               </div>
-              <div className="mt-4 font-display text-2xl font-bold text-primary">{item.num}</div>
-              <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
             </div>
           ))}
         </div>
