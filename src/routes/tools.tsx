@@ -1,170 +1,195 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
-      { title: "כלים אינטראקטיביים — מיכל זיו" },
-      { name: "description", content: "כלים אינטראקטיביים מבוססי AI לפונקציות, סטטיסטיקה וגיאומטריה" },
-      { property: "og:title", content: "כלים אינטראקטיביים — מיכל זיו" },
-      { property: "og:description", content: "כלים אינטראקטיביים מבוססי AI לפונקציות, סטטיסטיקה וגיאומטריה" },
+      { title: "כלי עבודה — מיכל זיו" },
+      { name: "description", content: "כלי עבודה דיגיטליים להוראת מתמטיקה: מצגות, דפי עבודה, סרטונים ואפליקציות אינטראקטיביות" },
+      { property: "og:title", content: "כלי עבודה — מיכל זיו" },
+      { property: "og:description", content: "כלי עבודה דיגיטליים להוראת מתמטיקה" },
     ],
   }),
   component: ToolsPage,
 });
 
-const toolCategories = [
+type ToolItem = {
+  title: string;
+  description: string;
+  icon: string;
+  url?: string;
+  isVideo?: boolean;
+};
+
+const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   {
-    title: "פונקציות",
-    description: "כלים אינטראקטיביים לחקירת פונקציות לינאריות, ריבועיות ומעריכיות. התלמידים יכולים לשנות פרמטרים ולראות את ההשפעה בזמן אמת.",
-    icon: "📈",
-    color: "bg-primary/10 text-primary",
-    url: "https://math-versatile-path-pro.base44.app",
+    title: "אפליקציות אינטראקטיביות",
+    subtitle: "מיקרו-אפליקציות לחקירה עצמאית",
+    items: [
+      {
+        title: "פונקציות",
+        description: "כלים לחקירת פונקציות לינאריות, ריבועיות ומעריכיות — שינוי פרמטרים בזמן אמת.",
+        icon: "📈",
+        url: "https://math-versatile-path-pro.base44.app",
+      },
+      {
+        title: "סטטיסטיקה ואי וודאות",
+        description: "סימולציות אינטראקטיביות להסתברות, ממוצעים, חציון וסטיית תקן.",
+        icon: "📊",
+      },
+      {
+        title: "גיאומטריה",
+        description: "חקירת צורות, זוויות, שטחים והיקפים בסביבת עבודה ויזואלית.",
+        icon: "📐",
+      },
+    ],
   },
   {
-    title: "סטטיסטיקה ואי וודאות",
-    description: "כלים להבנת הסתברות, ממוצעים, חציון וסטיית תקן. סימולציות אינטראקטיביות שהופכות נתונים מופשטים למוחשיים.",
-    icon: "📊",
-    color: "bg-gold/10 text-gold-foreground",
+    title: "דפי עבודה אינטראקטיביים",
+    subtitle: "כלים מבוססי HTML לתרגול ולמידה",
+    items: [
+      {
+        title: "חשבון מים",
+        description: "חישוב תעריפים, בניית מערכת משוואות ופתרונה. כולל שלבים מודרכים ושאלת בונוס.",
+        icon: "💧",
+        url: "/tools/water-bill.html",
+      },
+      {
+        title: "משוואות הקסם",
+        description: "דף עבודה אינטראקטיבי בנושא משוואות – שלבים מודרכים עם MathJax ואנימציות.",
+        icon: "✨",
+        url: "/tools/mishvaot_kesem_2.html",
+      },
+      {
+        title: "מתמטיקה מחוץ לסוגריים",
+        description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום.",
+        icon: "🎬",
+        url: "/tools/reel3.html",
+      },
+    ],
   },
   {
-    title: "גיאומטריה",
-    description: "כלים לחקירת צורות, זוויות, שטחים והיקפים. סביבת עבודה ויזואלית שמאפשרת בנייה, מדידה והוכחה.",
-    icon: "📐",
-    color: "bg-accent text-accent-foreground",
+    title: "מצגות",
+    subtitle: "מצגות שיעור אינטראקטיביות ב-Canva",
+    items: [
+      {
+        title: "מצגת 1",
+        description: "מצגת שיעור אינטראקטיבית",
+        icon: "📽️",
+        url: "https://www.canva.com/design/DAHDRpLL3yI/OA2WICgnu4Y31LrTX8ZX2g/view",
+      },
+      {
+        title: "מצגת 2",
+        description: "מצגת שיעור אינטראקטיבית",
+        icon: "📽️",
+        url: "https://www.canva.com/design/DAHDGouuLPY/kUimQHqFzR6aAUjGiz9E6w/view",
+      },
+      {
+        title: "מצגת 3",
+        description: "מצגת שיעור אינטראקטיבית",
+        icon: "📽️",
+        url: "https://www.canva.com/design/DAHD0eKpqVY/piio0DQXICikQqljLoQYPQ/view",
+      },
+      {
+        title: "מצגת 4",
+        description: "מצגת שיעור אינטראקטיבית",
+        icon: "📽️",
+        url: "https://www.canva.com/design/DAHCzkKxydg/I5tkXslDkg8RTA-m4ap_Lg/view",
+      },
+    ],
+  },
+  {
+    title: "סרטוני NotebookLM",
+    subtitle: "תכנים שנוצרו באמצעות NotebookLM של Google",
+    items: [
+      {
+        title: "לפצח את קוד הממ״ד",
+        description: "הסבר מרתק על מתמטיקה.",
+        icon: "🎧",
+        url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
+        isVideo: true,
+      },
+      {
+        title: "פתרון מערכת משוואות – שיטת הנגדת המקדמים",
+        description: "הסבר על פתרון מערכת משוואות בשיטת הנגדת המקדמים.",
+        icon: "🎧",
+        url: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1.mp4",
+        isVideo: true,
+      },
+      {
+        title: "איך לפצח את קוד הישר",
+        description: "הסבר על משוואת הישר.",
+        icon: "🎧",
+        url: "/notebook-lm/איך_לפצח_את_קוד_הישר.mp4",
+        isVideo: true,
+      },
+      {
+        title: "השביל הסודי – משפט פיתגורס",
+        description: "הסבר על משפט פיתגורס.",
+        icon: "🎧",
+        url: "/notebook-lm/השביל_הסודי_משפט_פיתגורס_1.mp4",
+        isVideo: true,
+      },
+    ],
   },
 ];
 
-const standaloneTools = [
-  {
-    title: "חשבון מים – דף עבודה אינטראקטיבי",
-    description: "דף עבודה אינטראקטיבי בנושא חשבון מים: חישוב תעריפים, בניית מערכת משוואות ופתרונה. כולל שלבים מודרכים ושאלת בונוס.",
-    icon: "💧",
-    color: "bg-primary/10 text-primary",
-    url: "/tools/water-bill.html",
-  },
-  {
-    title: "משוואות הקסם",
-    description: "דף עבודה אינטראקטיבי בנושא משוואות – שלבים מודרכים עם MathJax ואנימציות.",
-    icon: "✨",
-    color: "bg-gold/10 text-gold-foreground",
-    url: "/tools/mishvaot_kesem_2.html",
-  },
-  {
-    title: "מתמטיקה מחוץ לסוגריים",
-    description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום – חוויה ויזואלית מרתקת.",
-    icon: "🎬",
-    color: "bg-accent text-accent-foreground",
-    url: "/tools/reel3.html",
-  },
-];
 
-const notebookLmItems = [
-  {
-    title: "לפצח את קוד הממ״ד",
-    description: "סרטון שנוצר באמצעות NotebookLM – הסבר מרתק על מתמטיקה.",
-    icon: "🎧",
-    color: "bg-accent text-accent-foreground",
-    url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
-  },
-  {
-    title: "פתרון מערכת משוואות – שיטת הנגדת המקדמים",
-    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על פתרון מערכת משוואות בשיטת הנגדת המקדמים.",
-    icon: "🎧",
-    color: "bg-primary/10 text-primary",
-    url: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1.mp4",
-  },
-  {
-    title: "איך לפצח את קוד הישר",
-    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על משוואת הישר.",
-    icon: "🎧",
-    color: "bg-gold/10 text-gold-foreground",
-    url: "/notebook-lm/איך_לפצח_את_קוד_הישר.mp4",
-  },
-  {
-    title: "השביל הסודי – משפט פיתגורס",
-    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על משפט פיתגורס.",
-    icon: "🎧",
-    color: "bg-accent text-accent-foreground",
-    url: "/notebook-lm/השביל_הסודי_משפט_פיתגורס_1.mp4",
-  },
-];
 
-function ToolCard({ title, description, icon, color, url }: { title: string; description: string; icon: string; color: string; url?: string }) {
-  const content = (
-    <Card className="card-hover overflow-hidden h-full">
+function ToolCard({ item }: { item: ToolItem }) {
+  if (item.isVideo) {
+    return (
+      <Card className="card-hover overflow-hidden">
+        <CardHeader>
+          <div className="mb-2 text-2xl">{item.icon}</div>
+          <CardTitle className="font-display text-lg">{item.title}</CardTitle>
+          <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <video src={item.url} controls className="w-full rounded-lg" preload="metadata" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const card = (
+    <Card className="card-hover h-full">
       <CardHeader>
-        <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${color}`}>
-          {icon}
-        </div>
-        <CardTitle className="font-display text-xl">{title}</CardTitle>
-        <CardDescription className="text-sm leading-relaxed">{description}</CardDescription>
+        <div className="mb-2 text-2xl">{item.icon}</div>
+        <CardTitle className="font-display text-lg">{item.title}</CardTitle>
+        <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
       </CardHeader>
     </Card>
   );
 
-  if (url) {
+  if (item.url) {
     return (
-      <a href={url} target="_blank" rel="noopener noreferrer" className="block">
-        {content}
+      <a href={item.url} target="_blank" rel="noopener noreferrer" className="block">
+        {card}
       </a>
     );
   }
 
-  return content;
+  return card;
 }
 
 function ToolsPage() {
   return (
     <div className="section-container">
-      <h1 className="section-title">כלים אינטראקטיביים</h1>
-      <p className="mt-3 text-lg text-muted-foreground">מיקרו-אפליקציות מבוססות AI לחקירה עצמאית בתחומי המתמטיקה</p>
+      <h1 className="section-title">כלי עבודה</h1>
+      <p className="mt-3 text-lg text-muted-foreground">כלים דיגיטליים להוראת מתמטיקה — הכל במקום אחד</p>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-3">
-        {toolCategories.map((cat) => (
-          <ToolCard key={cat.title} {...cat} />
-        ))}
-      </div>
-
-      {standaloneTools.length > 0 && (
-        <>
-          <h2 className="mt-14 text-2xl font-display font-bold">דפי עבודה אינטראקטיביים</h2>
-          <p className="mt-2 text-muted-foreground">כלים עצמאיים מבוססי HTML לתרגול ולמידה</p>
-          <div className="mt-8 grid gap-8 md:grid-cols-3">
-            {standaloneTools.map((tool) => (
-              <ToolCard key={tool.title} {...tool} />
+      {sections.map((section) => (
+        <section key={section.title} className="mt-12 first:mt-8">
+          <h2 className="text-2xl font-display font-bold">{section.title}</h2>
+          <p className="mt-1 text-muted-foreground">{section.subtitle}</p>
+          <div className={`mt-6 grid gap-6 ${section.items.some((i) => i.isVideo) ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+            {section.items.map((item) => (
+              <ToolCard key={item.title} item={item} />
             ))}
           </div>
-        </>
-      )}
-
-      {notebookLmItems.length > 0 && (
-        <>
-          <h2 className="mt-14 text-2xl font-display font-bold">NotebookLM</h2>
-          <p className="mt-2 text-muted-foreground">תכנים שנוצרו באמצעות NotebookLM של Google</p>
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
-            {notebookLmItems.map((item) => (
-              <Card key={item.title} className="card-hover overflow-hidden">
-                <CardHeader>
-                  <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${item.color}`}>
-                    {item.icon}
-                  </div>
-                  <CardTitle className="font-display text-xl">{item.title}</CardTitle>
-                  <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <video
-                    src={item.url}
-                    controls
-                    className="w-full rounded-lg"
-                    preload="metadata"
-                  />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </>
-      )}
+        </section>
+      ))}
     </div>
   );
 }
