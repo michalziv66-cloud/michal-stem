@@ -51,12 +51,12 @@ function HomePage() {
         <div className="grid gap-8 sm:grid-cols-3">
           {[
             { num: "14+", label: "שנות ניסיון בהוראה", image: cardExperience },
-            { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem },
+            { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false },
             { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
           ].map((item) => (
             <div key={item.label} className="card-hover overflow-hidden rounded-xl border bg-card text-center">
-              <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
-                <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
+              <div className={`mx-auto mt-4 overflow-hidden border-2 border-gold/30 ${item.round !== false ? "h-20 w-20 rounded-full" : "h-20 w-32 rounded-lg"}`}>
+                <img src={item.image} alt={item.label} className={`h-full w-full ${item.round !== false ? "object-cover" : "object-contain"}`} />
               </div>
               <div className="p-4 pt-3">
                 <div className="font-display text-2xl font-bold text-primary">{item.num}</div>
