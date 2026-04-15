@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משוואות הקסם</title>
+<script>MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap');
+:root{--gold:#c8a84b;--gold-light:#f0d98a;--dark:#1a1a2e;--dark2:#16213e;--ink:#2c2c3a;--paper:#faf8f2;--paper2:#f2efe6;--accent:#7b4fa6;--accent-light:#e8d8f8;--line:#d0c9b8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Heebo',sans-serif;background:var(--paper);color:var(--ink);direction:rtl;}
+.page-header{background:var(--dark);color:#fff;position:relative;overflow:hidden;}
+.header-inner{max-width:820px;margin:0 auto;padding:36px 40px 28px;position:relative;z-index:2;}
+.header-stars{position:absolute;inset:0;background:radial-gradient(circle at 15% 40%,rgba(200,168,75,.18) 0%,transparent 50%),radial-gradient(circle at 85% 20%,rgba(123,79,166,.2) 0%,transparent 45%);pointer-events:none;}
+.badge{display:inline-block;background:var(--gold);color:var(--dark);font-size:11px;font-weight:700;letter-spacing:.08em;padding:4px 14px;border-radius:20px;margin-bottom:14px;}
+.header-title{font-size:38px;font-weight:900;letter-spacing:-.5px;line-height:1.15;color:#fff;}
+.header-title span{color:var(--gold-light);}
+.header-subtitle{margin-top:8px;font-size:15px;color:rgba(255,255,255,.65);font-weight:300;}
+.header-meta{display:flex;gap:28px;margin-top:22px;font-size:13px;color:rgba(255,255,255,.5);border-top:1px solid rgba(255,255,255,.1);padding-top:16px;}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block;}
+.content{max-width:820px;margin:0 auto;padding:36px 40px 60px;}
+.intro-box{background:var(--dark2);color:#fff;border-radius:12px;padding:24px 28px;margin-bottom:36px;border-right:4px solid var(--gold);line-height:1.75;font-size:15px;}
+.intro-box strong{color:var(--gold-light);}
+.stage{background:#fff;border-radius:12px;margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;border:1px solid var(--line);}
+.stage-header{display:flex;align-items:center;gap:14px;padding:16px 24px;background:var(--paper2);border-bottom:1px solid var(--line);}
+.stage-number{width:34px;height:34px;border-radius:50%;background:var(--dark);color:var(--gold-light);font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.stage-title{font-size:17px;font-weight:700;color:var(--dark);}
+.stage-tag{margin-right:auto;font-size:11px;font-weight:600;background:var(--accent-light);color:var(--accent);padding:3px 10px;border-radius:10px;}
+.stage-body{padding:22px 26px;line-height:1.8;font-size:15px;}
+.eq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0;}
+.eq-card{background:var(--paper2);border:1.5px solid var(--line);border-radius:8px;padding:14px 16px;text-align:center;}
+.eq-card .eq-label{font-size:11px;font-weight:700;color:#888;letter-spacing:.06em;margin-bottom:8px;}
+.eq-card .eq-math{font-size:14px;line-height:2;}
+.answer-label{font-size:13px;color:#888;margin-bottom:2px;font-weight:600;}
+textarea.answer-area{background:var(--paper2);border:1.5px dashed var(--line);border-radius:8px;min-height:64px;padding:10px 14px;margin:10px 0 16px;font-size:14px;font-family:'Heebo',sans-serif;width:100%;resize:vertical;direction:rtl;color:var(--ink);outline:none;transition:border-color .2s;}
+textarea.answer-area:focus{border-color:var(--gold);background:#fff;}
+.pattern-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+.pattern-table th{background:var(--dark);color:var(--gold-light);padding:10px 14px;font-weight:600;text-align:center;font-size:13px;}
+.pattern-table td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:center;}
+.pattern-table tr:nth-child(even) td{background:var(--paper2);}
+.pattern-table td.blank{background:#fff8e8;border:1.5px dashed var(--gold);}
+input.table-input{width:90%;border:none;border-bottom:1.5px solid var(--gold);background:transparent;font-family:'Heebo',sans-serif;font-size:13px;text-align:center;direction:rtl;padding:4px;outline:none;color:var(--ink);}
+input.table-input:focus{border-color:var(--accent);}
+.formula-box{background:linear-gradient(135deg,var(--dark) 0%,#2a1f4a 100%);color:#fff;border-radius:10px;padding:20px 24px;margin:18px 0;text-align:center;border:1px solid rgba(200,168,75,.3);}
+.formula-box .formula-title{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--gold);margin-bottom:12px;text-transform:uppercase;}
+.formula-box .formula-math{font-size:18px;line-height:2.4;}
+.tip-box{background:#fff8e8;border-right:3px solid var(--gold);border-radius:6px;padding:12px 16px;margin:14px 0;font-size:14px;line-height:1.7;color:#555;}
+.tip-box strong{color:#7a5800;}
+.challenge-box{background:linear-gradient(135deg,#1a1a2e,#2a1030);color:#fff;border-radius:12px;padding:24px 28px;margin-top:10px;border:1.5px solid rgba(200,168,75,.4);position:relative;overflow:hidden;}
+.challenge-box::before{content:'★';position:absolute;left:-10px;top:-10px;font-size:80px;color:rgba(200,168,75,.08);}
+.challenge-title{font-size:18px;font-weight:900;color:var(--gold-light);margin-bottom:12px;}
+.challenge-text{font-size:15px;line-height:1.8;color:rgba(255,255,255,.85);}
+textarea.challenge-textarea{width:100%;min-height:100px;background:rgba(255,255,255,.06);border:1.5px dashed rgba(200,168,75,.3);border-radius:8px;margin-top:16px;padding:12px;font-family:'Heebo',sans-serif;font-size:14px;color:rgba(255,255,255,.8);direction:rtl;resize:vertical;outline:none;}
+textarea.challenge-textarea:focus{border-color:rgba(200,168,75,.7);background:rgba(255,255,255,.1);}
+.section-divider{display:flex;align-items:center;gap:12px;margin:32px 0 20px;color:#aaa;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--line);}
+.name-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 24px;margin-bottom:30px;font-size:14px;}
+.name-field label{display:block;font-size:12px;color:#888;font-weight:600;margin-bottom:6px;}
+input.field-line{border:none;border-bottom:1.5px solid var(--line);width:100%;height:28px;background:transparent;font-family:'Heebo',sans-serif;font-size:14px;direction:rtl;outline:none;color:var(--ink);padding:0 4px;}
+input.field-line:focus{border-color:var(--gold);}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="header-stars"></div>
+  <div class="header-inner">
+    <div class="badge">חקירה מתמטית</div>
+    <div class="header-title">משוואות <span>הקסם</span> ✨</div>
+    <div class="header-subtitle">מערכת משוואות בשני נעלמים – כיתה ח׳ הקבצה א׳ | עבודת חופשת פסח</div>
+    <div class="header-meta">
+      <span><span class="dot"></span> חקירה ותצפית</span>
+      <span><span class="dot"></span> הכללה ותבנית</span>
+      <span><span class="dot"></span> הוכחה אלגברית</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="name-row">
+  <div class="name-field"><label>שם פרטי ושם משפחה</label><input type="text" class="field-line"></div>
+  <div class="name-field"><label>כיתה</label><input type="text" class="field-line"></div>
+  <div class="name-field"><label>תאריך הגשה</label><input type="text" class="field-line"></div>
+</div>
+
+<div class="intro-box">
+  <strong>מה זו משוואת קסם?</strong><br>
+  בפעילות זו תגלו שמשוואות מסוימות מסתירות בתוכן תבנית נסתרת – ותמיד יש להן <strong>אותו פתרון</strong>. תפקידכם: לגלות את הסוד, להכליל אותו ולהוכיח אותו אלגברית.
+</div>
+
+<!-- שלב 1 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-number">1</div>
+    <div class="stage-title">תצפית ראשונה – פתרו ובדקו</div>
+    <div class="stage-tag">גילוי</div>
+  </div>
+  <div class="stage-body">
+    <p>דנה קיבלה שלוש מערכות משוואות ופתרה שתיים מהן. היא קיבלה בשתיהן את הפתרון <strong>\((x,y) = (-1, 2)\)</strong> וטענה שגם השלישית תיתן אותו פתרון.</p>
+    <div class="eq-grid">
+      <div class="eq-card"><div class="eq-label">מערכת (1)</div><div class="eq-math">\(2x+3y=4\)<br>\(4x+5y=6\)</div></div>
+      <div class="eq-card"><div class="eq-label">מערכת (2)</div><div class="eq-math">\(3x+4y=5\)<br>\(6x+7y=8\)</div></div>
+      <div class="eq-card"><div class="eq-label">מערכת (3)</div><div class="eq-math">\(10x+11y=12\)<br>\(13x+14y=15\)</div></div>
+    </div>
+    <div class="tip-box"><strong>הנחיה:</strong> פתרו את כל שלוש המערכות. האם דנה צדקה?</div>
+    <div class="answer-label">פתרון מערכת (1):</div>
+    <textarea class="answer-area" style="min-height:80px"></textarea>
+    <div class="answer-label">פתרון מערכת (2):</div>
+    <textarea class="answer-area" style="min-height:80px"></textarea>
+    <div class="answer-label">פתרון מערכת (3) – האם דנה צדקה? הסבירו:</div>
+    <textarea class="answer-area" style="min-height:80px"></textarea>
+  </div>
+</div>
+
+<!-- שלב 2 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-number">2</div>
+    <div class="stage-title">זיהוי התבנית – גילוי ה-b</div>
+    <div class="stage-tag">הכללה</div>
+  </div>
+  <div class="stage-body">
+    <p>מלאו את הטבלה וחפשו את ההפרשים:</p>
+    <table class="pattern-table">
+      <thead>
+        <tr>
+          <th>משוואה</th>
+          <th>מקדם \(x\) = \(a\)</th>
+          <th>מקדם \(y\)</th>
+          <th>הפרש: מקדם \(y\) פחות \(a\)</th>
+          <th>אגף ימין</th>
+          <th>הפרש: ימין פחות \(a\)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>\(2x+3y=4\)</td><td>2</td><td>3</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td><td>4</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td></tr>
+        <tr><td>\(4x+5y=6\)</td><td>4</td><td>5</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td><td>6</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td></tr>
+        <tr><td>\(3x+4y=5\)</td><td>3</td><td>4</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td><td>5</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td></tr>
+        <tr><td>\(6x+7y=8\)</td><td>6</td><td>7</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td><td>8</td><td class="blank"><input type="text" class="table-input" placeholder="___"></td></tr>
+      </tbody>
+    </table>
+    <div class="tip-box">
+      <strong>שאלות להנחיה:</strong><br>
+      • מה קיבלתם בעמודת "הפרש מקדם y"? האם הוא קבוע?<br>
+      • מה קיבלתם בעמודת "הפרש אגף ימין"? האם הוא קבוע?<br>
+      • מה הקשר בין שני ההפרשים? נסמן את ההפרש של מקדם \(y\) ב-<strong>\(b\)</strong>.
+    </div>
+    <div class="answer-label">תארו במילים את התבנית שגיליתם (מה תפקיד \(b\)?):</div>
+    <textarea class="answer-area"></textarea>
+    <div class="answer-label">המציאו 3 משוואות קסם עם \(b\) שונה (למשל \(b=2\) או \(b=3\)):</div>
+    <textarea class="answer-area" style="min-height:90px"></textarea>
+  </div>
+</div>
+
+<!-- שלב 3 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-number">3</div>
+    <div class="stage-title">כתיבת תבנית כללית</div>
+    <div class="stage-tag">אלגברה</div>
+  </div>
+  <div class="stage-body">
+    <div class="tip-box">
+      <strong>הנחיה:</strong> בשלב 2 מצאתם שני הפרשים קבועים:<br>
+      • מקדם \(y\) = \(a+b\)<br>
+      • אגף ימין = \(a+2b\)<br>
+      לדוגמה: \(2x+3y=4\) ← \(a=2,\ b=1\): מקדם \(y\) = \(2+1=3\) ✓, אגף ימין = \(2+2\cdot1=4\) ✓
+    </div>
+    <div class="formula-box">
+      <div class="formula-title">תבנית כללית של משוואת קסם</div>
+      <div class="formula-math">\( {\color{#f0d98a}a} \cdot x + ({\color{#f0d98a}a}+{\color{#b8f0a0}b}) \cdot y = {\color{#f0d98a}a}+2{\color{#b8f0a0}b} \)</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:12px;">
+        <span style="color:#f0d98a;font-weight:700;">a</span> = מקדם \(x\) &nbsp;|&nbsp;
+        <span style="color:#b8f0a0;font-weight:700;">b</span> = ההפרש הקבוע בין המקדמים
+      </div>
+    </div>
+    <div class="answer-label">בדקו: הציבו \(a=5,\ b=2\) ופתרו. מה הפתרון?</div>
+    <textarea class="answer-area"></textarea>
+  </div>
+</div>
+
+<!-- שלב 4 -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-number">4</div>
+    <div class="stage-title">האם הקסם תמיד עובד?</div>
+    <div class="stage-tag">בדיקה ביקורתית</div>
+  </div>
+  <div class="stage-body">
+    <div class="eq-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="eq-card"><div class="eq-label">מערכת דן ורונה (א)</div><div class="eq-math">\(4x+6y=8\)<br>\(8x+10y=12\)</div></div>
+      <div class="eq-card"><div class="eq-label">מערכת דן ורונה (ב)</div><div class="eq-math">\(3x+5y=7\)<br>\(7x+9y=11\)</div></div>
+    </div>
+    <div class="answer-label">פתרו ורשמו מה קיבלתם בכל מערכת:</div>
+    <textarea class="answer-area" style="min-height:100px"></textarea>
+    <div class="answer-label">מה מיוחד במבנה? האם הן מערכות קסם?</div>
+    <textarea class="answer-area"></textarea>
+    <p style="margin-top:16px">עדי ערבבה שורות משתי המערכות:</p>
+    <div class="eq-grid" style="grid-template-columns:1fr;">
+      <div class="eq-card"><div class="eq-label">מערכת עדי</div><div class="eq-math">\(4x+6y=8\)<br>\(7x+9y=11\)</div></div>
+    </div>
+    <div class="answer-label">פתרו את מערכת עדי. האם "הקסם" עובד? הסבירו:</div>
+    <textarea class="answer-area"></textarea>
+  </div>
+</div>
+
+<div class="section-divider">פן גיאומטרי</div>
+
+<!-- שלב גיאומטרי -->
+<div class="stage">
+  <div class="stage-header">
+    <div class="stage-number" style="background:var(--accent);font-size:18px;">📐</div>
+    <div class="stage-title">המשמעות הגיאומטרית</div>
+    <div class="stage-tag" style="background:#e8d8f8;color:var(--accent)">גרף</div>
+  </div>
+  <div class="stage-body">
+    <p>כל משוואה לינארית מייצגת <strong>ישר</strong> במישור. לחצו "הוסף ישר" מספר פעמים וצפו:</p>
+    <div style="background:var(--paper2);border:1.5px solid var(--line);border-radius:10px;padding:18px 20px;margin:16px 0;">
+      <canvas id="graph" width="520" height="380" style="border:1px solid var(--line);border-radius:8px;background:#fff;max-width:100%;display:block;margin:0 auto;"></canvas>
+      <div style="margin-top:12px;display:flex;gap:10px;justify-content:center;">
+        <button onclick="addLine()" style="background:var(--dark);color:#f0d98a;border:none;padding:9px 22px;border-radius:6px;font-family:Heebo,sans-serif;font-size:14px;cursor:pointer;font-weight:700;">+ הוסף ישר</button>
+        <button onclick="clearLines()" style="background:#eee;color:#555;border:none;padding:9px 22px;border-radius:6px;font-family:Heebo,sans-serif;font-size:13px;cursor:pointer;">נקה</button>
+      </div>
+      <div id="lineInfo" style="text-align:center;font-size:13px;color:#777;margin-top:10px;min-height:20px;"></div>
+    </div>
+    <div class="answer-label">מה אתם מבחינים? מה מיוחד בכל הישרים?</div>
+    <textarea class="answer-area"></textarea>
+    <div class="answer-label">מה המשמעות הגיאומטרית של "פתרון המערכת"?</div>
+    <textarea class="answer-area"></textarea>
+    <div class="answer-label">אם נצייר 100 משוואות קסם שונות – מה יקרה בגרף?</div>
+    <textarea class="answer-area"></textarea>
+  </div>
+</div>
+
+<div class="section-divider">אתגר אלגברי</div>
+
+<div class="challenge-box">
+  <div class="challenge-title">⭐ אתגר – הוכיחו שתמיד \((x,y)=(-1,2)\)</div>
+  <div class="challenge-text">
+    עד עכשיו <em>בדקתם</em> שהפתרון הוא \((-1,2)\). עכשיו הוכיחו זאת אלגברית.<br><br>
+    השתמשו בתבנית הכללית: רשמו שתי משוואות קסם עם אותו \(b\) אך \(a\) שונה, פתרו את המערכת – וראו לאיזה פתרון מגיעים.
+  </div>
+  <textarea class="challenge-textarea" placeholder="הוכחתי כאן..."></textarea>
+</div>
+
+<!-- שלב 5 -->
+<div class="stage" style="margin-top:28px;">
+  <div class="stage-header">
+    <div class="stage-number">5</div>
+    <div class="stage-title">סיכום ורפלקציה</div>
+    <div class="stage-tag">סיכום</div>
+  </div>
+  <div class="stage-body">
+    <div class="answer-label">א. מהי "מערכת משוואות קסם"? הגדירו בעצמכם:</div>
+    <textarea class="answer-area"></textarea>
+    <div class="answer-label">ב. הביאו דוגמה שיצרתם בעצמכם ואמתו שפתרונה \((-1,2)\):</div>
+    <textarea class="answer-area" style="min-height:100px"></textarea>
+    <div class="answer-label">ג. מה גיליתם בחקירה זו שהפתיע אתכם?</div>
+    <textarea class="answer-area"></textarea>
+  </div>
+</div>
+
+</div>
+
+<script>
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+const lines = [];
+const colors = ["#e05c5c","#5c8de0","#5cc47a","#e0a45c","#a45ce0","#5ce0d4","#e05cba","#7ae05c","#e0c85c","#5c7ae0"];
+const presets = [
+  {a:2,b:1},{a:5,b:-1},{a:4,b:2},{a:1,b:3},{a:7,b:-2},{a:3,b:3},{a:6,b:-3},{a:2,b:4},{a:8,b:1},{a:1,b:-1}
+];
+let ci=0, pi=0;
+
+function w2c(x,y){const cx=canvas.width/2,cy=canvas.height/2,s=45;return[cx+x*s,cy-y*s];}
+
+function drawGrid(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const cx=canvas.width/2,cy=canvas.height/2,s=45;
+  ctx.strokeStyle="#eee";ctx.lineWidth=1;
+  for(let i=-10;i<=10;i++){
+    ctx.beginPath();ctx.moveTo(cx+i*s,0);ctx.lineTo(cx+i*s,canvas.height);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,cy+i*s);ctx.lineTo(canvas.width,cy+i*s);ctx.stroke();
+  }
+  ctx.strokeStyle="#999";ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(canvas.width,cy);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,0);ctx.lineTo(cx,canvas.height);ctx.stroke();
+  ctx.fillStyle="#aaa";ctx.font="11px Heebo,sans-serif";ctx.textAlign="center";
+  for(let i=-5;i<=5;i++){
+    if(i===0)continue;
+    ctx.fillText(i,cx+i*s,cy+14);
+    ctx.fillText(i,cx-16,cy-i*s+4);
+  }
+  ctx.fillStyle="#555";
+  ctx.fillText("x",canvas.width-10,cy-6);
+  ctx.font="bold 11px Heebo,sans-serif";
+  ctx.fillText("y",cx+12,10);
+}
+
+function drawLine(a,b,color){
+  const ab=a+b;if(ab===0)return;
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.globalAlpha=0.85;
+  ctx.beginPath();let first=true;
+  const cx=canvas.width/2,cy=canvas.height/2,s=45;
+  for(let px=0;px<=canvas.width;px+=2){
+    const x=(px-cx)/s;
+    const y=(a+2*b-a*x)/ab;
+    const sy=cy-y*s;
+    if(sy<-80||sy>canvas.height+80){first=true;continue;}
+    if(first){ctx.moveTo(px,sy);first=false;}else ctx.lineTo(px,sy);
+  }
+  ctx.stroke();ctx.globalAlpha=1;
+}
+
+function drawPoint(){
+  const [px,py]=w2c(-1,2);
+  ctx.beginPath();ctx.arc(px,py,8,0,Math.PI*2);
+  ctx.fillStyle="#1a1a2e";ctx.fill();
+  ctx.strokeStyle="#f0d98a";ctx.lineWidth=2.5;ctx.stroke();
+  ctx.fillStyle="#1a1a2e";ctx.font="bold 12px Heebo,sans-serif";ctx.textAlign="right";
+  ctx.fillText("(-1, 2)",px-12,py-12);
+}
+
+function redraw(){drawGrid();lines.forEach(l=>drawLine(l.a,l.b,l.color));drawPoint();}
+
+function addLine(){
+  const p=presets[pi%presets.length];pi++;
+  const color=colors[ci%colors.length];ci++;
+  lines.push({a:p.a,b:p.b,color});
+  document.getElementById("lineInfo").textContent=
+    "ישר "+lines.length+": "+p.a+"x+"+(p.a+p.b)+"y="+(p.a+2*p.b)+"   (a="+p.a+", b="+p.b+")";
+  redraw();
+}
+
+function clearLines(){lines.length=0;ci=0;pi=0;document.getElementById("lineInfo").textContent="";redraw();}
+
+redraw();
+</script>
+<div style="text-align:center;margin:40px 0 20px;">
+  <button id="sendBtn" style="background:#1a1a2e;color:#f0d98a;border:2px solid #c8a84b;padding:16px 40px;border-radius:10px;font-family:Heebo,sans-serif;font-size:16px;cursor:pointer;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,0.3);">&#128232; שלח תשובות למורה</button>
+</div>
+
+<div id="myModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:12px;padding:28px;width:90%;max-width:540px;direction:rtl;font-family:Heebo,sans-serif;">
+    <div style="font-weight:700;font-size:16px;color:#1a1a2e;margin-bottom:12px;"><div style="font-size:14px;line-height:2;">
+      <b>שלבי הגשה:</b><br>
+      1️⃣ לחצו <b>"העתק הכל"</b> למטה<br>
+      2️⃣ חזרו ל-Classroom → המטלה<br>
+      3️⃣ לחצו <b>"הוספה או יצירה"</b> ← בחרו 📄 <b>מסמך Google</b><br>
+      4️⃣ במסמך: <b>Ctrl+V</b> (הדבקה)<br>
+      5️⃣ לחצו <b>"הגש"</b> ✅
+    </div></div>
+    <textarea id="summaryBox" style="width:100%;height:260px;font-family:Heebo,sans-serif;font-size:13px;direction:rtl;border:1px solid #ccc;border-radius:8px;padding:10px;resize:none;" readonly></textarea>
+    <div style="display:flex;gap:10px;margin-top:12px;justify-content:center;">
+      <button id="copyBtn" style="background:#1a1a2e;color:#f0d98a;border:none;padding:10px 22px;border-radius:8px;font-family:Heebo,sans-serif;font-size:14px;cursor:pointer;font-weight:700;">העתק הכל</button>
+      <button id="closeBtn" style="background:#eee;color:#555;border:none;padding:10px 22px;border-radius:8px;font-family:Heebo,sans-serif;font-size:14px;cursor:pointer;">סגור</button>
+    </div>
+  </div>
+</div>
+
+</body>
+<script>
+window.onload = function() {
+  var btn = document.getElementById("sendBtn");
+  if (btn) btn.addEventListener("click", function() {
+    var fields = document.querySelectorAll("input.field-line");
+    var name = fields[0] ? fields[0].value : "תלמיד";
+    var kita = fields[1] ? fields[1].value : "";
+    var text = "משוואות הקסם - תשובות\nשם: " + name + "\nכיתה: " + kita + "\n\n";
+    var labels = document.querySelectorAll(".answer-label");
+    var areas = document.querySelectorAll("textarea.answer-area, textarea.challenge-textarea");
+    for (var i = 0; i < labels.length && i < areas.length; i++) {
+      text += labels[i].textContent.trim() + "\n" + (areas[i].value.trim() || "(לא נענה)") + "\n\n";
+    }
+    document.getElementById("summaryBox").value = text;
+    document.getElementById("myModal").style.display = "block";
+  });
+  var copy = document.getElementById("copyBtn");
+  if (copy) copy.addEventListener("click", function() {
+    var b = document.getElementById("summaryBox");
+    b.select(); b.setSelectionRange(0,99999);
+    document.execCommand("copy");
+    alert("הועתק!");
+  });
+  var close = document.getElementById("closeBtn");
+  if (close) close.addEventListener("click", function() {
+    document.getElementById("myModal").style.display = "none";
+  });
+};
+</script>
+</html>

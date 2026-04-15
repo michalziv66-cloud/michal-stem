@@ -44,11 +44,28 @@ const standaloneTools = [
     url: "/tools/water-bill.html",
   },
   {
+    title: "משוואות הקסם",
+    description: "דף עבודה אינטראקטיבי בנושא משוואות – שלבים מודרכים עם MathJax ואנימציות.",
+    icon: "✨",
+    color: "bg-gold/10 text-gold-foreground",
+    url: "/tools/mishvaot_kesem_2.html",
+  },
+  {
     title: "מתמטיקה מחוץ לסוגריים",
     description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום – חוויה ויזואלית מרתקת.",
     icon: "🎬",
     color: "bg-accent text-accent-foreground",
     url: "/tools/reel3.html",
+  },
+];
+
+const notebookLmItems = [
+  {
+    title: "לפצח את קוד הממ״ד",
+    description: "סרטון שנוצר באמצעות NotebookLM – הסבר מרתק על מתמטיקה.",
+    icon: "🎧",
+    color: "bg-accent text-accent-foreground",
+    url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
   },
 ];
 
@@ -106,6 +123,34 @@ function ToolsPage() {
                     title={tool.title}
                     className="h-[500px] w-full rounded-lg border"
                     allow="fullscreen"
+                  />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
+
+      {notebookLmItems.length > 0 && (
+        <>
+          <h2 className="mt-14 text-2xl font-display font-bold">NotebookLM</h2>
+          <p className="mt-2 text-muted-foreground">תכנים שנוצרו באמצעות NotebookLM של Google</p>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            {notebookLmItems.map((item) => (
+              <Card key={item.title} className="card-hover overflow-hidden">
+                <CardHeader>
+                  <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <CardTitle className="font-display text-xl">{item.title}</CardTitle>
+                  <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <video
+                    src={item.url}
+                    controls
+                    className="w-full rounded-lg"
+                    preload="metadata"
                   />
                 </CardContent>
               </Card>
