@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { GraduationCap, BrainCircuit, Lightbulb } from "lucide-react";
 import profileImage from "@/assets/michal-profile.png";
 import logo from "@/assets/logo-white.svg";
 
@@ -47,13 +48,15 @@ function HomePage() {
       <section className="section-container">
         <div className="grid gap-8 sm:grid-cols-3">
           {[
-            { num: "14+", label: "שנות ניסיון בהוראה", icon: "📐" },
-            { num: "AI", label: "כלים חכמים ל-STEM", icon: "🤖" },
-            { num: "∞", label: "חזון: לומדים עצמאיים", icon: "🎯" },
+            { num: "14+", label: "שנות ניסיון בהוראה", Icon: GraduationCap, bg: "bg-primary/10", color: "text-primary" },
+            { num: "AI", label: "כלים חכמים ל-STEM", Icon: BrainCircuit, bg: "bg-gold/10", color: "text-gold-foreground" },
+            { num: "∞", label: "חזון: לומדים עצמאיים", Icon: Lightbulb, bg: "bg-accent", color: "text-primary" },
           ].map((item) => (
             <div key={item.label} className="card-hover rounded-xl border bg-card p-6 text-center">
-              <span className="text-3xl">{item.icon}</span>
-              <div className="mt-3 font-display text-2xl font-bold text-primary">{item.num}</div>
+              <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-full ${item.bg}`}>
+                <item.Icon className={`h-7 w-7 ${item.color}`} strokeWidth={1.8} />
+              </div>
+              <div className="mt-4 font-display text-2xl font-bold text-primary">{item.num}</div>
               <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
             </div>
           ))}
