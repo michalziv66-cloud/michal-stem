@@ -9,6 +9,7 @@ import imgEquations from "@/assets/tools/equations.jpg";
 import imgReel from "@/assets/tools/reel.jpg";
 import imgPresPythagoras from "@/assets/tools/presentation-pythagoras.jpg";
 import imgPresHashvaat from "@/assets/tools/presentation-hashvaat-mekadmim.jpg";
+import imgPresEquationsSystem from "@/assets/tools/presentation-equations-system.jpg";
 import imgPresMeshulash from "@/assets/tools/presentation4.jpg";
 
 export const Route = createFileRoute("/tools")({
@@ -97,11 +98,11 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         image: imgPresPythagoras,
       },
       {
-        title: "שיטת השוואת מקדמים",
-        description: "הנגדת מקדמים — מסלול העמקה, הקבצה א׳",
+        title: "מערכת משוואות — שיטת ההצבה",
+        description: "מערכת משוואות — שיעור 1",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHDGouuLPY/kUimQHqFzR6aAUjGiz9E6w/view",
-        image: imgPresHashvaat,
+        image: imgPresEquationsSystem,
       },
       {
         title: "שיטת השוואת מקדמים — חלק 2",
