@@ -112,8 +112,8 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         image: imgPres3,
       },
       {
-        title: "מצגת 4",
-        description: "מצגת שיעור אינטראקטיבית",
+        title: "מטלה במתמטיקה — משולש ש״ש",
+        description: "שכבה ח׳ הקבצה א — מצגת אינטראקטיבית על משולש שווה-שוקיים",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHCzkKxydg/I5tkXslDkg8RTA-m4ap_Lg/view",
         image: imgPres4,
