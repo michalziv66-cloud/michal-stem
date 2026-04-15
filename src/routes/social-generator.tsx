@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import {
   Select,
   SelectContent,
@@ -76,6 +76,41 @@ function generatePosts(type: PostType, title: string, body: string, audience: st
   return { facebook, instagram, whatsapp };
 }
 
+function wrapTextRTL(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const paragraphs = text.split("\n");
+  const lines: string[] = [];
+  for (const para of paragraphs) {
+    if (para.trim() === "") { lines.push(""); continue; }
+    const words = para.split(" ");
+    let current = "";
+    for (const word of words) {
+      const test = current ? current + " " + word : word;
+      if (ctx.measureText(test).width > maxWidth && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = test;
+      }
+    }
+    if (current) lines.push(current);
+  }
+  return lines;
+}
+
+function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
 function SocialGeneratorPage() {
   const [postType, setPostType] = useState<PostType>("promotion");
   const [title, setTitle] = useState("");
@@ -109,6 +144,70 @@ function SocialGeneratorPage() {
     setCopied(platform);
     setTimeout(() => setCopied(null), 2000);
   };
+
+  const downloadPostImage = useCallback(async (text: string, platform: string) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d")!;
+    const width = 1080;
+    const padding = 60;
+    const textAreaWidth = width - padding * 2;
+
+    // Measure text height first
+    ctx.font = "28px Arial, sans-serif";
+    const lines = wrapTextRTL(ctx, text, textAreaWidth);
+    const lineHeight = 40;
+    const textBlockHeight = lines.length * lineHeight + padding;
+
+    const imageHeight = image ? 500 : 0;
+    const totalHeight = padding + imageHeight + (image ? 30 : 0) + textBlockHeight + padding;
+    canvas.width = width;
+    canvas.height = totalHeight;
+
+    // Background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, totalHeight);
+
+    // Draw image if exists
+    let textStartY = padding;
+    if (image) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      await new Promise<void>((resolve) => {
+        img.onload = () => resolve();
+        img.src = image;
+      });
+      const imgAspect = img.width / img.height;
+      const drawWidth = width - padding * 2;
+      const drawHeight = Math.min(500, drawWidth / imgAspect);
+      const imgX = padding;
+      const imgY = padding;
+      ctx.save();
+      roundRect(ctx, imgX, imgY, drawWidth, drawHeight, 16);
+      ctx.clip();
+      ctx.drawImage(img, imgX, imgY, drawWidth, drawHeight);
+      ctx.restore();
+      textStartY = imgY + drawHeight + 30;
+    }
+
+    // Draw text (RTL)
+    ctx.fillStyle = "#1a1a1a";
+    ctx.font = "28px Arial, sans-serif";
+    ctx.textAlign = "right";
+    ctx.direction = "rtl";
+    lines.forEach((line, i) => {
+      ctx.fillText(line, width - padding, textStartY + 32 + i * lineHeight);
+    });
+
+    // Brand bar
+    ctx.fillStyle = "#2563eb";
+    ctx.fillRect(0, totalHeight - 6, width, 6);
+
+    // Download
+    const link = document.createElement("a");
+    link.download = `post-${platform}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }, [image]);
 
   return (
     <div className="section-container">
@@ -185,17 +284,26 @@ function SocialGeneratorPage() {
             { platform: "WhatsApp", emoji: "💬", content: posts.whatsapp },
           ].map(({ platform, emoji, content }) => (
             <Card key={platform}>
-              <CardHeader className="flex-row items-center justify-between">
+              <CardHeader className="flex-row items-center justify-between gap-2">
                 <CardTitle className="font-display text-lg">
                   {emoji} {platform}
                 </CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => copyToClipboard(content, platform)}
-                >
-                  {copied === platform ? "✓ הועתק!" : "העתק"}
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => downloadPostImage(content, platform)}
+                  >
+                    ⬇ הורד תמונה
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => copyToClipboard(content, platform)}
+                  >
+                    {copied === platform ? "✓ הועתק!" : "העתק"}
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 {image && (
