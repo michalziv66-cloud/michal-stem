@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import profileImage from "@/assets/michal-profile.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,6 +24,9 @@ function HomePage() {
           <div className="absolute bottom-1/4 right-1/4 h-48 w-48 rounded-full bg-primary-foreground blur-3xl" />
         </div>
         <div className="relative mx-auto max-w-4xl px-4 py-24 text-center sm:py-32 lg:py-40">
+          <div className="mx-auto mb-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/40 shadow-xl sm:h-44 sm:w-44">
+            <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
+          </div>
           <p className="mb-4 inline-block rounded-full bg-gold/20 px-4 py-1.5 text-sm font-medium text-gold">
             מובילת פיתוח פדגוגי דיגיטלי
           </p>
