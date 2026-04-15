@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import cardExperience from "@/assets/card-experience.jpg";
-import cardVision from "@/assets/card-vision.png";
+import cardVision from "@/assets/card-about-vr.png";
 import cardStem from "@/assets/card-stem.png";
 import profileImage from "@/assets/michal-profile.png";
 import { BrandLogo } from "@/components/BrandLogo";
