@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/materials")({
   head: () => ({
@@ -24,12 +25,14 @@ const materials = [
 ];
 
 function MaterialsPage() {
+  const gridRef = useScrollReveal();
+
   return (
     <div className="section-container">
-      <h1 className="section-title">חומרי לימוד</h1>
-      <p className="mt-3 text-lg text-muted-foreground">מצגות, דפי עבודה ומדריכים להורדה חופשית</p>
+      <h1 className="page-enter section-title">חומרי לימוד</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">מצגות, דפי עבודה ומדריכים להורדה חופשית</p>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div ref={gridRef} className="scroll-reveal mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {materials.map((mat) => (
           <Card key={mat.title} className="card-hover">
             <CardHeader>

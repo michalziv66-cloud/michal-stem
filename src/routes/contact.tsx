@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -19,14 +20,16 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const formRef = useScrollReveal();
+  const detailsRef = useScrollReveal(200);
 
   return (
     <div className="section-container">
-      <h1 className="section-title">צור קשר</h1>
-      <p className="mt-3 text-lg text-muted-foreground">נשמח לשמוע מכם!</p>
+      <h1 className="page-enter section-title">צור קשר</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">נשמח לשמוע מכם!</p>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div ref={formRef} className="scroll-reveal lg:col-span-3">
           {submitted ? (
             <Card>
               <CardContent className="p-8 text-center">
@@ -62,7 +65,7 @@ function ContactPage() {
           )}
         </div>
 
-        <div className="lg:col-span-2">
+        <div ref={detailsRef} className="scroll-reveal lg:col-span-2">
           <div className="rounded-xl border bg-card p-6 space-y-5">
             <h3 className="font-display text-lg font-bold text-primary">פרטי התקשרות</h3>
             <div className="space-y-4">

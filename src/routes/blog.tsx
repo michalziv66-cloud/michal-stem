@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -37,12 +38,14 @@ const articles = [
 ];
 
 function BlogPage() {
+  const articlesRef = useScrollReveal();
+
   return (
     <div className="section-container">
-      <h1 className="section-title">בלוג</h1>
-      <p className="mt-3 text-lg text-muted-foreground">מחשבות, תובנות וטיפים מהשטח</p>
+      <h1 className="page-enter section-title">בלוג</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">מחשבות, תובנות וטיפים מהשטח</p>
 
-      <div className="mt-10 space-y-6">
+      <div ref={articlesRef} className="scroll-reveal mt-10 space-y-6">
         {articles.map((article) => (
           <Card key={article.title} className="card-hover">
             <CardHeader>

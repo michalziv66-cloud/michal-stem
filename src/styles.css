@@ -182,6 +182,17 @@
     animation: hero-float 10s ease-in-out 2s infinite;
   }
 
+  /* Page enter animation */
+  .page-enter {
+    animation: hero-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .page-enter-delay-1 {
+    animation: hero-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+  }
+  .page-enter-delay-2 {
+    animation: hero-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+  }
+
   .shimmer-border {
     background: linear-gradient(90deg, transparent 30%, oklch(0.85 0.10 85 / 40%) 50%, transparent 70%);
     background-size: 200% 100%;

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/social-generator")({
   head: () => ({
@@ -51,6 +52,7 @@ function SocialGeneratorPage() {
   const [audience, setAudience] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const formRef = useScrollReveal();
 
   const handleGenerate = () => {
     if (!toolName.trim() || !description.trim() || !audience.trim()) return;
@@ -65,10 +67,10 @@ function SocialGeneratorPage() {
 
   return (
     <div className="section-container">
-      <h1 className="section-title">מחולל פוסטים לרשתות חברתיות</h1>
-      <p className="mt-3 text-lg text-muted-foreground">הכניסו פרטים על הכלי וקבלו 3 פוסטים מוכנים לשיתוף</p>
+      <h1 className="page-enter section-title">מחולל פוסטים לרשתות חברתיות</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">הכניסו פרטים על הכלי וקבלו 3 פוסטים מוכנים לשיתוף</p>
 
-      <div className="mx-auto mt-10 max-w-2xl space-y-4">
+      <div ref={formRef} className="scroll-reveal mx-auto mt-10 max-w-2xl space-y-4">
         <div>
           <label className="mb-1.5 block text-sm font-medium">שם הכלי</label>
           <Input value={toolName} onChange={(e) => setToolName(e.target.value)} placeholder="לדוגמה: חוקר הפונקציות" />

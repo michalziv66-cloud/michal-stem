@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import profileImage from "@/assets/michal-profile.png";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -14,16 +15,19 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
+  const contentRef = useScrollReveal();
+  const expertiseRef = useScrollReveal(200);
+
   return (
     <div className="section-container">
-      <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
+      <div className="page-enter flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
         <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg">
           <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
         </div>
         <h1 className="section-title">אודות</h1>
       </div>
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
-        <div className="lg:col-span-3 space-y-5 text-lg leading-relaxed text-foreground/90">
+        <div ref={contentRef} className="scroll-reveal lg:col-span-3 space-y-5 text-lg leading-relaxed text-foreground/90">
           <p>
             שמי <strong className="text-primary">מיכל זיו</strong>, מורה למתמטיקה בחטיבת הביניים עם <strong>14 שנות ניסיון</strong> בהוראה במסגרת משרד החינוך.
           </p>
@@ -37,7 +41,7 @@ function AboutPage() {
             💡 החזון שמניע אותי: תלמיד שיוצא מהכיתה עם היכולת ללמוד בעצמו.
           </p>
         </div>
-        <div className="lg:col-span-2">
+        <div ref={expertiseRef} className="scroll-reveal lg:col-span-2">
           <div className="rounded-xl border bg-accent/50 p-6 space-y-4">
             <h3 className="font-display text-lg font-bold text-primary">תחומי מומחיות</h3>
             {[
