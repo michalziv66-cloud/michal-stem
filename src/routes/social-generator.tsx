@@ -276,6 +276,9 @@ function SocialGeneratorPage() {
             </Button>
           )}
         </div>
+        {error && (
+          <p className="text-sm font-medium text-destructive">{error}</p>
+        )}
         <Button onClick={handleGenerate} size="lg" className="w-full">
           ✨ צור פוסטים
         </Button>
