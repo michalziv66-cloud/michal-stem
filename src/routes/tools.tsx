@@ -90,6 +90,30 @@ const notebookLmItems = [
   },
 ];
 
+function ToolCard({ title, description, icon, color, url }: { title: string; description: string; icon: string; color: string; url?: string }) {
+  const content = (
+    <Card className="card-hover overflow-hidden h-full">
+      <CardHeader>
+        <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${color}`}>
+          {icon}
+        </div>
+        <CardTitle className="font-display text-xl">{title}</CardTitle>
+        <CardDescription className="text-sm leading-relaxed">{description}</CardDescription>
+      </CardHeader>
+    </Card>
+  );
+
+  if (url) {
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+        {content}
+      </a>
+    );
+  }
+
+  return content;
+}
+
 function ToolsPage() {
   return (
     <div className="section-container">
@@ -98,29 +122,7 @@ function ToolsPage() {
 
       <div className="mt-10 grid gap-8 md:grid-cols-3">
         {toolCategories.map((cat) => (
-          <Card key={cat.title} className="card-hover overflow-hidden">
-            <CardHeader>
-              <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${cat.color}`}>
-                {cat.icon}
-              </div>
-              <CardTitle className="font-display text-xl">{cat.title}</CardTitle>
-              <CardDescription className="text-sm leading-relaxed">{cat.description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {"url" in cat && cat.url ? (
-                <iframe
-                  src={cat.url}
-                  title={cat.title}
-                  className="h-[400px] w-full rounded-lg border"
-                  allow="fullscreen"
-                />
-              ) : (
-                <div className="rounded-lg border-2 border-dashed border-border bg-muted/50 p-8 text-center text-sm text-muted-foreground">
-                  כלי אינטראקטיבי ייטען כאן
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <ToolCard key={cat.title} {...cat} />
         ))}
       </div>
 
@@ -128,25 +130,9 @@ function ToolsPage() {
         <>
           <h2 className="mt-14 text-2xl font-display font-bold">דפי עבודה אינטראקטיביים</h2>
           <p className="mt-2 text-muted-foreground">כלים עצמאיים מבוססי HTML לתרגול ולמידה</p>
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
             {standaloneTools.map((tool) => (
-              <Card key={tool.title} className="card-hover overflow-hidden">
-                <CardHeader>
-                  <div className={`mb-3 inline-flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${tool.color}`}>
-                    {tool.icon}
-                  </div>
-                  <CardTitle className="font-display text-xl">{tool.title}</CardTitle>
-                  <CardDescription className="text-sm leading-relaxed">{tool.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <iframe
-                    src={tool.url}
-                    title={tool.title}
-                    className="h-[500px] w-full rounded-lg border"
-                    allow="fullscreen"
-                  />
-                </CardContent>
-              </Card>
+              <ToolCard key={tool.title} {...tool} />
             ))}
           </div>
         </>
