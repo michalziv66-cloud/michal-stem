@@ -36,6 +36,10 @@ export const Route = createRootRoute({
       { name: "author", content: "מיכל זיו" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:title", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
+      { name: "twitter:title", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
+      { property: "og:description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
+      { name: "twitter:description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
     ],
     links: [
       {
