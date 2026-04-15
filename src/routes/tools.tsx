@@ -35,6 +35,16 @@ const toolCategories = [
   },
 ];
 
+const standaloneTools = [
+  {
+    title: "חשבון מים – דף עבודה אינטראקטיבי",
+    description: "דף עבודה אינטראקטיבי בנושא חשבון מים: חישוב תעריפים, בניית מערכת משוואות ופתרונה. כולל שלבים מודרכים ושאלת בונוס.",
+    icon: "💧",
+    color: "bg-primary/10 text-primary",
+    url: "/tools/water-bill.html",
+  },
+];
+
 function ToolsPage() {
   return (
     <div className="section-container">
