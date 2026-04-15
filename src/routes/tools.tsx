@@ -81,6 +81,13 @@ const notebookLmItems = [
     color: "bg-gold/10 text-gold-foreground",
     url: "/notebook-lm/איך_לפצח_את_קוד_הישר.mp4",
   },
+  {
+    title: "השביל הסודי – משפט פיתגורס",
+    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על משפט פיתגורס.",
+    icon: "🎧",
+    color: "bg-accent text-accent-foreground",
+    url: "/notebook-lm/השביל_הסודי_משפט_פיתגורס_1.mp4",
+  },
 ];
 
 function ToolsPage() {
