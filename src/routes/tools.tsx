@@ -67,6 +67,13 @@ const notebookLmItems = [
     color: "bg-accent text-accent-foreground",
     url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
   },
+  {
+    title: "פתרון מערכת משוואות – שיטת הנגדת המקדמים",
+    description: "סרטון שנוצר באמצעות NotebookLM – הסבר על פתרון מערכת משוואות בשיטת הנגדת המקדמים.",
+    icon: "🎧",
+    color: "bg-primary/10 text-primary",
+    url: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1.mp4",
+  },
 ];
 
 function ToolsPage() {
