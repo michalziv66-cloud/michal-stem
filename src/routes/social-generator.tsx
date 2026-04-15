@@ -110,6 +110,70 @@ function SocialGeneratorPage() {
     setTimeout(() => setCopied(null), 2000);
   };
 
+  const downloadPostImage = useCallback(async (text: string, platform: string) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d")!;
+    const width = 1080;
+    const padding = 60;
+    const textAreaWidth = width - padding * 2;
+
+    // Measure text height first
+    ctx.font = "28px Arial, sans-serif";
+    const lines = wrapTextRTL(ctx, text, textAreaWidth);
+    const lineHeight = 40;
+    const textBlockHeight = lines.length * lineHeight + padding;
+
+    const imageHeight = image ? 500 : 0;
+    const totalHeight = padding + imageHeight + (image ? 30 : 0) + textBlockHeight + padding;
+    canvas.width = width;
+    canvas.height = totalHeight;
+
+    // Background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, totalHeight);
+
+    // Draw image if exists
+    let textStartY = padding;
+    if (image) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      await new Promise<void>((resolve) => {
+        img.onload = () => resolve();
+        img.src = image;
+      });
+      const imgAspect = img.width / img.height;
+      const drawWidth = width - padding * 2;
+      const drawHeight = Math.min(500, drawWidth / imgAspect);
+      const imgX = padding;
+      const imgY = padding;
+      ctx.save();
+      roundRect(ctx, imgX, imgY, drawWidth, drawHeight, 16);
+      ctx.clip();
+      ctx.drawImage(img, imgX, imgY, drawWidth, drawHeight);
+      ctx.restore();
+      textStartY = imgY + drawHeight + 30;
+    }
+
+    // Draw text (RTL)
+    ctx.fillStyle = "#1a1a1a";
+    ctx.font = "28px Arial, sans-serif";
+    ctx.textAlign = "right";
+    ctx.direction = "rtl";
+    lines.forEach((line, i) => {
+      ctx.fillText(line, width - padding, textStartY + 32 + i * lineHeight);
+    });
+
+    // Brand bar
+    ctx.fillStyle = "#2563eb";
+    ctx.fillRect(0, totalHeight - 6, width, 6);
+
+    // Download
+    const link = document.createElement("a");
+    link.download = `post-${platform}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }, [image]);
+
   return (
     <div className="section-container">
       <h1 className="page-enter section-title">מחולל פוסטים לרשתות חברתיות</h1>
