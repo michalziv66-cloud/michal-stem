@@ -39,7 +39,7 @@ function HomePage() {
           </div>
           <img src={logo} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="hero-logo mx-auto mb-6 h-28 w-auto sm:h-36 lg:h-44" />
           <p className="hero-subtitle mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
-            מורה למתמטיקה בחטיבת הביניים | מפתחת כלי AI ל-STEM
+            מורה למתמטיקה בחטיבת הביניים | מפתחת כלי <span className="whitespace-nowrap">AI ל-STEM</span>
           </p>
           <div className="hero-buttons mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button asChild variant="hero" size="lg">
