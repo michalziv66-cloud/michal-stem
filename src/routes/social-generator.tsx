@@ -127,6 +127,7 @@ function SocialGeneratorPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [audience, setAudience] = useState("");
+  const [link, setLink] = useState("");
   const [hashtags, setHashtags] = useState<string[]>(defaultHashtags["promotion"]);
   const [newHashtag, setNewHashtag] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
@@ -174,7 +175,7 @@ function SocialGeneratorPage() {
       return;
     }
     setError(null);
-    setPosts(generatePosts(postType, title, body, audience, hashtags));
+    setPosts(generatePosts(postType, title, body, audience, hashtags, link));
   };
 
   const copyToClipboard = (text: string, platform: string) => {
@@ -280,6 +281,10 @@ function SocialGeneratorPage() {
         <div>
           <label className="mb-1.5 block text-sm font-medium">קהל יעד</label>
           <Input value={audience} onChange={(e) => setAudience(e.target.value)} placeholder="לדוגמה: מנהלי חטיבות ביניים" />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">קישור לאתר (אופציונלי)</label>
+          <Input value={link} onChange={(e) => setLink(e.target.value)} placeholder="https://example.com" dir="ltr" />
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium">תמונה לפוסט (אופציונלי)</label>
