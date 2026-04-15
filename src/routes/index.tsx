@@ -55,15 +55,9 @@ function HomePage() {
             { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
           ].map((item) => (
             <div key={item.label} className="card-hover overflow-hidden rounded-xl border bg-card text-center">
-              {"image" in item && item.image ? (
-                <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
-                  <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
-                </div>
-              ) : (
-                <div className={`mx-auto mt-6 flex h-14 w-14 items-center justify-center rounded-full ${"bg" in item ? item.bg : ""}`}>
-                  {"Icon" in item && item.Icon && <item.Icon className={`h-7 w-7 ${"color" in item ? item.color : ""}`} strokeWidth={1.8} />}
-                </div>
-              )}
+              <div className="mx-auto mt-4 h-20 w-20 overflow-hidden rounded-full border-2 border-gold/30">
+                <img src={item.image} alt={item.label} className="h-full w-full object-cover" />
+              </div>
               <div className="p-4 pt-3">
                 <div className="font-display text-2xl font-bold text-primary">{item.num}</div>
                 <p className="mt-1 text-sm text-muted-foreground">{item.label}</p>
