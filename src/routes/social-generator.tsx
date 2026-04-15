@@ -42,7 +42,7 @@ const defaultHashtags: Record<PostType, string[]> = {
   free: ["#מתמטיקה", "#חינוך", "#STEM"],
 };
 
-function generatePosts(type: PostType, title: string, body: string, audience: string) {
+function generatePosts(type: PostType, title: string, body: string, audience: string, hashtags: string[] = []) {
   const signature = `\n\n📐 מיכל זיו — מתמטיקה מחוץ לסוגריים\n📧 michalziv66@gmail.com | 📱 0509017802`;
 
   let facebook = "";
