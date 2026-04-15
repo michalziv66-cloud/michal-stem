@@ -8,9 +8,9 @@ import imgWaterBill from "@/assets/tools/water-bill.jpg";
 import imgEquations from "@/assets/tools/equations.jpg";
 import imgReel from "@/assets/tools/reel.jpg";
 import imgPres1 from "@/assets/tools/presentation1.jpg";
-import imgPres2 from "@/assets/tools/presentation2.jpg";
+import imgPresHashvaat from "@/assets/tools/presentation-hashvaat-mekadmim.jpg";
 import imgPres3 from "@/assets/tools/presentation3.jpg";
-import imgPres4 from "@/assets/tools/presentation4.jpg";
+import imgPresMeshulash from "@/assets/tools/presentation4.jpg";
 
 export const Route = createFileRoute("/tools")({
   head: () => ({
