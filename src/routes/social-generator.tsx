@@ -42,8 +42,9 @@ const defaultHashtags: Record<PostType, string[]> = {
   free: ["#מתמטיקה", "#חינוך", "#STEM"],
 };
 
-function generatePosts(type: PostType, title: string, body: string, audience: string, hashtags: string[] = []) {
+function generatePosts(type: PostType, title: string, body: string, audience: string, hashtags: string[] = [], link: string = "") {
   const signature = `\n\n📐 מיכל זיו — מתמטיקה מחוץ לסוגריים\n📧 michalziv66@gmail.com | 📱 0509017802`;
+  const linkLine = link ? `\n\n🔗 ${link}` : "";
 
   let facebook = "";
   let instagram = "";
@@ -53,33 +54,33 @@ function generatePosts(type: PostType, title: string, body: string, audience: st
 
   switch (type) {
     case "tool":
-      facebook = `🚀 שמעתם על "${title}"? 🎉\n\n${body}\n\n✨ הכלי מיועד ל${audience} ומאפשר חוויית למידה אינטראקטיבית.\n\n🔗 הכלי זמין בחינם באתר שלי — קישור בתגובה הראשונה!\n\n💡 נסו, שתפו, ותגידו לי מה דעתכם! 👇${signature}`;
-      instagram = `📐 ${title} — כלי חדש ל${audience}!\n\n${body}\n\n🔗 לינק באתר — בביו!\n\n${hashtagStr}`;
-      whatsapp = `היי 👋\nרציתי לשתף אתכם עם "${title}" — ${body}\nמתאים ל${audience}. שווה לנסות! 📐✨`;
+      facebook = `🚀 שמעתם על "${title}"? 🎉\n\n${body}\n\n✨ הכלי מיועד ל${audience} ומאפשר חוויית למידה אינטראקטיבית.${linkLine || "\n\n🔗 הכלי זמין בחינם באתר שלי — קישור בתגובה הראשונה!"}\n\n💡 נסו, שתפו, ותגידו לי מה דעתכם! 👇${signature}`;
+      instagram = `📐 ${title} — כלי חדש ל${audience}!\n\n${body}\n\n${link ? `🔗 ${link}` : "🔗 לינק באתר — בביו!"}\n\n${hashtagStr}`;
+      whatsapp = `היי 👋\nרציתי לשתף אתכם עם "${title}" — ${body}\nמתאים ל${audience}. שווה לנסות! 📐✨${linkLine}`;
       break;
 
     case "tip":
-      facebook = `💡 טיפ מקצועי: ${title}\n\n${body}\n\n👥 רלוונטי במיוחד ל${audience}\n\nמה דעתכם? יש לכם טיפים נוספים? 👇${signature}`;
-      instagram = `💡 ${title}\n\n${body}\n\n👥 ל${audience}\n\n${hashtagStr}`;
-      whatsapp = `💡 טיפ: ${title}\n\n${body}\n\nרלוונטי ל${audience}. מה דעתכם?`;
+      facebook = `💡 טיפ מקצועי: ${title}\n\n${body}\n\n👥 רלוונטי במיוחד ל${audience}${linkLine}\n\nמה דעתכם? יש לכם טיפים נוספים? 👇${signature}`;
+      instagram = `💡 ${title}\n\n${body}\n\n👥 ל${audience}${linkLine}\n\n${hashtagStr}`;
+      whatsapp = `💡 טיפ: ${title}\n\n${body}\n\nרלוונטי ל${audience}. מה דעתכם?${linkLine}`;
       break;
 
     case "challenge":
-      facebook = `🧩 אתגר! ${title}\n\n${body}\n\n🎯 מתאים ל${audience}\n\nכתבו את התשובה בתגובות! 👇${signature}`;
-      instagram = `🧩 ${title}\n\n${body}\n\n💬 כתבו תשובה בתגובות!\n\n${hashtagStr}`;
-      whatsapp = `🧩 אתגר: ${title}\n\n${body}\n\nל${audience} — מה התשובה? 🤔`;
+      facebook = `🧩 אתגר! ${title}\n\n${body}\n\n🎯 מתאים ל${audience}${linkLine}\n\nכתבו את התשובה בתגובות! 👇${signature}`;
+      instagram = `🧩 ${title}\n\n${body}\n\n💬 כתבו תשובה בתגובות!${linkLine}\n\n${hashtagStr}`;
+      whatsapp = `🧩 אתגר: ${title}\n\n${body}\n\nל${audience} — מה התשובה? 🤔${linkLine}`;
       break;
 
     case "promotion":
-      facebook = `👋 ${title}\n\n${body}\n\n🎯 מיועד ל${audience}\n\nמוזמנים לשוחח 👇${signature}`;
-      instagram = `✨ ${title}\n\n${body}\n\n👥 ל${audience}\n\n📩 פרטים בביו!\n\n${hashtagStr}`;
-      whatsapp = `היי 👋\n\n${title}\n\n${body}\n\nמיועד ל${audience}.\nאשמח לפרטים נוספים? צרו קשר 📱`;
+      facebook = `👋 ${title}\n\n${body}\n\n🎯 מיועד ל${audience}${linkLine}\n\nמוזמנים לשוחח 👇${signature}`;
+      instagram = `✨ ${title}\n\n${body}\n\n👥 ל${audience}${linkLine}\n\n📩 פרטים בביו!\n\n${hashtagStr}`;
+      whatsapp = `היי 👋\n\n${title}\n\n${body}\n\nמיועד ל${audience}.${linkLine}\nאשמח לפרטים נוספים? צרו קשר 📱`;
       break;
 
     case "free":
-      facebook = `${title}\n\n${body}\n\n👥 ל${audience}${signature}`;
-      instagram = `${title}\n\n${body}\n\n${hashtagStr}`;
-      whatsapp = `${title}\n\n${body}`;
+      facebook = `${title}\n\n${body}\n\n👥 ל${audience}${linkLine}${signature}`;
+      instagram = `${title}\n\n${body}${linkLine}\n\n${hashtagStr}`;
+      whatsapp = `${title}\n\n${body}${linkLine}`;
       break;
   }
 
