@@ -124,11 +124,33 @@ function SocialGeneratorPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [audience, setAudience] = useState("");
+  const [hashtags, setHashtags] = useState<string[]>(defaultHashtags["promotion"]);
+  const [newHashtag, setNewHashtag] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePostTypeChange = (v: string) => {
+    const type = v as PostType;
+    setPostType(type);
+    setHashtags(defaultHashtags[type]);
+  };
+
+  const addHashtag = () => {
+    const tag = newHashtag.trim();
+    if (!tag) return;
+    const formatted = tag.startsWith("#") ? tag : `#${tag}`;
+    if (!hashtags.includes(formatted)) {
+      setHashtags([...hashtags, formatted]);
+    }
+    setNewHashtag("");
+  };
+
+  const removeHashtag = (index: number) => {
+    setHashtags(hashtags.filter((_, i) => i !== index));
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -149,7 +171,7 @@ function SocialGeneratorPage() {
       return;
     }
     setError(null);
-    setPosts(generatePosts(postType, title, body, audience));
+    setPosts(generatePosts(postType, title, body, audience, hashtags));
   };
 
   const copyToClipboard = (text: string, platform: string) => {
