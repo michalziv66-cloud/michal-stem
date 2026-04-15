@@ -2,8 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 import imgFunctions from "@/assets/tools/functions.jpg";
-import imgStatistics from "@/assets/tools/statistics.jpg";
-import imgGeometry from "@/assets/tools/geometry.jpg";
+import imgFunctions from "@/assets/tools/functions.jpg";
 import imgWaterBill from "@/assets/tools/water-bill.jpg";
 import imgEquations from "@/assets/tools/equations.jpg";
 import imgReel from "@/assets/tools/reel.jpg";
