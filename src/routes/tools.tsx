@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-import imgFunctions from "@/assets/tools/functions.jpg";
+import imgAppMissions from "@/assets/tools/app-missions.jpg";
 import imgWaterBill from "@/assets/tools/water-bill.jpg";
 import imgEquations from "@/assets/tools/equations.jpg";
 import imgReel from "@/assets/tools/reel.jpg";
@@ -37,11 +37,11 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
     subtitle: "אפליקציות שפיתחתי להוראת מתמטיקה",
     items: [
       {
-        title: "חקירת פונקציות",
-        description: "אפליקציה אינטראקטיבית לחקירת פונקציות לינאריות, ריבועיות ומעריכיות — שינוי פרמטרים בזמן אמת.",
-        icon: "📈",
+        title: "משימות ביצוע — ישראל ריאלית",
+        description: "שלוש משימות מתמטיות מתוך פרויקט ישראל ריאלית — עם גרפים אינטראקטיביים. גישת STEM בין-תחומית.",
+        icon: "🚀",
         url: "https://math-versatile-path-pro.base44.app",
-        image: imgFunctions,
+        image: imgAppMissions,
       },
     ],
   },
