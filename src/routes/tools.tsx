@@ -13,6 +13,14 @@ export const Route = createFileRoute("/tools")({
   component: ToolsPage,
 });
 
+type ToolItem = {
+  title: string;
+  description: string;
+  icon: string;
+  url?: string;
+  isVideo?: boolean;
+};
+
 const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   {
     title: "אפליקציות אינטראקטיביות",
@@ -126,13 +134,6 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   },
 ];
 
-type ToolItem = {
-  title: string;
-  description: string;
-  icon: string;
-  url?: string;
-  isVideo?: boolean;
-};
 
 
 function ToolCard({ item }: { item: ToolItem }) {
