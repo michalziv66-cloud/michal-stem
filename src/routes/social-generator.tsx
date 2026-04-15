@@ -198,6 +198,9 @@ function SocialGeneratorPage() {
                 </Button>
               </CardHeader>
               <CardContent>
+                {image && (
+                  <img src={image} alt="תמונת פוסט" className="mb-3 max-h-48 w-full rounded-lg object-cover" />
+                )}
                 <pre className="whitespace-pre-wrap rounded-lg bg-muted p-4 text-sm leading-relaxed" dir="rtl">
                   {content}
                 </pre>
