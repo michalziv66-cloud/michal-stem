@@ -52,7 +52,7 @@ function SocialGeneratorPage() {
   const [audience, setAudience] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  const formRef = useScrollReveal();
+  
 
   const handleGenerate = () => {
     if (!toolName.trim() || !description.trim() || !audience.trim()) return;
