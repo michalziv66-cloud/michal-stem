@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/principals")({
   head: () => ({
@@ -24,15 +25,17 @@ const checklistItems = [
 
 function PrincipalsPage() {
   const [checked, setChecked] = useState<boolean[]>(new Array(checklistItems.length).fill(false));
+  const cardsRef = useScrollReveal();
+  const checklistRef = useScrollReveal(150);
+  const ctaRef = useScrollReveal(300);
 
   return (
     <div className="section-container">
-      <h1 className="section-title">למנהלי חטיבות ביניים</h1>
-      <p className="mt-3 text-lg text-muted-foreground">מודל Hybrid App — הפתרון לפער הדיווח ב-STEM</p>
+      <h1 className="page-enter section-title">למנהלי חטיבות ביניים</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">מודל Hybrid App — הפתרון לפער הדיווח ב-STEM</p>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-3">
-        {/* Problem */}
-        <Card className="border-destructive/30 bg-destructive/5">
+      <div ref={cardsRef} className="scroll-reveal mt-12 grid gap-8 lg:grid-cols-3">
+        <Card className="border-destructive/30 bg-destructive/5" style={{ transitionDelay: "0ms" }}>
           <CardHeader>
             <CardTitle className="font-display text-lg text-destructive">🔴 הבעיה</CardTitle>
           </CardHeader>
@@ -41,7 +44,6 @@ function PrincipalsPage() {
           </CardContent>
         </Card>
 
-        {/* Solution */}
         <Card className="border-primary/30 bg-primary/5">
           <CardHeader>
             <CardTitle className="font-display text-lg text-primary">🟢 הפתרון</CardTitle>
@@ -51,7 +53,6 @@ function PrincipalsPage() {
           </CardContent>
         </Card>
 
-        {/* Benefits */}
         <Card className="border-gold/30 bg-gold/5">
           <CardHeader>
             <CardTitle className="font-display text-lg gold-accent">🏆 היתרונות</CardTitle>
@@ -65,8 +66,7 @@ function PrincipalsPage() {
         </Card>
       </div>
 
-      {/* Checklist */}
-      <div className="mx-auto mt-14 max-w-2xl">
+      <div ref={checklistRef} className="scroll-reveal mx-auto mt-14 max-w-2xl">
         <h2 className="font-display text-2xl font-bold text-primary">שאלון התאמה עצמית</h2>
         <p className="mt-2 text-sm text-muted-foreground">סמנו את הפריטים הרלוונטיים לבית הספר שלכם:</p>
         <div className="mt-6 space-y-4">
@@ -93,8 +93,7 @@ function PrincipalsPage() {
         )}
       </div>
 
-      {/* CTA */}
-      <div className="mt-14 text-center">
+      <div ref={ctaRef} className="scroll-reveal mt-14 text-center">
         <h2 className="font-display text-2xl font-bold text-primary">מעוניינים לשמוע עוד?</h2>
         <p className="mt-2 text-muted-foreground">נשמח לתאם פגישת היכרות ולהתאים את המודל לבית הספר שלכם</p>
         <Button asChild size="lg" className="mt-6">

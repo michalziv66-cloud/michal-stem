@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 import imgAppMissions from "@/assets/tools/app-missions.jpg";
 import imgWaterBill from "@/assets/tools/water-bill.jpg";
@@ -188,22 +189,29 @@ function ToolCard({ item }: { item: ToolItem }) {
   return card;
 }
 
+function ToolSection({ section, index }: { section: typeof sections[number]; index: number }) {
+  const ref = useScrollReveal(index * 100);
+  return (
+    <section ref={ref} className="scroll-reveal mt-12 first:mt-8">
+      <h2 className="text-2xl font-display font-bold">{section.title}</h2>
+      <p className="mt-1 text-muted-foreground">{section.subtitle}</p>
+      <div className={`mt-6 grid gap-6 ${section.items.some((i) => i.isVideo) ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
+        {section.items.map((item) => (
+          <ToolCard key={item.title} item={item} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function ToolsPage() {
   return (
     <div className="section-container">
-      <h1 className="section-title">כלי עבודה</h1>
-      <p className="mt-3 text-lg text-muted-foreground">כלים דיגיטליים להוראת מתמטיקה — הכל במקום אחד</p>
+      <h1 className="page-enter section-title">כלי עבודה</h1>
+      <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">כלים דיגיטליים להוראת מתמטיקה — הכל במקום אחד</p>
 
-      {sections.map((section) => (
-        <section key={section.title} className="mt-12 first:mt-8">
-          <h2 className="text-2xl font-display font-bold">{section.title}</h2>
-          <p className="mt-1 text-muted-foreground">{section.subtitle}</p>
-          <div className={`mt-6 grid gap-6 ${section.items.some((i) => i.isVideo) ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
-            {section.items.map((item) => (
-              <ToolCard key={item.title} item={item} />
-            ))}
-          </div>
-        </section>
+      {sections.map((section, i) => (
+        <ToolSection key={section.title} section={section} index={i} />
       ))}
     </div>
   );
