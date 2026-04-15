@@ -98,11 +98,11 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         image: imgPres1,
       },
       {
-        title: "מצגת 2",
-        description: "מצגת שיעור אינטראקטיבית",
+        title: "שיטת השוואת מקדמים",
+        description: "הנגדת מקדמים — מסלול העמקה, הקבצה א׳",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHDGouuLPY/kUimQHqFzR6aAUjGiz9E6w/view",
-        image: imgPres2,
+        image: imgPresHashvaat,
       },
       {
         title: "מצגת 3",
@@ -116,7 +116,7 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         description: "שכבה ח׳ הקבצה א — מצגת אינטראקטיבית על משולש שווה-שוקיים",
         icon: "📽️",
         url: "https://www.canva.com/design/DAHCzkKxydg/I5tkXslDkg8RTA-m4ap_Lg/view",
-        image: imgPres4,
+        image: imgPresMeshulash,
       },
     ],
   },
