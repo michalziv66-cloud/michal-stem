@@ -118,6 +118,7 @@ function SocialGeneratorPage() {
   const [audience, setAudience] = useState("");
   const [posts, setPosts] = useState<ReturnType<typeof generatePosts> | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -135,7 +136,11 @@ function SocialGeneratorPage() {
   };
 
   const handleGenerate = () => {
-    if (!title.trim() || !body.trim() || !audience.trim()) return;
+    if (!title.trim() || !body.trim() || !audience.trim()) {
+      setError("יש למלא את כל השדות: כותרת, תוכן וקהל יעד");
+      return;
+    }
+    setError(null);
     setPosts(generatePosts(postType, title, body, audience));
   };
 
@@ -271,6 +276,9 @@ function SocialGeneratorPage() {
             </Button>
           )}
         </div>
+        {error && (
+          <p className="text-sm font-medium text-destructive">{error}</p>
+        )}
         <Button onClick={handleGenerate} size="lg" className="w-full">
           ✨ צור פוסטים
         </Button>
