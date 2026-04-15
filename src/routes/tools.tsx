@@ -43,6 +43,13 @@ const standaloneTools = [
     color: "bg-primary/10 text-primary",
     url: "/tools/water-bill.html",
   },
+  {
+    title: "מתמטיקה מחוץ לסוגריים",
+    description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום – חוויה ויזואלית מרתקת.",
+    icon: "🎬",
+    color: "bg-accent text-accent-foreground",
+    url: "/tools/reel3.html",
+  },
 ];
 
 function ToolsPage() {
