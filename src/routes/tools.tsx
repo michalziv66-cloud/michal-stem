@@ -19,6 +19,7 @@ const toolCategories = [
     description: "כלים אינטראקטיביים לחקירת פונקציות לינאריות, ריבועיות ומעריכיות. התלמידים יכולים לשנות פרמטרים ולראות את ההשפעה בזמן אמת.",
     icon: "📈",
     color: "bg-primary/10 text-primary",
+    url: "https://math-versatile-path-pro.base44.app",
   },
   {
     title: "סטטיסטיקה ואי וודאות",
@@ -51,9 +52,18 @@ function ToolsPage() {
               <CardDescription className="text-sm leading-relaxed">{cat.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="rounded-lg border-2 border-dashed border-border bg-muted/50 p-8 text-center text-sm text-muted-foreground">
-                כלי אינטראקטיבי ייטען כאן
-              </div>
+              {"url" in cat && cat.url ? (
+                <iframe
+                  src={cat.url}
+                  title={cat.title}
+                  className="h-[400px] w-full rounded-lg border"
+                  allow="fullscreen"
+                />
+              ) : (
+                <div className="rounded-lg border-2 border-dashed border-border bg-muted/50 p-8 text-center text-sm text-muted-foreground">
+                  כלי אינטראקטיבי ייטען כאן
+                </div>
+              )}
             </CardContent>
           </Card>
         ))}
