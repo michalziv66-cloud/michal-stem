@@ -153,18 +153,20 @@ function SocialGeneratorPage() {
   const downloadPostImage = useCallback(async (text: string, platform: string) => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d")!;
-    const width = 1080;
-    const padding = 60;
+    // Facebook-friendly: 1200x630 max, use JPEG for smaller file size
+    const width = 1200;
+    const maxHeight = 1200;
+    const padding = 50;
     const textAreaWidth = width - padding * 2;
 
     // Measure text height first
-    ctx.font = "28px Arial, sans-serif";
+    ctx.font = "24px Arial, sans-serif";
     const lines = wrapTextRTL(ctx, text, textAreaWidth);
-    const lineHeight = 40;
+    const lineHeight = 34;
     const textBlockHeight = lines.length * lineHeight + padding;
 
-    const imageHeight = image ? 500 : 0;
-    const totalHeight = padding + imageHeight + (image ? 30 : 0) + textBlockHeight + padding;
+    const imageHeight = image ? 400 : 0;
+    const totalHeight = Math.min(maxHeight, padding + imageHeight + (image ? 24 : 0) + textBlockHeight + padding);
     canvas.width = width;
     canvas.height = totalHeight;
 
@@ -183,34 +185,35 @@ function SocialGeneratorPage() {
       });
       const imgAspect = img.width / img.height;
       const drawWidth = width - padding * 2;
-      const drawHeight = Math.min(500, drawWidth / imgAspect);
+      const drawHeight = Math.min(400, drawWidth / imgAspect);
       const imgX = padding;
       const imgY = padding;
       ctx.save();
-      roundRect(ctx, imgX, imgY, drawWidth, drawHeight, 16);
+      roundRect(ctx, imgX, imgY, drawWidth, drawHeight, 12);
       ctx.clip();
       ctx.drawImage(img, imgX, imgY, drawWidth, drawHeight);
       ctx.restore();
-      textStartY = imgY + drawHeight + 30;
+      textStartY = imgY + drawHeight + 24;
     }
 
     // Draw text (RTL)
     ctx.fillStyle = "#1a1a1a";
-    ctx.font = "28px Arial, sans-serif";
+    ctx.font = "24px Arial, sans-serif";
     ctx.textAlign = "right";
     ctx.direction = "rtl";
     lines.forEach((line, i) => {
-      ctx.fillText(line, width - padding, textStartY + 32 + i * lineHeight);
+      const y = textStartY + 28 + i * lineHeight;
+      if (y < totalHeight - 20) ctx.fillText(line, width - padding, y);
     });
 
     // Brand bar
     ctx.fillStyle = "#2563eb";
-    ctx.fillRect(0, totalHeight - 6, width, 6);
+    ctx.fillRect(0, totalHeight - 5, width, 5);
 
-    // Download
+    // Download as JPEG (much smaller file size, Facebook-friendly)
     const link = document.createElement("a");
-    link.download = `post-${platform}.png`;
-    link.href = canvas.toDataURL("image/png");
+    link.download = `post-${platform}.jpg`;
+    link.href = canvas.toDataURL("image/jpeg", 0.85);
     link.click();
   }, [image]);
 
