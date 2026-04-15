@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { BrainCircuit } from "lucide-react";
 import cardExperience from "@/assets/card-experience.jpg";
 import cardVision from "@/assets/card-vision.png";
+import cardStem from "@/assets/card-stem.png";
 import profileImage from "@/assets/michal-profile.png";
 import logo from "@/assets/logo-white.svg";
 
@@ -51,7 +51,7 @@ function HomePage() {
         <div className="grid gap-8 sm:grid-cols-3">
           {[
             { num: "14+", label: "שנות ניסיון בהוראה", image: cardExperience },
-            { num: "AI", label: "כלים חכמים ל-STEM", Icon: BrainCircuit, bg: "bg-gold/10", color: "text-gold-foreground" },
+            { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem },
             { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
           ].map((item) => (
             <div key={item.label} className="card-hover overflow-hidden rounded-xl border bg-card text-center">
