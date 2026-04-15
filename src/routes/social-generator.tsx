@@ -257,7 +257,7 @@ function SocialGeneratorPage() {
       <div className="page-enter page-enter-delay-2 mx-auto mt-10 max-w-2xl space-y-4">
         <div>
           <label className="mb-1.5 block text-sm font-medium">סוג הפוסט</label>
-          <Select value={postType} onValueChange={(v) => setPostType(v as PostType)}>
+          <Select value={postType} onValueChange={handlePostTypeChange}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -310,6 +310,38 @@ function SocialGeneratorPage() {
               📷 בחרו תמונה
             </Button>
           )}
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">האשטגים (אינסטגרם)</label>
+          <div className="flex flex-wrap gap-2 rounded-lg border border-border bg-muted/50 p-3">
+            {hashtags.map((tag, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm text-primary"
+              >
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => removeHashtag(i)}
+                  className="mr-1 text-primary/60 hover:text-destructive"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <div className="mt-2 flex gap-2">
+            <Input
+              value={newHashtag}
+              onChange={(e) => setNewHashtag(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addHashtag())}
+              placeholder="הוסיפו האשטג..."
+              className="flex-1"
+            />
+            <Button variant="outline" size="sm" onClick={addHashtag}>
+              + הוסף
+            </Button>
+          </div>
         </div>
         {error && (
           <p className="text-sm font-medium text-destructive">{error}</p>
