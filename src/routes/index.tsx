@@ -61,7 +61,7 @@ function HomePage() {
           {[
             { label: "יזמית פדגוגית במתמטיקה", image: cardExperience },
             { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false },
-            { num: "∞", label: "חזון: לומדים עצמאיים", image: cardVision },
+            { label: "אודות", image: cardVision, link: "/about" },
           ].map((item, i) => (
             <div
               key={item.label}
