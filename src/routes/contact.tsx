@@ -68,24 +68,20 @@ function ContactPage() {
         <div ref={detailsRef} className="scroll-reveal lg:col-span-2">
           <div className="rounded-xl border bg-card p-6 space-y-5">
             <h3 className="font-display text-lg font-bold text-primary">פרטי התקשרות</h3>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div>
                 <span className="text-xl">📧</span>
-                <div>
-                  <p className="text-sm font-medium">אימייל</p>
-                  <a href="mailto:michalziv66@gmail.com" className="text-sm text-primary hover:underline" dir="ltr">
-                    michalziv66@gmail.com
-                  </a>
-                </div>
+                <p className="text-sm font-medium">אימייל</p>
+                <a href="mailto:michalziv66@gmail.com" className="text-sm text-primary hover:underline" dir="ltr">
+                  michalziv66@gmail.com
+                </a>
               </div>
-              <div className="flex items-start gap-3">
+              <div>
                 <span className="text-xl">📱</span>
-                <div>
-                  <p className="text-sm font-medium">טלפון</p>
-                  <a href="tel:+972509017802" className="text-sm text-primary hover:underline" dir="ltr">
-                    050-901-7802
-                  </a>
-                </div>
+                <p className="text-sm font-medium">טלפון</p>
+                <a href="tel:+972509017802" className="text-sm text-primary hover:underline" dir="ltr">
+                  050-901-7802
+                </a>
               </div>
             </div>
           </div>
