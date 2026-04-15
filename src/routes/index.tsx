@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import profileImage from "@/assets/michal-profile.png";
+import logo from "@/assets/logo-white.svg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,15 +28,7 @@ function HomePage() {
           <div className="mx-auto mb-8 h-36 w-36 overflow-hidden rounded-full border-4 border-gold/40 shadow-xl sm:h-44 sm:w-44">
             <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
           </div>
-          <p className="mb-4 inline-block rounded-full bg-gold/20 px-4 py-1.5 text-sm font-medium text-gold">
-            מובילת פיתוח פדגוגי דיגיטלי
-          </p>
-          <h1 className="font-display text-4xl font-extrabold leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-            מיכל זיו
-          </h1>
-          <p className="mt-4 font-display text-xl font-medium text-gold sm:text-2xl">
-            מתמטיקה מחוץ לסוגריים
-          </p>
+          <img src={logo} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="mx-auto mb-6 h-20 w-auto sm:h-28" />
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
             מחנכת בחטיבת הביניים | מפתחת כלי AI ל-STEM
           </p>
