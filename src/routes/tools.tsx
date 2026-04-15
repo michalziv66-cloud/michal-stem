@@ -44,11 +44,28 @@ const standaloneTools = [
     url: "/tools/water-bill.html",
   },
   {
+    title: "משוואות הקסם",
+    description: "דף עבודה אינטראקטיבי בנושא משוואות – שלבים מודרכים עם MathJax ואנימציות.",
+    icon: "✨",
+    color: "bg-gold/10 text-gold-foreground",
+    url: "/tools/mishvaot_kesem_2.html",
+  },
+  {
     title: "מתמטיקה מחוץ לסוגריים",
     description: "סרטון אינטראקטיבי בסגנון רילס על מתמטיקה בחיי היומיום – חוויה ויזואלית מרתקת.",
     icon: "🎬",
     color: "bg-accent text-accent-foreground",
     url: "/tools/reel3.html",
+  },
+];
+
+const notebookLmItems = [
+  {
+    title: "לפצח את קוד הממ״ד",
+    description: "סרטון שנוצר באמצעות NotebookLM – הסבר מרתק על מתמטיקה.",
+    icon: "🎧",
+    color: "bg-accent text-accent-foreground",
+    url: "/notebook-lm/לפצח_את_קוד_הממ_ד.mp4",
   },
 ];
 
