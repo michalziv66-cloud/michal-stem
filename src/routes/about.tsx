@@ -41,6 +41,9 @@ function AboutPage() {
           <p className="rounded-lg bg-gold/10 p-4 font-medium text-primary">
             💡 החזון שמניע אותי: תלמיד שיוצא מהכיתה עם היכולת ללמוד בעצמו.
           </p>
+          <div className="mt-6 overflow-hidden rounded-xl border-2 border-gold/20 shadow-lg">
+            <img src={artisticImage} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="h-auto w-full object-cover" />
+          </div>
         </div>
         <div ref={expertiseRef} className="scroll-reveal lg:col-span-2">
           <div className="rounded-xl border bg-accent/50 p-6 space-y-4">
