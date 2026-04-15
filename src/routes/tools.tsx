@@ -13,7 +13,7 @@ export const Route = createFileRoute("/tools")({
   component: ToolsPage,
 });
 
-const sections = [
+const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   {
     title: "אפליקציות אינטראקטיביות",
     subtitle: "מיקרו-אפליקציות לחקירה עצמאית",
@@ -133,6 +133,7 @@ type ToolItem = {
   url?: string;
   isVideo?: boolean;
 };
+
 
 function ToolCard({ item }: { item: ToolItem }) {
   if (item.isVideo) {
