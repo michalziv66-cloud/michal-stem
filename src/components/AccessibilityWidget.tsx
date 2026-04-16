@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 type Settings = {
@@ -21,18 +20,12 @@ function applySettings(s: Settings) {
 }
 
 export function AccessibilityWidget() {
-  const [container, setContainer] = useState<HTMLElement | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
-    // Create a container div and append to body
-    const div = document.createElement("div");
-    div.id = "a11y-widget-root";
-    document.body.appendChild(div);
-    setContainer(div);
-
-    // Load saved settings
+    setMounted(true);
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -41,17 +34,13 @@ export function AccessibilityWidget() {
         applySettings(saved);
       }
     } catch {}
-
-    return () => {
-      document.body.removeChild(div);
-    };
   }, []);
 
   useEffect(() => {
-    if (!container) return;
+    if (!mounted) return;
     applySettings(settings);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-  }, [settings, container]);
+  }, [settings, mounted]);
 
   const update = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
@@ -61,11 +50,11 @@ export function AccessibilityWidget() {
     setSettings(DEFAULT_SETTINGS);
   }, []);
 
-  if (!container) return null;
+  if (!mounted) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
-  return createPortal(
+  return (
     <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
       {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
@@ -135,7 +124,6 @@ export function AccessibilityWidget() {
       >
         ♿
       </button>
-    </div>,
-    container,
+    </div>
   );
 }
