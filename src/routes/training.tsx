@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 
 
-export const Route = createFileRoute("/training")({
+export const Route = createFileRoute("/training" as const)({
   head: () => ({
     meta: [
       { title: "הדרכות AI בזום — מיכל זיו" },
