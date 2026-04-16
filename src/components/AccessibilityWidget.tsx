@@ -28,6 +28,8 @@ function normalizeSettings(value: unknown): Settings {
 }
 
 function applySettings(settings: Settings) {
+  if (typeof document === "undefined") return;
+
   const html = document.documentElement;
   html.classList.remove("a11y-font-1", "a11y-font-2");
 
@@ -39,23 +41,18 @@ function applySettings(settings: Settings) {
 }
 
 export function AccessibilityWidget() {
-  const [mounted, setMounted] = useState(typeof window !== "undefined");
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
-    if (!mounted) setMounted(true);
-    console.log("[a11y] widget mounted");
+    setMounted(true);
 
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = normalizeSettings(JSON.parse(raw));
-        setSettings(parsed);
-        applySettings(parsed);
-      } else {
-        applySettings(DEFAULT_SETTINGS);
-      }
+      const nextSettings = raw ? normalizeSettings(JSON.parse(raw)) : DEFAULT_SETTINGS;
+      setSettings(nextSettings);
+      applySettings(nextSettings);
     } catch {
       applySettings(DEFAULT_SETTINGS);
     }
