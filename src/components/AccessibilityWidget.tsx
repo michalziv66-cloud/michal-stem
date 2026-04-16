@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 type Settings = {
@@ -7,17 +7,35 @@ type Settings = {
   highlightLinks: boolean;
 };
 
-const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlightLinks: false };
 const STORAGE_KEY = "a11y-settings";
+const DEFAULT_SETTINGS: Settings = {
+  fontSize: 0,
+  highContrast: false,
+  highlightLinks: false,
+};
 
-function applySettings(s: Settings) {
-  if (typeof document === "undefined") return;
+function normalizeSettings(value: unknown): Settings {
+  if (!value || typeof value !== "object") return DEFAULT_SETTINGS;
+
+  const candidate = value as Partial<Settings>;
+  const fontSize = candidate.fontSize === 1 || candidate.fontSize === 2 ? candidate.fontSize : 0;
+
+  return {
+    fontSize,
+    highContrast: Boolean(candidate.highContrast),
+    highlightLinks: Boolean(candidate.highlightLinks),
+  };
+}
+
+function applySettings(settings: Settings) {
   const html = document.documentElement;
   html.classList.remove("a11y-font-1", "a11y-font-2");
-  if (s.fontSize === 1) html.classList.add("a11y-font-1");
-  if (s.fontSize === 2) html.classList.add("a11y-font-2");
-  html.classList.toggle("a11y-high-contrast", s.highContrast);
-  html.classList.toggle("a11y-highlight-links", s.highlightLinks);
+
+  if (settings.fontSize === 1) html.classList.add("a11y-font-1");
+  if (settings.fontSize === 2) html.classList.add("a11y-font-2");
+
+  html.classList.toggle("a11y-high-contrast", settings.highContrast);
+  html.classList.toggle("a11y-highlight-links", settings.highlightLinks);
 }
 
 export function AccessibilityWidget() {
@@ -26,54 +44,58 @@ export function AccessibilityWidget() {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
-    console.log("[A11Y] Widget mounted");
     setMounted(true);
+
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const saved = JSON.parse(raw) as Settings;
-        setSettings(saved);
-        applySettings(saved);
+        const parsed = normalizeSettings(JSON.parse(raw));
+        setSettings(parsed);
+        applySettings(parsed);
+      } else {
+        applySettings(DEFAULT_SETTINGS);
       }
     } catch {
-      // ignore
+      applySettings(DEFAULT_SETTINGS);
     }
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
+
     applySettings(settings);
+
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     } catch {
-      // ignore
+      // ignore storage failures
     }
-  }, [settings, mounted]);
+  }, [mounted, settings]);
 
-  const update = useCallback((partial: Partial<Settings>) => {
+  const updateSettings = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
   }, []);
 
-  const reset = useCallback(() => {
+  const resetSettings = useCallback(() => {
     setSettings(DEFAULT_SETTINGS);
   }, []);
-
-  console.log("[A11Y] Render, mounted:", mounted);
 
   if (!mounted) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
+  const fontButtons = ["א", "א+", "א++"];
 
   return (
-    <div style={{ position: "fixed", bottom: 16, left: 16, zIndex: 9999 }} dir="rtl">
+    <div className="fixed bottom-4 left-4 z-[9999]" dir="rtl">
       {open && (
-        <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
+        <div className="mb-2 w-64 rounded-xl border bg-card p-4 text-card-foreground shadow-xl">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-sm font-bold">הגדרות נגישות</h3>
             <button
+              type="button"
               onClick={() => setOpen(false)}
-              className="text-muted-foreground hover:text-foreground"
-              aria-label="סגור"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="סגור חלון נגישות"
             >
               ✕
             </button>
@@ -86,14 +108,16 @@ export function AccessibilityWidget() {
                 {[0, 1, 2].map((level) => (
                   <button
                     key={level}
-                    onClick={() => update({ fontSize: level })}
+                    type="button"
+                    onClick={() => updateSettings({ fontSize: level as Settings["fontSize"] })}
                     className={`flex-1 rounded-md border px-2 py-1.5 text-xs font-medium transition-colors ${
                       settings.fontSize === level
                         ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border hover:bg-accent"
+                        : "border-border bg-background hover:bg-accent"
                     }`}
+                    aria-pressed={settings.fontSize === level}
                   >
-                    {["א", "א+", "א++"][level]}
+                    {fontButtons[level]}
                   </button>
                 ))}
               </div>
@@ -104,7 +128,7 @@ export function AccessibilityWidget() {
               <input
                 type="checkbox"
                 checked={settings.highContrast}
-                onChange={(e) => update({ highContrast: e.target.checked })}
+                onChange={(event) => updateSettings({ highContrast: event.target.checked })}
                 className="h-4 w-4 accent-primary"
               />
             </label>
@@ -114,12 +138,12 @@ export function AccessibilityWidget() {
               <input
                 type="checkbox"
                 checked={settings.highlightLinks}
-                onChange={(e) => update({ highlightLinks: e.target.checked })}
+                onChange={(event) => updateSettings({ highlightLinks: event.target.checked })}
                 className="h-4 w-4 accent-primary"
               />
             </label>
 
-            <Button variant="outline" size="sm" className="w-full text-xs" onClick={reset}>
+            <Button variant="outline" size="sm" className="w-full text-xs" onClick={resetSettings}>
               איפוס הגדרות
             </Button>
           </div>
@@ -127,22 +151,10 @@ export function AccessibilityWidget() {
       )}
 
       <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: "50%",
-          backgroundColor: "var(--primary)",
-          color: "var(--primary-foreground)",
-          fontSize: 20,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "none",
-          cursor: "pointer",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-        }}
-        aria-label="נגישות"
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        aria-label="פתח הגדרות נגישות"
         title="נגישות"
       >
         ♿
