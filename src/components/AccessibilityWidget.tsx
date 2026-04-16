@@ -7,6 +7,7 @@ type Settings = {
   highlightLinks: boolean;
 };
 
+const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlightLinks: false };
 const STORAGE_KEY = "a11y-settings";
 
 function loadSettings(): Settings {
@@ -14,7 +15,7 @@ function loadSettings(): Settings {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch {}
-  return { fontSize: 0, highContrast: false, highlightLinks: false };
+  return DEFAULT_SETTINGS;
 }
 
 function saveSettings(s: Settings) {
@@ -23,40 +24,42 @@ function saveSettings(s: Settings) {
 
 function applySettings(s: Settings) {
   const html = document.documentElement;
-
-  // Font size
   html.classList.remove("a11y-font-1", "a11y-font-2");
   if (s.fontSize === 1) html.classList.add("a11y-font-1");
   if (s.fontSize === 2) html.classList.add("a11y-font-2");
-
-  // High contrast
   html.classList.toggle("a11y-high-contrast", s.highContrast);
-
-  // Highlight links
   html.classList.toggle("a11y-highlight-links", s.highlightLinks);
 }
 
 export function AccessibilityWidget() {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
-  const [settings, setSettings] = useState<Settings>(loadSettings);
+  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+
+  // Client-only init
+  useEffect(() => {
+    const saved = loadSettings();
+    setSettings(saved);
+    applySettings(saved);
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
     applySettings(settings);
     saveSettings(settings);
-  }, [settings]);
-
-  // Apply on mount
-  useEffect(() => {
-    applySettings(loadSettings());
-  }, []);
+  }, [settings, mounted]);
 
   const update = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
   }, []);
 
   const reset = useCallback(() => {
-    setSettings({ fontSize: 0, highContrast: false, highlightLinks: false });
+    setSettings(DEFAULT_SETTINGS);
   }, []);
+
+  // Don't render during SSR
+  if (!mounted) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
@@ -76,7 +79,6 @@ export function AccessibilityWidget() {
           </div>
 
           <div className="space-y-3">
-            {/* Font size */}
             <div>
               <p className="mb-1.5 text-xs font-medium">גודל טקסט: {fontLabels[settings.fontSize]}</p>
               <div className="flex gap-1.5">
@@ -96,7 +98,6 @@ export function AccessibilityWidget() {
               </div>
             </div>
 
-            {/* High contrast */}
             <label className="flex cursor-pointer items-center justify-between rounded-md border px-3 py-2">
               <span className="text-xs font-medium">ניגודיות גבוהה</span>
               <input
@@ -107,7 +108,6 @@ export function AccessibilityWidget() {
               />
             </label>
 
-            {/* Highlight links */}
             <label className="flex cursor-pointer items-center justify-between rounded-md border px-3 py-2">
               <span className="text-xs font-medium">סימון קישורים</span>
               <input
