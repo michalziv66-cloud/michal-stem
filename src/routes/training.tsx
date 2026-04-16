@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -42,10 +42,8 @@ const workshops: Workshop[] = [
 ];
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
-  const ref = useScrollReveal();
-
   return (
-    <div ref={ref} className="scroll-reveal">
+    <div className="page-enter-delay-2">
       <Card className="card-hover h-full overflow-hidden">
         {/* Image placeholder */}
         <div className="flex aspect-[16/9] items-center justify-center bg-primary/5">
