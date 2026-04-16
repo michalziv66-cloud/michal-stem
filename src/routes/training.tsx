@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import trainingAiImage from "@/assets/training-ai-design.png";
+import trainingDigitalImage from "@/assets/training-digital-tools.png";
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -40,6 +41,7 @@ const workshops: Workshop[] = [
       "Google Slides", "Google Drive", "Google Meet", "Gmail",
       "Google Keep", "Google Sites", "NotebookLM", "Kahoot", "Suno", "Moodle",
     ],
+    image: trainingDigitalImage,
   },
 ];
 
