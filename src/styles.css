@@ -199,3 +199,23 @@
     animation: shimmer 4s linear infinite;
   }
 }
+
+/* Accessibility overrides */
+html.a11y-font-1 {
+  font-size: 118.75%;
+}
+html.a11y-font-2 {
+  font-size: 137.5%;
+}
+html.a11y-high-contrast {
+  --foreground: oklch(0 0 0);
+  --background: oklch(1 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --muted-foreground: oklch(0.2 0 0);
+}
+html.a11y-highlight-links a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+}
