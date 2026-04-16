@@ -41,10 +41,13 @@ function HomePage() {
           </p>
           <div className="hero-buttons mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button asChild variant="hero" size="lg">
-              <Link to="/training">הדרכות AI בזום</Link>
+              <Link to="/tools">לכלים האינטראקטיביים</Link>
             </Button>
             <Button asChild variant="heroOutline" size="lg">
               <Link to="/principals">למנהלי חטיבות</Link>
+            </Button>
+            <Button asChild variant="heroOutline" size="lg">
+              <Link to="/training">הדרכת חדרי מורים</Link>
             </Button>
           </div>
         </div>

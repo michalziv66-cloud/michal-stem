@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
-import { AccessibilityWidget } from "@/components/AccessibilityWidget";
 
 const navItems = [
   { to: "/", label: "בית" },
@@ -19,7 +18,6 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <>
     <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" aria-label="דף הבית" className="shrink-0">
@@ -78,7 +76,5 @@ export function Header() {
         </nav>
       )}
     </header>
-    <AccessibilityWidget />
-    </>
   );
 }
