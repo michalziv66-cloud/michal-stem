@@ -1,26 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 type Settings = {
-  fontSize: number; // 0 = normal, 1 = large, 2 = x-large
+  fontSize: number;
   highContrast: boolean;
   highlightLinks: boolean;
 };
 
 const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlightLinks: false };
 const STORAGE_KEY = "a11y-settings";
-
-function loadSettings(): Settings {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return DEFAULT_SETTINGS;
-}
-
-function saveSettings(s: Settings) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-}
 
 function applySettings(s: Settings) {
   const html = document.documentElement;
@@ -32,23 +21,37 @@ function applySettings(s: Settings) {
 }
 
 export function AccessibilityWidget() {
-  const [mounted, setMounted] = useState(false);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
-  // Client-only init
   useEffect(() => {
-    const saved = loadSettings();
-    setSettings(saved);
-    applySettings(saved);
-    setMounted(true);
+    // Create a container div and append to body
+    const div = document.createElement("div");
+    div.id = "a11y-widget-root";
+    document.body.appendChild(div);
+    setContainer(div);
+
+    // Load saved settings
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        setSettings(saved);
+        applySettings(saved);
+      }
+    } catch {}
+
+    return () => {
+      document.body.removeChild(div);
+    };
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!container) return;
     applySettings(settings);
-    saveSettings(settings);
-  }, [settings, mounted]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  }, [settings, container]);
 
   const update = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
@@ -58,12 +61,11 @@ export function AccessibilityWidget() {
     setSettings(DEFAULT_SETTINGS);
   }, []);
 
-  // Don't render during SSR
-  if (!mounted) return null;
+  if (!container) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
-  return (
+  return createPortal(
     <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
       {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
@@ -133,6 +135,7 @@ export function AccessibilityWidget() {
       >
         ♿
       </button>
-    </div>
+    </div>,
+    container,
   );
 }
