@@ -82,7 +82,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
                 <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1 text-xs">
-                  <span className="text-sm leading-none">{toolEmoji[tool] || "🔹"}</span>
+                  <ToolLogo name={tool} />
                   {tool}
                 </Badge>
               ))}
