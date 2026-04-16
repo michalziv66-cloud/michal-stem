@@ -40,14 +40,14 @@ const workshops: Workshop[] = [
   },
 ];
 
-const toolColors: Record<string, string> = {
-  Claude: "#d97706", ChatGPT: "#10a37f", Gemini: "#4285f4", Copilot: "#6366f1",
-  Gamma: "#8b5cf6", Canva: "#00c4cc", Lovable: "#ec4899", Base44: "#1e293b",
-  "Google Classroom": "#0f9d58", "Google Docs": "#4285f4", "Google Sheets": "#0f9d58",
-  "Google Forms": "#7b1fa2", "Google Slides": "#f4b400", "Google Drive": "#4285f4",
-  "Google Meet": "#00897b", Gmail: "#ea4335", "Google Keep": "#fbbc04",
-  "Google Sites": "#4285f4", NotebookLM: "#1a73e8", Kahoot: "#46178f",
-  Suno: "#1db954", Moodle: "#f98012",
+const toolEmoji: Record<string, string> = {
+  Claude: "🟠", ChatGPT: "🟢", Gemini: "🔵", Copilot: "🟣",
+  Gamma: "🟣", Canva: "🟦", Lovable: "💗", Base44: "⬛",
+  "Google Classroom": "🟩", "Google Docs": "📄", "Google Sheets": "📊",
+  "Google Forms": "📋", "Google Slides": "📽️", "Google Drive": "💾",
+  "Google Meet": "📹", Gmail: "✉️", "Google Keep": "📝",
+  "Google Sites": "🌐", NotebookLM: "📓", Kahoot: "🎯",
+  Suno: "🎵", Moodle: "🎓",
 };
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
@@ -79,7 +79,8 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <p className="mb-2 text-xs font-semibold text-muted-foreground">כלים בסדנה</p>
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
-                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs" style={{ borderRight: `3px solid ${toolColors[tool] || "#888"}` }}>
+                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1 text-xs">
+                  <span className="text-sm leading-none">{toolEmoji[tool] || "🔹"}</span>
                   {tool}
                 </Badge>
               ))}
