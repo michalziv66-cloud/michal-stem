@@ -2,44 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
-const toolBrands: Record<string, { abbr: string; bg: string; fg: string }> = {
-  Claude:           { abbr: "C",  bg: "#d97706", fg: "#fff" },
-  ChatGPT:          { abbr: "G",  bg: "#10a37f", fg: "#fff" },
-  Gemini:           { abbr: "G",  bg: "#4285f4", fg: "#fff" },
-  Copilot:          { abbr: "Co", bg: "#6366f1", fg: "#fff" },
-  Gamma:            { abbr: "γ",  bg: "#8b5cf6", fg: "#fff" },
-  Canva:            { abbr: "C",  bg: "#00c4cc", fg: "#fff" },
-  Lovable:          { abbr: "♥",  bg: "#ec4899", fg: "#fff" },
-  Base44:           { abbr: "44", bg: "#1e293b", fg: "#fff" },
-  "Google Classroom": { abbr: "GC", bg: "#0f9d58", fg: "#fff" },
-  "Google Docs":    { abbr: "D",  bg: "#4285f4", fg: "#fff" },
-  "Google Sheets":  { abbr: "S",  bg: "#0f9d58", fg: "#fff" },
-  "Google Forms":   { abbr: "F",  bg: "#7b1fa2", fg: "#fff" },
-  "Google Slides":  { abbr: "Sl", bg: "#f4b400", fg: "#fff" },
-  "Google Drive":   { abbr: "Dr", bg: "#4285f4", fg: "#fff" },
-  "Google Meet":    { abbr: "M",  bg: "#00897b", fg: "#fff" },
-  Gmail:            { abbr: "✉",  bg: "#ea4335", fg: "#fff" },
-  "Google Keep":    { abbr: "K",  bg: "#fbbc04", fg: "#333" },
-  "Google Sites":   { abbr: "Si", bg: "#4285f4", fg: "#fff" },
-  NotebookLM:       { abbr: "NB", bg: "#1a73e8", fg: "#fff" },
-  Kahoot:           { abbr: "K!", bg: "#46178f", fg: "#fff" },
-  Suno:             { abbr: "♫",  bg: "#1db954", fg: "#fff" },
-  Moodle:           { abbr: "M",  bg: "#f98012", fg: "#fff" },
-};
-
-function ToolIcon({ name }: { name: string }) {
-  const brand = toolBrands[name];
-  if (!brand) return null;
-  return (
-    <span
-      className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-bold leading-none"
-      style={{ backgroundColor: brand.bg, color: brand.fg }}
-    >
-      {brand.abbr}
-    </span>
-  );
-}
+import { ToolLogo } from "@/components/ToolLogos";
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -108,7 +71,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
                 <Badge key={tool} variant="secondary" className="flex items-center gap-1.5 text-xs">
-                  <ToolIcon name={tool} />
+                  <ToolLogo name={tool} />
                   {tool}
                 </Badge>
               ))}
