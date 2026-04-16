@@ -2,25 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
 type Settings = {
-  fontSize: number; // 0 = normal, 1 = large, 2 = x-large
+  fontSize: number;
   highContrast: boolean;
   highlightLinks: boolean;
 };
 
 const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlightLinks: false };
 const STORAGE_KEY = "a11y-settings";
-
-function loadSettings(): Settings {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return DEFAULT_SETTINGS;
-}
-
-function saveSettings(s: Settings) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-}
 
 function applySettings(s: Settings) {
   const html = document.documentElement;
@@ -31,24 +19,20 @@ function applySettings(s: Settings) {
   html.classList.toggle("a11y-highlight-links", s.highlightLinks);
 }
 
-export function AccessibilityWidget() {
-  const [mounted, setMounted] = useState(false);
+function AccessibilityWidgetInner() {
   const [open, setOpen] = useState(false);
-  const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
-
-  // Client-only init
-  useEffect(() => {
-    const saved = loadSettings();
-    setSettings(saved);
-    applySettings(saved);
-    setMounted(true);
-  }, []);
+  const [settings, setSettings] = useState<Settings>(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return DEFAULT_SETTINGS;
+  });
 
   useEffect(() => {
-    if (!mounted) return;
     applySettings(settings);
-    saveSettings(settings);
-  }, [settings, mounted]);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  }, [settings]);
 
   const update = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
@@ -61,8 +45,8 @@ export function AccessibilityWidget() {
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
   return (
-    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl" suppressHydrationWarning>
-      {mounted && open && (
+    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
+      {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-sm font-bold">הגדרות נגישות</h3>
@@ -122,16 +106,26 @@ export function AccessibilityWidget() {
         </div>
       )}
 
-      {mounted && (
-        <button
-          onClick={() => setOpen(!open)}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
-          aria-label="נגישות"
-          title="נגישות"
-        >
-          ♿
-        </button>
-      )}
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
+        aria-label="נגישות"
+        title="נגישות"
+      >
+        ♿
+      </button>
     </div>
   );
+}
+
+export function AccessibilityWidget() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return <AccessibilityWidgetInner />;
 }
