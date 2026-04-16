@@ -1,9 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-
-const AccessibilityWidget = lazy(() => import("@/components/AccessibilityWidget").then(m => ({ default: m.AccessibilityWidget })));
+import { AccessibilityWidget } from "@/components/AccessibilityWidget";
 
 import appCss from "../styles.css?url";
 
@@ -58,7 +56,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="he" dir="rtl">
       <head>
         <HeadContent />
       </head>
@@ -78,7 +76,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <Suspense fallback={null}><AccessibilityWidget /></Suspense>
+      <AccessibilityWidget />
     </>
   );
 }
