@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -28,6 +26,7 @@ export function AccessibilityWidget() {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
+    console.log("[A11Y] Widget mounted");
     setMounted(true);
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -59,12 +58,14 @@ export function AccessibilityWidget() {
     setSettings(DEFAULT_SETTINGS);
   }, []);
 
+  console.log("[A11Y] Render, mounted:", mounted);
+
   if (!mounted) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
   return (
-    <div className="fixed bottom-4 left-4 z-[9999]" dir="rtl">
+    <div style={{ position: "fixed", bottom: 16, left: 16, zIndex: 9999 }} dir="rtl">
       {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
           <div className="mb-3 flex items-center justify-between">
@@ -127,7 +128,20 @@ export function AccessibilityWidget() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: "50%",
+          backgroundColor: "var(--primary)",
+          color: "var(--primary-foreground)",
+          fontSize: 20,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
+          cursor: "pointer",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+        }}
         aria-label="נגישות"
         title="נגישות"
       >
