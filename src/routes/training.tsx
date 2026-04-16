@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ToolLogo } from "@/components/ToolLogos";
 import trainingAiImage from "@/assets/training-ai-design.png";
 import trainingDigitalImage from "@/assets/training-digital-tools.png";
 
@@ -45,15 +46,6 @@ const workshops: Workshop[] = [
   },
 ];
 
-const toolEmoji: Record<string, string> = {
-  Claude: "🟠", ChatGPT: "🟢", Gemini: "🔵", Copilot: "🟣",
-  Gamma: "🟣", Canva: "🟦", Lovable: "💗", Base44: "⬛",
-  "Google Classroom": "🟩", "Google Docs": "📄", "Google Sheets": "📊",
-  "Google Forms": "📋", "Google Slides": "📽️", "Google Drive": "💾",
-  "Google Meet": "📹", Gmail: "✉️", "Google Keep": "📝",
-  "Google Sites": "🌐", NotebookLM: "📓", Kahoot: "🎯",
-  Suno: "🎵", Moodle: "🎓",
-};
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
@@ -90,7 +82,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
                 <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1 text-xs">
-                  <span className="text-sm leading-none">{toolEmoji[tool] || "🔹"}</span>
+                  <ToolLogo name={tool} />
                   {tool}
                 </Badge>
               ))}
