@@ -1,7 +1,9 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { AccessibilityWidget } from "@/components/AccessibilityWidget";
+
+const AccessibilityWidget = lazy(() => import("@/components/AccessibilityWidget").then(m => ({ default: m.AccessibilityWidget })));
 
 import appCss from "../styles.css?url";
 
