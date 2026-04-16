@@ -42,10 +42,8 @@ const workshops: Workshop[] = [
 ];
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
-  const ref = useScrollReveal();
-
   return (
-    <div ref={ref} className="scroll-reveal">
+    <div className="page-enter-delay-2">
       <Card className="card-hover h-full overflow-hidden">
         {/* Image placeholder */}
         <div className="flex aspect-[16/9] items-center justify-center bg-primary/5">
