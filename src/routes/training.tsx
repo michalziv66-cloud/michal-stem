@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ToolLogo } from "@/components/ToolLogos";
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -41,6 +40,16 @@ const workshops: Workshop[] = [
   },
 ];
 
+const toolColors: Record<string, string> = {
+  Claude: "#d97706", ChatGPT: "#10a37f", Gemini: "#4285f4", Copilot: "#6366f1",
+  Gamma: "#8b5cf6", Canva: "#00c4cc", Lovable: "#ec4899", Base44: "#1e293b",
+  "Google Classroom": "#0f9d58", "Google Docs": "#4285f4", "Google Sheets": "#0f9d58",
+  "Google Forms": "#7b1fa2", "Google Slides": "#f4b400", "Google Drive": "#4285f4",
+  "Google Meet": "#00897b", Gmail: "#ea4335", "Google Keep": "#fbbc04",
+  "Google Sites": "#4285f4", NotebookLM: "#1a73e8", Kahoot: "#46178f",
+  Suno: "#1db954", Moodle: "#f98012",
+};
+
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div className="page-enter-delay-2">
@@ -70,8 +79,11 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <p className="mb-2 text-xs font-semibold text-muted-foreground">כלים בסדנה</p>
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
-                <Badge key={tool} variant="secondary" className="flex items-center gap-1.5 text-xs">
-                  <ToolLogo name={tool} />
+                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs">
+                  <span
+                    className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: toolColors[tool] || "#888" }}
+                  />
                   {tool}
                 </Badge>
               ))}
