@@ -39,12 +39,13 @@ function applySettings(settings: Settings) {
 }
 
 export function AccessibilityWidget() {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(typeof window !== "undefined");
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
-    setMounted(true);
+    if (!mounted) setMounted(true);
+    console.log("[a11y] widget mounted");
 
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
