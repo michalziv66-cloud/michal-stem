@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { createPortal } from "react-dom";
 import { Button } from "@/components/ui/button";
 
 type Settings = {
@@ -12,6 +11,7 @@ const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlight
 const STORAGE_KEY = "a11y-settings";
 
 function applySettings(s: Settings) {
+  if (typeof document === "undefined") return;
   const html = document.documentElement;
   html.classList.remove("a11y-font-1", "a11y-font-2");
   if (s.fontSize === 1) html.classList.add("a11y-font-1");
@@ -21,37 +21,34 @@ function applySettings(s: Settings) {
 }
 
 export function AccessibilityWidget() {
-  const [container, setContainer] = useState<HTMLElement | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
-    // Create a container div and append to body
-    const div = document.createElement("div");
-    div.id = "a11y-widget-root";
-    document.body.appendChild(div);
-    setContainer(div);
-
-    // Load saved settings
+    console.log("[A11Y] Widget mounted");
+    setMounted(true);
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const saved = JSON.parse(raw);
+        const saved = JSON.parse(raw) as Settings;
         setSettings(saved);
         applySettings(saved);
       }
-    } catch {}
-
-    return () => {
-      document.body.removeChild(div);
-    };
+    } catch {
+      // ignore
+    }
   }, []);
 
   useEffect(() => {
-    if (!container) return;
+    if (!mounted) return;
     applySettings(settings);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-  }, [settings, container]);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch {
+      // ignore
+    }
+  }, [settings, mounted]);
 
   const update = useCallback((partial: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...partial }));
@@ -61,12 +58,14 @@ export function AccessibilityWidget() {
     setSettings(DEFAULT_SETTINGS);
   }, []);
 
-  if (!container) return null;
+  console.log("[A11Y] Render, mounted:", mounted);
+
+  if (!mounted) return null;
 
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
-  return createPortal(
-    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
+  return (
+    <div style={{ position: "fixed", bottom: 16, left: 16, zIndex: 9999 }} dir="rtl">
       {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
           <div className="mb-3 flex items-center justify-between">
@@ -129,13 +128,25 @@ export function AccessibilityWidget() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: "50%",
+          backgroundColor: "var(--primary)",
+          color: "var(--primary-foreground)",
+          fontSize: 20,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
+          cursor: "pointer",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+        }}
         aria-label="נגישות"
         title="נגישות"
       >
         ♿
       </button>
-    </div>,
-    container,
+    </div>
   );
 }
