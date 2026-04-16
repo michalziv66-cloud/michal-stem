@@ -46,15 +46,6 @@ const workshops: Workshop[] = [
   },
 ];
 
-const toolEmoji: Record<string, string> = {
-  Claude: "🟠", ChatGPT: "🟢", Gemini: "🔵", Copilot: "🟣",
-  Gamma: "🟣", Canva: "🟦", Lovable: "💗", Base44: "⬛",
-  "Google Classroom": "🟩", "Google Docs": "📄", "Google Sheets": "📊",
-  "Google Forms": "📋", "Google Slides": "📽️", "Google Drive": "💾",
-  "Google Meet": "📹", Gmail: "✉️", "Google Keep": "📝",
-  "Google Sites": "🌐", NotebookLM: "📓", Kahoot: "🎯",
-  Suno: "🎵", Moodle: "🎓",
-};
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
