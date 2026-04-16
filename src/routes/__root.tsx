@@ -1,5 +1,4 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts, ClientOnly } from "@tanstack/react-router";
-import { AccessibilityWidget } from "@/components/AccessibilityWidget";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -76,9 +75,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <ClientOnly fallback={null}>
-        <AccessibilityWidget />
-      </ClientOnly>
     </>
   );
 }
