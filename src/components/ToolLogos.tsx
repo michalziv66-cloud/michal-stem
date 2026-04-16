@@ -1,4 +1,4 @@
-/* Simplified brand-style SVG logos for workshop tool badges – 16×16 */
+/* Brand-style SVG logos for workshop tool badges – 16×16 */
 
 const S = 16;
 

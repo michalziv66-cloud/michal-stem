@@ -3,44 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const toolBrands: Record<string, { abbr: string; bg: string; fg: string }> = {
-  Claude:           { abbr: "C",  bg: "#d97706", fg: "#fff" },
-  ChatGPT:          { abbr: "G",  bg: "#10a37f", fg: "#fff" },
-  Gemini:           { abbr: "G",  bg: "#4285f4", fg: "#fff" },
-  Copilot:          { abbr: "Co", bg: "#6366f1", fg: "#fff" },
-  Gamma:            { abbr: "γ",  bg: "#8b5cf6", fg: "#fff" },
-  Canva:            { abbr: "C",  bg: "#00c4cc", fg: "#fff" },
-  Lovable:          { abbr: "♥",  bg: "#ec4899", fg: "#fff" },
-  Base44:           { abbr: "44", bg: "#1e293b", fg: "#fff" },
-  "Google Classroom": { abbr: "GC", bg: "#0f9d58", fg: "#fff" },
-  "Google Docs":    { abbr: "D",  bg: "#4285f4", fg: "#fff" },
-  "Google Sheets":  { abbr: "S",  bg: "#0f9d58", fg: "#fff" },
-  "Google Forms":   { abbr: "F",  bg: "#7b1fa2", fg: "#fff" },
-  "Google Slides":  { abbr: "Sl", bg: "#f4b400", fg: "#fff" },
-  "Google Drive":   { abbr: "Dr", bg: "#4285f4", fg: "#fff" },
-  "Google Meet":    { abbr: "M",  bg: "#00897b", fg: "#fff" },
-  Gmail:            { abbr: "✉",  bg: "#ea4335", fg: "#fff" },
-  "Google Keep":    { abbr: "K",  bg: "#fbbc04", fg: "#333" },
-  "Google Sites":   { abbr: "Si", bg: "#4285f4", fg: "#fff" },
-  NotebookLM:       { abbr: "NB", bg: "#1a73e8", fg: "#fff" },
-  Kahoot:           { abbr: "K!", bg: "#46178f", fg: "#fff" },
-  Suno:             { abbr: "♫",  bg: "#1db954", fg: "#fff" },
-  Moodle:           { abbr: "M",  bg: "#f98012", fg: "#fff" },
-};
-
-function ToolIcon({ name }: { name: string }) {
-  const brand = toolBrands[name];
-  if (!brand) return null;
-  return (
-    <span
-      className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[9px] font-bold leading-none"
-      style={{ backgroundColor: brand.bg, color: brand.fg }}
-    >
-      {brand.abbr}
-    </span>
-  );
-}
-
 export const Route = createFileRoute("/training")({
   head: () => ({
     meta: [
@@ -78,6 +40,16 @@ const workshops: Workshop[] = [
   },
 ];
 
+const toolColors: Record<string, string> = {
+  Claude: "#d97706", ChatGPT: "#10a37f", Gemini: "#4285f4", Copilot: "#6366f1",
+  Gamma: "#8b5cf6", Canva: "#00c4cc", Lovable: "#ec4899", Base44: "#1e293b",
+  "Google Classroom": "#0f9d58", "Google Docs": "#4285f4", "Google Sheets": "#0f9d58",
+  "Google Forms": "#7b1fa2", "Google Slides": "#f4b400", "Google Drive": "#4285f4",
+  "Google Meet": "#00897b", Gmail: "#ea4335", "Google Keep": "#fbbc04",
+  "Google Sites": "#4285f4", NotebookLM: "#1a73e8", Kahoot: "#46178f",
+  Suno: "#1db954", Moodle: "#f98012",
+};
+
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div className="page-enter-delay-2">
@@ -107,8 +79,11 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <p className="mb-2 text-xs font-semibold text-muted-foreground">כלים בסדנה</p>
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
-                <Badge key={tool} variant="secondary" className="flex items-center gap-1.5 text-xs">
-                  <ToolIcon name={tool} />
+                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs">
+                  <span
+                    className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+                    style={{ backgroundColor: toolColors[tool] || "#888" }}
+                  />
                   {tool}
                 </Badge>
               ))}
