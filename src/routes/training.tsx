@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import trainingAiImage from "@/assets/training-ai-design.png";
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -19,6 +20,7 @@ type Workshop = {
   title: string;
   description: string;
   tools: string[];
+  image?: string;
 };
 
 const workshops: Workshop[] = [
@@ -27,6 +29,7 @@ const workshops: Workshop[] = [
     description:
       "סדנה מעשית לבניית חומרי הוראה, מצגות וכלים דיגיטליים באמצעות כלי AI. המשתתפים יוצאים עם תוצר מוכן לשימוש.",
     tools: ["Claude", "ChatGPT", "Gemini", "Copilot", "Gamma", "Canva", "Lovable", "Base44"],
+    image: trainingAiImage,
   },
   {
     title: "הוראה בכלים דיגיטליים",
@@ -54,9 +57,14 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div className="page-enter-delay-2">
       <Card className="card-hover h-full overflow-hidden">
-        {/* Image placeholder */}
-        <div className="flex aspect-[16/9] items-center justify-center bg-primary/5">
-          <span className="text-5xl">🎓</span>
+        <div className="aspect-[16/9] overflow-hidden bg-primary/5">
+          {workshop.image ? (
+            <img src={workshop.image} alt={workshop.title} className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <span className="text-5xl">🎓</span>
+            </div>
+          )}
         </div>
 
         <CardHeader>
