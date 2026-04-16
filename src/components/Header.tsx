@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
 
@@ -16,14 +16,6 @@ const navItems = [
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    if (document.getElementById("a11y-widget")) return;
-    const script = document.createElement("script");
-    script.src = "/a11y.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-sm">
