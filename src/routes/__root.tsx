@@ -78,7 +78,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <AccessibilityWidget />
+      <Suspense fallback={null}><AccessibilityWidget /></Suspense>
     </>
   );
 }
