@@ -54,7 +54,6 @@ function DefaultErrorComponent({ error, reset }: { error: Error; reset: () => vo
   );
 }
 
-// Router factory
 export const getRouter = () => {
   const router = createRouter({
     routeTree,

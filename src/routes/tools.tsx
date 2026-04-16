@@ -124,7 +124,6 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         icon: "🎧",
         url: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1.mp4",
         isVideo: true,
-        image: "/notebook-lm/פתרון_מערכת_משוואות_שיטת_הנגדת_המקדמים_1_thumb.jpg",
       },
       {
         title: "איך לפצח את קוד הישר",
@@ -132,7 +131,6 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         icon: "🎧",
         url: "/notebook-lm/איך_לפצח_את_קוד_הישר.mp4",
         isVideo: true,
-        image: "/notebook-lm/איך_לפצח_את_קוד_הישר_thumb.jpg",
       },
       {
         title: "השביל הסודי – משפט פיתגורס",
@@ -140,7 +138,6 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
         icon: "🎧",
         url: "/notebook-lm/השביל_הסודי_משפט_פיתגורס_1.mp4",
         isVideo: true,
-        image: "/notebook-lm/השביל_הסודי_משפט_פיתגורס_1_thumb.jpg",
       },
     ],
   },
@@ -156,7 +153,7 @@ function ToolCard({ item }: { item: ToolItem }) {
           <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <video src={`${item.url}#t=0.1`} poster={item.image} controls className="w-full rounded-lg" preload="metadata" />
+          <video src={item.url} controls className="w-full rounded-lg" preload="metadata" />
         </CardContent>
       </Card>
     );
