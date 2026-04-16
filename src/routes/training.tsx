@@ -79,11 +79,7 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <p className="mb-2 text-xs font-semibold text-muted-foreground">כלים בסדנה</p>
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
-                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs">
-                  <span
-                    className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: toolColors[tool] || "#888" }}
-                  />
+                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs" style={{ borderRight: `3px solid ${toolColors[tool] || "#888"}` }}>
                   {tool}
                 </Badge>
               ))}
