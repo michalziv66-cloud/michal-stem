@@ -58,14 +58,11 @@ export function AccessibilityWidget() {
     setSettings(DEFAULT_SETTINGS);
   }, []);
 
-  // Don't render during SSR
-  if (!mounted) return null;
-
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
   return (
-    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
-      {open && (
+    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl" suppressHydrationWarning>
+      {mounted && open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-sm font-bold">הגדרות נגישות</h3>
@@ -125,14 +122,16 @@ export function AccessibilityWidget() {
         </div>
       )}
 
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
-        aria-label="נגישות"
-        title="נגישות"
-      >
-        ♿
-      </button>
+      {mounted && (
+        <button
+          onClick={() => setOpen(!open)}
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-xl text-primary-foreground shadow-lg transition-transform hover:scale-110"
+          aria-label="נגישות"
+          title="נגישות"
+        >
+          ♿
+        </button>
+      )}
     </div>
   );
 }
