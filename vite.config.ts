@@ -6,4 +6,15 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  vite: {
+    plugins: [
+      {
+        name: "inject-a11y-script",
+        transformIndexHtml(html: string) {
+          return html.replace("</body>", '<script src="/a11y.js" defer></script></body>');
+        },
+      },
+    ],
+  },
+});
