@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { AccessibilityWidget } from "@/components/AccessibilityWidget";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -47,12 +48,6 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
-    scripts: [
-      {
-        src: "/a11y.js",
-        defer: true,
-      },
-    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -81,6 +76,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <AccessibilityWidget />
     </>
   );
 }
