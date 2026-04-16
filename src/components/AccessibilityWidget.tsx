@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +13,7 @@ const DEFAULT_SETTINGS: Settings = { fontSize: 0, highContrast: false, highlight
 const STORAGE_KEY = "a11y-settings";
 
 function applySettings(s: Settings) {
+  if (typeof document === "undefined") return;
   const html = document.documentElement;
   html.classList.remove("a11y-font-1", "a11y-font-2");
   if (s.fontSize === 1) html.classList.add("a11y-font-1");
@@ -29,17 +32,23 @@ export function AccessibilityWidget() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const saved = JSON.parse(raw);
+        const saved = JSON.parse(raw) as Settings;
         setSettings(saved);
         applySettings(saved);
       }
-    } catch {}
+    } catch {
+      // ignore
+    }
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
     applySettings(settings);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch {
+      // ignore
+    }
   }, [settings, mounted]);
 
   const update = useCallback((partial: Partial<Settings>) => {
@@ -55,7 +64,7 @@ export function AccessibilityWidget() {
   const fontLabels = ["רגיל", "גדול", "גדול מאוד"];
 
   return (
-    <div className="fixed bottom-4 start-4 z-[9999]" dir="rtl">
+    <div className="fixed bottom-4 left-4 z-[9999]" dir="rtl">
       {open && (
         <div className="mb-2 w-64 rounded-xl border bg-card p-4 shadow-xl">
           <div className="mb-3 flex items-center justify-between">
