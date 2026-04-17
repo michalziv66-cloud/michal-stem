@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Volume2, Square, Loader2 } from "lucide-react";
+import { Volume2, Square } from "lucide-react";
 import avatarImage from "@/assets/avatar-michal.png";
 import { cn } from "@/lib/utils";
 
