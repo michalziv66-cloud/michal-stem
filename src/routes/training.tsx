@@ -2,6 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ToolLogo } from "@/components/ToolLogos";
+import trainingAiImage from "@/assets/training-ai-design.png";
+import trainingDigitalImage from "@/assets/training-digital-tools.png";
 
 export const Route = createFileRoute("/training")({
   head: () => ({
@@ -19,6 +22,7 @@ type Workshop = {
   title: string;
   description: string;
   tools: string[];
+  image?: string;
 };
 
 const workshops: Workshop[] = [
@@ -27,6 +31,7 @@ const workshops: Workshop[] = [
     description:
       "סדנה מעשית לבניית חומרי הוראה, מצגות וכלים דיגיטליים באמצעות כלי AI. המשתתפים יוצאים עם תוצר מוכן לשימוש.",
     tools: ["Claude", "ChatGPT", "Gemini", "Copilot", "Gamma", "Canva", "Lovable", "Base44"],
+    image: trainingAiImage,
   },
   {
     title: "הוראה בכלים דיגיטליים",
@@ -37,26 +42,23 @@ const workshops: Workshop[] = [
       "Google Slides", "Google Drive", "Google Meet", "Gmail",
       "Google Keep", "Google Sites", "NotebookLM", "Kahoot", "Suno", "Moodle",
     ],
+    image: trainingDigitalImage,
   },
 ];
 
-const toolColors: Record<string, string> = {
-  Claude: "#d97706", ChatGPT: "#10a37f", Gemini: "#4285f4", Copilot: "#6366f1",
-  Gamma: "#8b5cf6", Canva: "#00c4cc", Lovable: "#ec4899", Base44: "#1e293b",
-  "Google Classroom": "#0f9d58", "Google Docs": "#4285f4", "Google Sheets": "#0f9d58",
-  "Google Forms": "#7b1fa2", "Google Slides": "#f4b400", "Google Drive": "#4285f4",
-  "Google Meet": "#00897b", Gmail: "#ea4335", "Google Keep": "#fbbc04",
-  "Google Sites": "#4285f4", NotebookLM: "#1a73e8", Kahoot: "#46178f",
-  Suno: "#1db954", Moodle: "#f98012",
-};
 
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div className="page-enter-delay-2">
       <Card className="card-hover h-full overflow-hidden">
-        {/* Image placeholder */}
-        <div className="flex aspect-[16/9] items-center justify-center bg-primary/5">
-          <span className="text-5xl">🎓</span>
+        <div className="aspect-[16/9] overflow-hidden bg-primary/5">
+          {workshop.image ? (
+            <img src={workshop.image} alt={workshop.title} className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <span className="text-5xl">🎓</span>
+            </div>
+          )}
         </div>
 
         <CardHeader>
@@ -79,11 +81,8 @@ function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <p className="mb-2 text-xs font-semibold text-muted-foreground">כלים בסדנה</p>
             <div className="flex flex-wrap gap-1.5">
               {workshop.tools.map((tool) => (
-                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1.5 text-xs">
-                  <span
-                    className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: toolColors[tool] || "#888" }}
-                  />
+                <Badge key={tool} variant="secondary" className="inline-flex items-center gap-1 text-xs">
+                  <ToolLogo name={tool} />
                   {tool}
                 </Badge>
               ))}
