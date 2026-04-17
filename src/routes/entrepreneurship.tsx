@@ -41,7 +41,7 @@ function EntrepreneurshipPage() {
         </div>
         <div>
           <h1 className="section-title">מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים</h1>
-          <p className="mt-2 text-muted-foreground">מוגש ע״י: מיכל זיו, מחנכת ומובילת פיתוח פדגוגי דיגיטלי במתמטיקה</p>
+          <p className="mt-2 text-muted-foreground">{"\n"}</p>
         </div>
       </div>
 
