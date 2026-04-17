@@ -24,7 +24,7 @@ export const Route = createFileRoute("/contact")({
 
 const WHATSAPP_NUMBER = "972509017802";
 const WHATSAPP_MESSAGE = "שלום מיכל, פניתי אליך מהאתר ואשמח לקבל פרטים נוספים.";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
 function ContactPage() {
   const ctaRef = useScrollReveal();
