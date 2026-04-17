@@ -37,11 +37,16 @@ export function SpeakingAvatar() {
   }, []);
 
   // Stop speaking when navigating to a new page
+  // Stop speaking only when navigating AWAY from a page that's actively reading.
+  // Use a ref to track previous path so we don't cancel on initial mount/StrictMode double-run.
+  const prevPathRef = useRef<string | null>(null);
   useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (prevPathRef.current !== null && prevPathRef.current !== path) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
     }
+    prevPathRef.current = path;
   }, [path]);
 
   const pickHebrewVoice = (): SpeechSynthesisVoice | null => {
@@ -138,14 +143,19 @@ export function SpeakingAvatar() {
       }
     }
 
-    utter.onstart = () => setIsSpeaking(true);
-    utter.onend = () => setIsSpeaking(false);
+    utter.onstart = () => {
+      console.log("[SpeakingAvatar] onstart — speech actually started");
+      setIsSpeaking(true);
+    };
+    utter.onend = () => {
+      console.log("[SpeakingAvatar] onend");
+      setIsSpeaking(false);
+    };
     utter.onerror = (e) => {
       console.error("[SpeakingAvatar] speech error:", e.error, {
         usedVoice: utter.voice?.name,
         lang: utter.lang,
       });
-      // Retry once with the browser default voice if the picked voice failed
       if (!useDefaultVoice && e.error === "synthesis-failed") {
         console.warn("[SpeakingAvatar] retrying with default voice...");
         setTimeout(() => speak(text, true), 50);
@@ -154,9 +164,26 @@ export function SpeakingAvatar() {
       setIsSpeaking(false);
     };
 
+    console.log("[SpeakingAvatar] calling synth.speak()", {
+      voice: utter.voice?.name ?? "(default)",
+      lang: utter.lang,
+      textLength: text.length,
+      pending: synth.pending,
+      speaking: synth.speaking,
+      paused: synth.paused,
+    });
     utteranceRef.current = utter;
     synth.speak(utter);
     setIsSpeaking(true);
+
+    // Diagnostic: check after 500ms whether speech actually started
+    setTimeout(() => {
+      console.log("[SpeakingAvatar] 500ms after speak():", {
+        speaking: synth.speaking,
+        pending: synth.pending,
+        paused: synth.paused,
+      });
+    }, 500);
 
     // Chrome workaround: speech can stall after ~15s, ping resume periodically
     const keepAlive = setInterval(() => {
@@ -170,32 +197,54 @@ export function SpeakingAvatar() {
   };
 
   const handleClick = () => {
-    if (!isSupported) return;
+    console.log("[SpeakingAvatar] === click ===", {
+      isSupported,
+      isSpeaking,
+      hasScript: !!scriptText,
+      path,
+    });
+    if (!isSupported) {
+      console.warn("[SpeakingAvatar] speechSynthesis not supported");
+      return;
+    }
 
     const synth = window.speechSynthesis;
+    const allVoices = synth.getVoices();
+    console.log(
+      "[SpeakingAvatar] voices available:",
+      allVoices.length,
+      allVoices.map((v) => `${v.name} (${v.lang})`),
+    );
 
     if (isSpeaking || synth.speaking) {
+      console.log("[SpeakingAvatar] currently speaking — cancelling");
       synth.cancel();
       setIsSpeaking(false);
       return;
     }
 
     const text = scriptText;
-    if (!text) return;
+    if (!text) {
+      console.warn("[SpeakingAvatar] no script text for path", path);
+      return;
+    }
 
     // If voices haven't loaded yet, wait for them (Chrome async voice loading)
-    if (synth.getVoices().length === 0) {
+    if (allVoices.length === 0) {
+      console.log("[SpeakingAvatar] voices not loaded yet, waiting...");
       const onVoices = () => {
         synth.removeEventListener("voiceschanged", onVoices);
+        console.log("[SpeakingAvatar] voiceschanged fired, retrying speak");
         speak(text);
       };
       synth.addEventListener("voiceschanged", onVoices);
-      // Trigger voice load
       synth.getVoices();
-      // Fallback timeout in case event never fires
       setTimeout(() => {
         synth.removeEventListener("voiceschanged", onVoices);
-        if (!synth.speaking) speak(text);
+        if (!synth.speaking) {
+          console.log("[SpeakingAvatar] timeout — speaking anyway");
+          speak(text);
+        }
       }, 500);
       return;
     }
