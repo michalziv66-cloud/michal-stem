@@ -11,10 +11,19 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
-      { name: "description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
-      { property: "og:title", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
-      { property: "og:description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
+      { title: "מיכל זיו — מומחית AI בחינוך, הדרכות לחדרי מורים וכלי STEM" },
+      {
+        name: "description",
+        content:
+          "הדרכות בינה מלאכותית למורים, סדנאות AI לחדרי מורים, וכלי STEM להוראת מתמטיקה. 14 שנות ניסיון בחדשנות פדגוגית.",
+      },
+      { property: "og:title", content: "מיכל זיו — מומחית AI בחינוך והוראה" },
+      {
+        property: "og:description",
+        content:
+          "הדרכות AI למורים, סדנאות לחדרי מורים, וכלי STEM להוראת מתמטיקה.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/" },
     ],
   }),
   component: HomePage,

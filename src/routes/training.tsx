@@ -9,10 +9,37 @@ import trainingDigitalImage from "@/assets/training-digital-tools.png";
 export const Route = createFileRoute("/training")({
   head: () => ({
     meta: [
-      { title: "הדרכות AI בזום — מיכל זיו" },
-      { name: "description", content: "סדנאות מעשיות בזום: עיצוב ובנייה עם AI, הוראה בכלים דיגיטליים — עד 100 משתתפים" },
-      { property: "og:title", content: "הדרכות AI בזום — מיכל זיו" },
-      { property: "og:description", content: "סדנאות מעשיות בזום: עיצוב ובנייה עם AI, הוראה בכלים דיגיטליים" },
+      { title: "סדנאות AI בזום למורים — עיצוב, בנייה והוראה דיגיטלית | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "סדנאות מקוונות בזום למורים: עיצוב ובנייה עם בינה מלאכותית, ChatGPT בכיתה וכלים דיגיטליים להוראה. עד 100 משתתפים.",
+      },
+      { name: "keywords", content: "סדנאות AI, הדרכות בזום, ChatGPT למורים, AI בכיתה, סדנת בינה מלאכותית" },
+      { property: "og:title", content: "סדנאות AI בזום למורים | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "סדנאות מקוונות בעיצוב, בנייה והוראה עם AI — עד 100 משתתפים.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/training" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "סדנאות AI בזום למורים",
+          description: "סדנאות מקוונות בזום: עיצוב ובנייה עם בינה מלאכותית והוראה בכלים דיגיטליים.",
+          provider: {
+            "@type": "Person",
+            name: "מיכל זיו",
+            url: "https://michal-stem.lovable.app/",
+          },
+          inLanguage: "he",
+          courseMode: "online",
+        }),
+      },
     ],
   }),
   component: TrainingPage,

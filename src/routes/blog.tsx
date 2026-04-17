@@ -5,10 +5,19 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "בלוג — מיכל זיו" },
-      { name: "description", content: "מאמרים על חדשנות פדגוגית, AI בחינוך, והוראת מתמטיקה" },
-      { property: "og:title", content: "בלוג — מיכל זיו" },
-      { property: "og:description", content: "מאמרים על חדשנות פדגוגית, AI בחינוך, והוראת מתמטיקה" },
+      { title: "בלוג — AI בחינוך, חדשנות פדגוגית והוראת מתמטיקה | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "מאמרים, טיפים ותובנות על שילוב בינה מלאכותית בכיתה, חדשנות פדגוגית, ChatGPT למורים והוראת מתמטיקה אפקטיבית.",
+      },
+      { name: "keywords", content: "בלוג חינוך, AI בחינוך, ChatGPT, מאמרים למורים, חדשנות פדגוגית" },
+      { property: "og:title", content: "בלוג מיכל זיו — AI בחינוך והוראת מתמטיקה" },
+      {
+        property: "og:description",
+        content: "מאמרים על AI בחינוך, ChatGPT למורים והוראת מתמטיקה.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/blog" },
     ],
   }),
   component: BlogPage,

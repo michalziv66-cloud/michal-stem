@@ -6,10 +6,18 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "אודות — מיכל זיו" },
-      { name: "description", content: "מורה למתמטיקה בחטיבת הביניים עם 14 שנות ניסיון, מובילת חדשנות פדגוגית" },
-      { property: "og:title", content: "אודות — מיכל זיו" },
-      { property: "og:description", content: "מורה למתמטיקה בחטיבת הביניים עם 14 שנות ניסיון" },
+      { title: "אודות מיכל זיו — מומחית AI בחינוך ומורה למתמטיקה" },
+      {
+        name: "description",
+        content:
+          "מיכל זיו: 14 שנות ניסיון כמורה למתמטיקה בחטיבת הביניים, מובילת חדשנות פדגוגית ומומחית לשילוב בינה מלאכותית בהוראה.",
+      },
+      { property: "og:title", content: "אודות מיכל זיו — מומחית AI בחינוך" },
+      {
+        property: "og:description",
+        content: "14 שנות ניסיון בהוראה, חדשנות פדגוגית ושילוב AI בחינוך.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/about" },
     ],
   }),
   component: AboutPage,

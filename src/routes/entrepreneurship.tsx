@@ -7,10 +7,19 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/entrepreneurship")({
   head: () => ({
     meta: [
-      { title: "יזמית פדגוגית במתמטיקה — מיכל זיו" },
-      { name: "description", content: "מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים" },
-      { property: "og:title", content: "יזמית פדגוגית במתמטיקה — מיכל זיו" },
-      { property: "og:description", content: "מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים" },
+      { title: "יזמות פדגוגית במתמטיקה — מודל להזנקת STEM | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "מודל יזמי-יישומי להזנקת מדדי STEM ואוריינות מתמטית בחטיבת הביניים. שיטה מוכחת לשיפור הישגים והנעת מורים.",
+      },
+      { name: "keywords", content: "יזמות פדגוגית, STEM, אוריינות מתמטית, חטיבת ביניים, חדשנות בחינוך" },
+      { property: "og:title", content: "יזמות פדגוגית במתמטיקה | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "מודל יישומי להזנקת מדדי STEM ואוריינות מתמטית בחטיבת הביניים.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/entrepreneurship" },
     ],
   }),
   component: EntrepreneurshipPage,

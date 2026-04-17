@@ -14,10 +14,19 @@ import imgPresMeshulash from "@/assets/tools/presentation4.jpg";
 export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
-      { title: "כלי עבודה — מיכל זיו" },
-      { name: "description", content: "כלי עבודה דיגיטליים להוראת מתמטיקה: מצגות, דפי עבודה, סרטונים ואפליקציות אינטראקטיביות" },
-      { property: "og:title", content: "כלי עבודה — מיכל זיו" },
-      { property: "og:description", content: "כלי עבודה דיגיטליים להוראת מתמטיקה" },
+      { title: "כלי AI להוראת מתמטיקה — מצגות, אפליקציות וסרטונים | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "אוסף כלי AI ומשאבים דיגיטליים להוראת מתמטיקה: מצגות אינטראקטיביות, אפליקציות לימוד, דפי עבודה וסרטוני הסבר.",
+      },
+      { name: "keywords", content: "כלי AI למורים, אפליקציות מתמטיקה, מצגות אינטראקטיביות, כלים דיגיטליים להוראה" },
+      { property: "og:title", content: "כלי AI להוראת מתמטיקה | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "מצגות, אפליקציות, דפי עבודה וסרטונים להוראת מתמטיקה עם AI.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/tools" },
     ],
   }),
   component: ToolsPage,
