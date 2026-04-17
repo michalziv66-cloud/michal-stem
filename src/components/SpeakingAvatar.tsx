@@ -48,10 +48,40 @@ export function SpeakingAvatar() {
   const pickHebrewVoice = (): SpeechSynthesisVoice | null => {
     const voices = window.speechSynthesis.getVoices();
     if (!voices.length) return null;
-    const he =
-      voices.find((v) => v.lang?.toLowerCase().startsWith("he")) ||
-      voices.find((v) => v.lang?.toLowerCase().includes("iw"));
-    return he || null;
+
+    const hebrewVoices = voices.filter(
+      (v) =>
+        v.lang?.toLowerCase().startsWith("he") ||
+        v.lang?.toLowerCase().includes("iw"),
+    );
+
+    // Heuristic: prefer voices whose name suggests a female speaker
+    const femaleHints = [
+      "female",
+      "woman",
+      "carmit", // common Hebrew female voice on macOS/iOS
+      "google",
+      "זוהר",
+      "שירה",
+      "מיכל",
+      "יעל",
+    ];
+
+    const isLikelyFemale = (name: string) => {
+      const n = name.toLowerCase();
+      if (n.includes("male") && !n.includes("female")) return false;
+      return femaleHints.some((h) => n.includes(h.toLowerCase()));
+    };
+
+    const femaleHebrew = hebrewVoices.find((v) => isLikelyFemale(v.name));
+    if (femaleHebrew) return femaleHebrew;
+
+    // Fallback: any Hebrew voice
+    if (hebrewVoices[0]) return hebrewVoices[0];
+
+    // Last resort: any female-sounding voice in any language
+    const anyFemale = voices.find((v) => isLikelyFemale(v.name));
+    return anyFemale || null;
   };
 
   const handleClick = () => {
