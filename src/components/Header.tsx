@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Button } from "@/components/ui/button";
-import { SpeakingAvatar } from "@/components/SpeakingAvatar";
 
 const navItems = [
   { to: "/", label: "בית" },
@@ -39,7 +38,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <SpeakingAvatar />
           <Button
             variant="ghost"
             size="icon"
