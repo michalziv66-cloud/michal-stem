@@ -120,11 +120,51 @@ export function SpeakingAvatar() {
     return hebrewVoices[0] || null;
   };
 
+  const speak = (text: string) => {
+    const synth = window.speechSynthesis;
+
+    // Build utterance SYNCHRONOUSLY inside user gesture
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "he-IL";
+    utter.rate = 1;
+    utter.pitch = 1.25;
+    utter.volume = 1;
+
+    const voice = pickHebrewVoice();
+    if (voice) {
+      utter.voice = voice;
+      utter.lang = voice.lang;
+    }
+
+    utter.onstart = () => setIsSpeaking(true);
+    utter.onend = () => setIsSpeaking(false);
+    utter.onerror = (e) => {
+      console.error("[SpeakingAvatar] speech error:", e.error);
+      setIsSpeaking(false);
+    };
+
+    utteranceRef.current = utter;
+    synth.speak(utter);
+    setIsSpeaking(true);
+
+    // Chrome bug workaround: speech can stall after ~15s, ping resume periodically
+    const keepAlive = setInterval(() => {
+      if (!synth.speaking) {
+        clearInterval(keepAlive);
+        return;
+      }
+      synth.pause();
+      synth.resume();
+    }, 10000);
+  };
+
   const handleClick = () => {
     if (!isSupported) return;
 
-    if (isSpeaking) {
-      window.speechSynthesis.cancel();
+    const synth = window.speechSynthesis;
+
+    if (isSpeaking || synth.speaking) {
+      synth.cancel();
       setIsSpeaking(false);
       return;
     }
@@ -132,24 +172,24 @@ export function SpeakingAvatar() {
     const text = scriptText;
     if (!text) return;
 
-    // Cancel anything queued
-    window.speechSynthesis.cancel();
+    // If voices haven't loaded yet, wait for them (Chrome async voice loading)
+    if (synth.getVoices().length === 0) {
+      const onVoices = () => {
+        synth.removeEventListener("voiceschanged", onVoices);
+        speak(text);
+      };
+      synth.addEventListener("voiceschanged", onVoices);
+      // Trigger voice load
+      synth.getVoices();
+      // Fallback timeout in case event never fires
+      setTimeout(() => {
+        synth.removeEventListener("voiceschanged", onVoices);
+        if (!synth.speaking) speak(text);
+      }, 500);
+      return;
+    }
 
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "he-IL";
-    utter.rate = 1;
-    // Slightly higher pitch helps generic voices sound more feminine
-    utter.pitch = 1.25;
-
-    const voice = pickHebrewVoice();
-    if (voice) utter.voice = voice;
-
-    utter.onend = () => setIsSpeaking(false);
-    utter.onerror = () => setIsSpeaking(false);
-
-    utteranceRef.current = utter;
-    window.speechSynthesis.speak(utter);
-    setIsSpeaking(true);
+    speak(text);
   };
 
   // Some browsers load voices async — trigger a refresh
