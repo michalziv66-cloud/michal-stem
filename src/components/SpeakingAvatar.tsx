@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "@tanstack/react-router";
 import { Volume2, Square } from "lucide-react";
 import avatarImage from "@/assets/avatar-michal.png";
+import { avatarScripts } from "@/lib/avatar-scripts";
 import { cn } from "@/lib/utils";
 
 /**
