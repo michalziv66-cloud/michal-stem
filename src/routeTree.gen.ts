@@ -14,6 +14,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as SocialGeneratorRouteImport } from './routes/social-generator'
 import { Route as PrincipalsRouteImport } from './routes/principals'
 import { Route as MaterialsRouteImport } from './routes/materials'
+import { Route as EntrepreneurshipRouteImport } from './routes/entrepreneurship'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
@@ -44,6 +45,11 @@ const MaterialsRoute = MaterialsRouteImport.update({
   path: '/materials',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EntrepreneurshipRoute = EntrepreneurshipRouteImport.update({
+  id: '/entrepreneurship',
+  path: '/entrepreneurship',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/entrepreneurship': typeof EntrepreneurshipRoute
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/entrepreneurship': typeof EntrepreneurshipRoute
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
+  '/entrepreneurship': typeof EntrepreneurshipRoute
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/entrepreneurship'
     | '/materials'
     | '/principals'
     | '/social-generator'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/entrepreneurship'
     | '/materials'
     | '/principals'
     | '/social-generator'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/blog'
     | '/contact'
+    | '/entrepreneurship'
     | '/materials'
     | '/principals'
     | '/social-generator'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
+  EntrepreneurshipRoute: typeof EntrepreneurshipRoute
   MaterialsRoute: typeof MaterialsRoute
   PrincipalsRoute: typeof PrincipalsRoute
   SocialGeneratorRoute: typeof SocialGeneratorRoute
@@ -184,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MaterialsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/entrepreneurship': {
+      id: '/entrepreneurship'
+      path: '/entrepreneurship'
+      fullPath: '/entrepreneurship'
+      preLoaderRoute: typeof EntrepreneurshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
+  EntrepreneurshipRoute: EntrepreneurshipRoute,
   MaterialsRoute: MaterialsRoute,
   PrincipalsRoute: PrincipalsRoute,
   SocialGeneratorRoute: SocialGeneratorRoute,
@@ -229,12 +250,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

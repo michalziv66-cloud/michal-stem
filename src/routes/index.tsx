@@ -1,12 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
 import cardExperience from "@/assets/card-experience.jpg";
-import cardVision from "@/assets/card-vision.png";
+import cardVision from "@/assets/card-about-vr.png";
 import cardStem from "@/assets/card-stem.png";
 import profileImage from "@/assets/michal-profile.png";
-import logo from "@/assets/logo-white.svg";
-
+import { BrandLogo } from "@/components/BrandLogo";
+import { Button } from "@/components/ui/button";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 export const Route = createFileRoute("/")({
@@ -26,7 +25,6 @@ function HomePage() {
 
   return (
     <>
-      {/* Hero */}
       <section className="hero-gradient relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="hero-glow-1 absolute left-1/4 top-1/4 h-64 w-64 rounded-full bg-gold blur-3xl" />
@@ -37,13 +35,13 @@ function HomePage() {
             <div className="shimmer-border absolute inset-0 rounded-full" />
             <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
           </div>
-          <img src={logo} alt="מיכל זיו — מתמטיקה מחוץ לסוגריים" className="hero-logo mx-auto mb-6 h-28 w-auto sm:h-36 lg:h-44" />
+          <BrandLogo theme="dark" variant="hero" className="hero-logo mx-auto mb-6" />
           <p className="hero-subtitle mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
-            מורה למתמטיקה בחטיבת הביניים | מפתחת כלי AI ל-STEM
+            מורה למתמטיקה בחטיבת הביניים | מפתחת כלי <span className="whitespace-nowrap">AI ל-STEM</span>
           </p>
           <div className="hero-buttons mt-10 flex flex-wrap items-center justify-center gap-4">
             <Button asChild variant="hero" size="lg">
-              <Link to="/tools">לכלים האינטראקטיביים</Link>
+              <Link to="/training">הדרכות AI בזום</Link>
             </Button>
             <Button asChild variant="heroOutline" size="lg">
               <Link to="/principals">למנהלי חטיבות</Link>
@@ -55,11 +53,10 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Highlights */}
       <section className="section-container">
         <div ref={highlightsRef} className="scroll-reveal grid gap-8 sm:grid-cols-3">
           {[
-            { label: "יזמית פדגוגית במתמטיקה", image: cardExperience, link: "/about" },
+            { label: "יזמית פדגוגית במתמטיקה", image: cardExperience, link: "/entrepreneurship" },
             { num: "AI", label: "כלים חכמים ל-STEM", image: cardStem, round: false, link: "/tools" },
             { label: "אודות", image: cardVision, link: "/about" },
           ].map((item, i) => {
