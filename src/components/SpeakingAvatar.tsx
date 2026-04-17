@@ -60,9 +60,8 @@ export function SpeakingAvatar() {
       "female",
       "woman",
       "carmit", // common Hebrew female voice on macOS/iOS
-      "asaf" === "skip", // placeholder false to keep types
       "google",
-      "זוהר", // hebrew female names sometimes appear
+      "זוהר",
       "שירה",
       "מיכל",
       "יעל",
