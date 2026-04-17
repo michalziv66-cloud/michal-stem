@@ -143,14 +143,19 @@ export function SpeakingAvatar() {
       }
     }
 
-    utter.onstart = () => setIsSpeaking(true);
-    utter.onend = () => setIsSpeaking(false);
+    utter.onstart = () => {
+      console.log("[SpeakingAvatar] onstart — speech actually started");
+      setIsSpeaking(true);
+    };
+    utter.onend = () => {
+      console.log("[SpeakingAvatar] onend");
+      setIsSpeaking(false);
+    };
     utter.onerror = (e) => {
       console.error("[SpeakingAvatar] speech error:", e.error, {
         usedVoice: utter.voice?.name,
         lang: utter.lang,
       });
-      // Retry once with the browser default voice if the picked voice failed
       if (!useDefaultVoice && e.error === "synthesis-failed") {
         console.warn("[SpeakingAvatar] retrying with default voice...");
         setTimeout(() => speak(text, true), 50);
@@ -159,9 +164,26 @@ export function SpeakingAvatar() {
       setIsSpeaking(false);
     };
 
+    console.log("[SpeakingAvatar] calling synth.speak()", {
+      voice: utter.voice?.name ?? "(default)",
+      lang: utter.lang,
+      textLength: text.length,
+      pending: synth.pending,
+      speaking: synth.speaking,
+      paused: synth.paused,
+    });
     utteranceRef.current = utter;
     synth.speak(utter);
     setIsSpeaking(true);
+
+    // Diagnostic: check after 500ms whether speech actually started
+    setTimeout(() => {
+      console.log("[SpeakingAvatar] 500ms after speak():", {
+        speaking: synth.speaking,
+        pending: synth.pending,
+        paused: synth.paused,
+      });
+    }, 500);
 
     // Chrome workaround: speech can stall after ~15s, ping resume periodically
     const keepAlive = setInterval(() => {
