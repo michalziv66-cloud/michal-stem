@@ -107,7 +107,11 @@ export function SpeakingAvatar() {
         v.lang?.toLowerCase().includes("iw"),
     );
 
-    // 1. Hebrew + known female (e.g. Carmit)
+    // CRITICAL: Hebrew language MUST come first. A female voice that speaks
+    // English with Hebrew text sounds completely broken — better a Hebrew
+    // male voice (e.g. Microsoft Asaf on Windows) than an English female.
+
+    // 1. Hebrew + known female (e.g. Carmit on macOS/iOS)
     const hebFemale = hebrewVoices.find((v) => isKnownFemale(v.name));
     if (hebFemale) return hebFemale;
 
@@ -115,12 +119,14 @@ export function SpeakingAvatar() {
     const hebNotMale = hebrewVoices.find((v) => !isKnownMale(v.name));
     if (hebNotMale) return hebNotMale;
 
-    // 3. Any female voice in any language (better than a male Hebrew voice)
+    // 3. ANY Hebrew voice (even male — at least pronunciation is correct)
+    if (hebrewVoices[0]) return hebrewVoices[0];
+
+    // 4. No Hebrew at all — last resort, any female voice
     const anyFemale = voices.find((v) => isKnownFemale(v.name));
     if (anyFemale) return anyFemale;
 
-    // 4. Last resort: first Hebrew voice
-    return hebrewVoices[0] || null;
+    return null;
   };
 
   const speak = (text: string, useDefaultVoice = false) => {
