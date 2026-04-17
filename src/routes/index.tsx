@@ -47,7 +47,7 @@ function HomePage() {
               <Link to="/principals">למנהלי חטיבות</Link>
             </Button>
             <Button asChild variant="heroOutline" size="lg">
-              <Link to="/training">הדרכת חדרי מורים</Link>
+              <Link to="/teacher-training">הדרכת חדרי מורים</Link>
             </Button>
           </div>
         </div>

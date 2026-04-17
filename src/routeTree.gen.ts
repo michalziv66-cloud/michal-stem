@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrainingRouteImport } from './routes/training'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as TeacherTrainingRouteImport } from './routes/teacher-training'
 import { Route as SocialGeneratorRouteImport } from './routes/social-generator'
 import { Route as PrincipalsRouteImport } from './routes/principals'
 import { Route as MaterialsRouteImport } from './routes/materials'
@@ -28,6 +29,11 @@ const TrainingRoute = TrainingRouteImport.update({
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
   path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherTrainingRoute = TeacherTrainingRouteImport.update({
+  id: '/teacher-training',
+  path: '/teacher-training',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SocialGeneratorRoute = SocialGeneratorRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
+  '/teacher-training': typeof TeacherTrainingRoute
   '/tools': typeof ToolsRoute
   '/training': typeof TrainingRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
+  '/teacher-training': typeof TeacherTrainingRoute
   '/tools': typeof ToolsRoute
   '/training': typeof TrainingRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/materials': typeof MaterialsRoute
   '/principals': typeof PrincipalsRoute
   '/social-generator': typeof SocialGeneratorRoute
+  '/teacher-training': typeof TeacherTrainingRoute
   '/tools': typeof ToolsRoute
   '/training': typeof TrainingRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/materials'
     | '/principals'
     | '/social-generator'
+    | '/teacher-training'
     | '/tools'
     | '/training'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/materials'
     | '/principals'
     | '/social-generator'
+    | '/teacher-training'
     | '/tools'
     | '/training'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/materials'
     | '/principals'
     | '/social-generator'
+    | '/teacher-training'
     | '/tools'
     | '/training'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   MaterialsRoute: typeof MaterialsRoute
   PrincipalsRoute: typeof PrincipalsRoute
   SocialGeneratorRoute: typeof SocialGeneratorRoute
+  TeacherTrainingRoute: typeof TeacherTrainingRoute
   ToolsRoute: typeof ToolsRoute
   TrainingRoute: typeof TrainingRoute
 }
@@ -174,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/tools'
       fullPath: '/tools'
       preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher-training': {
+      id: '/teacher-training'
+      path: '/teacher-training'
+      fullPath: '/teacher-training'
+      preLoaderRoute: typeof TeacherTrainingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/social-generator': {
@@ -244,9 +264,19 @@ const rootRouteChildren: RootRouteChildren = {
   MaterialsRoute: MaterialsRoute,
   PrincipalsRoute: PrincipalsRoute,
   SocialGeneratorRoute: SocialGeneratorRoute,
+  TeacherTrainingRoute: TeacherTrainingRoute,
   ToolsRoute: ToolsRoute,
   TrainingRoute: TrainingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
