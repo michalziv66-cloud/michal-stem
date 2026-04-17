@@ -165,7 +165,15 @@ function ToolCard({ item }: { item: ToolItem }) {
           <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <video src={`${item.url}#t=0.1`} poster={item.image} controls className="w-full rounded-lg" preload="metadata" />
+          <video
+            src={item.url ? encodeURI(decodeURI(item.url)) : undefined}
+            poster={item.image ? encodeURI(decodeURI(item.image)) : undefined}
+            controls
+            playsInline
+            muted
+            preload="metadata"
+            className="aspect-video w-full rounded-lg bg-muted object-cover"
+          />
         </CardContent>
       </Card>
     );
