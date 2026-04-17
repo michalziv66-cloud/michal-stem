@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import principalsHero from "@/assets/principals-hero.png";
 
 export const Route = createFileRoute("/principals")({
   head: () => ({
@@ -40,6 +41,14 @@ function PrincipalsPage() {
 
   return (
     <div className="section-container">
+      <div className="page-enter mb-8 overflow-hidden rounded-2xl shadow-lg">
+        <img
+          src={principalsHero}
+          alt="מנהלת מציגה מדד STEM TTM בחדר ישיבות"
+          className="h-auto w-full object-cover"
+          loading="eager"
+        />
+      </div>
       <h1 className="page-enter section-title">למנהלי חטיבות ביניים</h1>
       <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">מודל Hybrid App — הפתרון לפער הדיווח ב-STEM</p>
 
