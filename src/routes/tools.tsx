@@ -155,6 +155,17 @@ const sections: { title: string; subtitle: string; items: ToolItem[] }[] = [
   },
 ];
 
+// Encode only path segments that may contain non-ASCII (Hebrew) characters.
+// Avoids double-encoding and guards against decodeURI throwing on malformed input.
+function safeUrl(url?: string) {
+  if (!url) return undefined;
+  if (/^https?:\/\//i.test(url)) return url;
+  return url
+    .split("/")
+    .map((seg) => (seg ? encodeURIComponent(decodeURIComponent(seg)) : seg))
+    .join("/");
+}
+
 function ToolCard({ item }: { item: ToolItem }) {
   if (item.isVideo) {
     return (
@@ -166,11 +177,10 @@ function ToolCard({ item }: { item: ToolItem }) {
         </CardHeader>
         <CardContent>
           <video
-            src={item.url ? encodeURI(decodeURI(item.url)) : undefined}
-            poster={item.image ? encodeURI(decodeURI(item.image)) : undefined}
+            src={safeUrl(item.url)}
+            poster={safeUrl(item.image)}
             controls
             playsInline
-            muted
             preload="metadata"
             className="aspect-video w-full rounded-lg bg-muted object-cover"
           />
@@ -183,7 +193,7 @@ function ToolCard({ item }: { item: ToolItem }) {
     <Card className="card-hover h-full overflow-hidden">
       {item.image && (
         <img
-          src={item.image}
+          src={safeUrl(item.image)}
           alt={item.title}
           loading="lazy"
           width={768}
