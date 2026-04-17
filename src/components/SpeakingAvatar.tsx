@@ -132,10 +132,16 @@ export function SpeakingAvatar() {
   return (
     <div
       data-speaking-avatar
-      className="fixed bottom-5 right-5 z-[100] flex flex-col items-end gap-2"
+      onMouseEnter={() => setShowHint(true)}
+      onMouseLeave={() => setShowHint(false)}
+      className="fixed bottom-5 right-5 z-[100]"
     >
+      {/* Hint bubble — absolutely positioned so it doesn't shift the button */}
       {showHint && !isSpeaking && (
-        <div className="animate-fade-in rounded-2xl rounded-br-sm bg-card border border-gold/30 px-4 py-2 text-sm shadow-lg max-w-[200px]">
+        <div
+          role="tooltip"
+          className="pointer-events-none absolute bottom-full right-0 mb-2 animate-fade-in rounded-2xl rounded-br-sm bg-card border border-gold/30 px-4 py-2 text-sm shadow-lg w-[200px]"
+        >
           <p className="font-medium text-foreground">היי! 👋</p>
           <p className="text-xs text-muted-foreground mt-0.5">
             לחצי עליי ואקריא את העמוד
@@ -146,8 +152,6 @@ export function SpeakingAvatar() {
       <button
         type="button"
         onClick={handleClick}
-        onMouseEnter={() => setShowHint(true)}
-        onMouseLeave={() => setShowHint(false)}
         onFocus={() => setShowHint(true)}
         onBlur={() => setShowHint(false)}
         aria-label={isSpeaking ? "עצור הקראה" : "הקרא את תוכן העמוד"}
@@ -157,7 +161,7 @@ export function SpeakingAvatar() {
           "shadow-xl hover:shadow-2xl transition-all duration-300",
           "hover:scale-110 active:scale-95",
           "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/40",
-          isSpeaking && "ring-4 ring-gold/50 animate-pulse",
+          isSpeaking && "ring-4 ring-gold/50",
         )}
       >
         <img
