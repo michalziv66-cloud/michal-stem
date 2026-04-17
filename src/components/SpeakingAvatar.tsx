@@ -102,10 +102,10 @@ export function SpeakingAvatar() {
   return (
     <div
       data-speaking-avatar
-      className="fixed bottom-6 left-6 z-40 flex flex-col items-start gap-2"
+      className="fixed bottom-5 right-5 z-[100] flex flex-col items-end gap-2"
     >
       {showHint && !isSpeaking && (
-        <div className="animate-fade-in rounded-2xl rounded-bl-sm bg-card border border-gold/30 px-4 py-2 text-sm shadow-lg max-w-[200px]">
+        <div className="animate-fade-in rounded-2xl rounded-br-sm bg-card border border-gold/30 px-4 py-2 text-sm shadow-lg max-w-[200px]">
           <p className="font-medium text-foreground">היי! 👋</p>
           <p className="text-xs text-muted-foreground mt-0.5">
             לחצי עליי ואקריא את העמוד
