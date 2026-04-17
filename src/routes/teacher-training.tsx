@@ -8,17 +8,38 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/teacher-training")({
   head: () => ({
     meta: [
-      { title: "הדרכת חדרי מורים — מיכל זיו" },
+      { title: "הדרכת AI לחדרי מורים — תוכניות מותאמות לבתי ספר | מיכל זיו" },
       {
         name: "description",
         content:
-          "תוכנית הדרכה לחדרי מורים ולצוותי ניהול עם שלושה מסלולים נפרדים להטמעת STEM ואוריינות מתמטית.",
+          "הדרכות AI לחדרי מורים בבית הספר: שלושה מסלולים להטמעת בינה מלאכותית, STEM ואוריינות מתמטית. ליווי לצוותי הוראה וניהול.",
       },
-      { property: "og:title", content: "הדרכת חדרי מורים — מיכל זיו" },
+      { name: "keywords", content: "הדרכת חדר מורים, AI בחדר מורים, השתלמות מורים, הטמעת STEM, ליווי פדגוגי" },
+      { property: "og:title", content: "הדרכת AI לחדרי מורים | מיכל זיו" },
       {
         property: "og:description",
         content:
-          "שלושה מסלולים להטמעת STEM ואוריינות מתמטית: ליווי לחדר מורים, הדרכה לצוותי ניהול וליווי מותאם לבית הספר.",
+          "שלושה מסלולים להטמעת AI ו-STEM בחדר המורים — ליווי, הדרכה לניהול ותוכנית מותאמת לבית הספר.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/teacher-training" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Course",
+          name: "הדרכת AI לחדרי מורים",
+          description: "תוכנית הדרכה לחדרי מורים ולצוותי ניהול עם שלושה מסלולים נפרדים להטמעת AI, STEM ואוריינות מתמטית.",
+          provider: {
+            "@type": "Person",
+            name: "מיכל זיו",
+            url: "https://michal-stem.lovable.app/",
+          },
+          inLanguage: "he",
+          courseMode: "blended",
+          educationalLevel: "professional development",
+        }),
       },
     ],
   }),

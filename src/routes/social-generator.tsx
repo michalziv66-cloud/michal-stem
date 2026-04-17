@@ -15,10 +15,19 @@ import {
 export const Route = createFileRoute("/social-generator")({
   head: () => ({
     meta: [
-      { title: "מחולל פוסטים — מיכל זיו" },
-      { name: "description", content: "צרו פוסטים מוכנים לפייסבוק, אינסטגרם וואטסאפ" },
-      { property: "og:title", content: "מחולל פוסטים — מיכל זיו" },
-      { property: "og:description", content: "צרו פוסטים מוכנים לפייסבוק, אינסטגרם וואטסאפ" },
+      { title: "מחולל פוסטים למורים — פייסבוק, אינסטגרם וואטסאפ | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "כלי AI חינמי ליצירת פוסטים חינוכיים מוכנים לפייסבוק, אינסטגרם וואטסאפ. שיתוף כלים, טיפים ופעילויות בקלות.",
+      },
+      { name: "keywords", content: "מחולל פוסטים, AI ליצירת תוכן, פוסטים למורים, רשתות חברתיות לחינוך" },
+      { property: "og:title", content: "מחולל פוסטים למורים | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "כלי AI חינמי ליצירת פוסטים חינוכיים לרשתות החברתיות.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/social-generator" },
     ],
   }),
   component: SocialGeneratorPage,

@@ -9,10 +9,18 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "צור קשר — מיכל זיו" },
-      { name: "description", content: "צרו קשר עם מיכל זיו — מורה למתמטיקה ומובילת חדשנות פדגוגית" },
-      { property: "og:title", content: "צור קשר — מיכל זיו" },
-      { property: "og:description", content: "צרו קשר עם מיכל זיו" },
+      { title: "צרו קשר — הזמנת הדרכת AI לבית הספר | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "צרו קשר עם מיכל זיו להזמנת הדרכות AI לחדרי מורים, סדנאות מקוונות וייעוץ פדגוגי לבית הספר שלכם.",
+      },
+      { property: "og:title", content: "צרו קשר — מיכל זיו | הדרכות AI בחינוך" },
+      {
+        property: "og:description",
+        content: "הזמנת הדרכות AI, סדנאות וייעוץ פדגוגי לבתי ספר.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/contact" },
     ],
   }),
   component: ContactPage,

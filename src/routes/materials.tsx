@@ -6,10 +6,19 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/materials")({
   head: () => ({
     meta: [
-      { title: "חומרי לימוד — מיכל זיו" },
-      { name: "description", content: "מצגות, דפי עבודה וחומרים להוראת מתמטיקה" },
-      { property: "og:title", content: "חומרי לימוד — מיכל זיו" },
-      { property: "og:description", content: "מצגות, דפי עבודה וחומרים להוראת מתמטיקה" },
+      { title: "חומרי לימוד למתמטיקה — מצגות ודפי עבודה | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "אוסף חומרי לימוד מוכנים להוראת מתמטיקה בחטיבת הביניים: מצגות שיעור, דפי עבודה ופעילויות בנושאי פונקציות, סטטיסטיקה וגאומטריה.",
+      },
+      { name: "keywords", content: "חומרי לימוד מתמטיקה, מצגות שיעור, דפי עבודה, חטיבת ביניים" },
+      { property: "og:title", content: "חומרי לימוד למתמטיקה | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "מצגות, דפי עבודה ופעילויות מוכנות להוראת מתמטיקה בחטיבה.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/materials" },
     ],
   }),
   component: MaterialsPage,

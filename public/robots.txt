@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://michal-stem.lovable.app/sitemap.xml

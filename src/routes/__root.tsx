@@ -32,20 +32,63 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
-      { name: "description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
+      { title: "מיכל זיו — מומחית AI בחינוך והוראת מתמטיקה" },
+      {
+        name: "description",
+        content:
+          "מיכל זיו — מובילת פיתוח פדגוגי דיגיטלי, מומחית לשילוב בינה מלאכותית בחינוך, הדרכות AI לחדרי מורים וכלי STEM להוראת מתמטיקה.",
+      },
       { name: "author", content: "מיכל זיו" },
+      {
+        name: "keywords",
+        content:
+          "AI בחינוך, בינה מלאכותית בהוראה, הדרכות AI למורים, ChatGPT בכיתה, כלי AI לחינוך, הוראת מתמטיקה, STEM, חדר מורים, מיכל זיו",
+      },
+      { name: "robots", content: "index, follow" },
+      { name: "language", content: "Hebrew" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { property: "og:title", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
-      { name: "twitter:title", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
-      { property: "og:description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
-      { name: "twitter:description", content: "מובילת פיתוח פדגוגי דיגיטלי, מחנכת בחטיבת הביניים, מפתחת כלי AI ל-STEM" },
+      { property: "og:locale", content: "he_IL" },
+      { property: "og:site_name", content: "מיכל זיו — מתמטיקה מחוץ לסוגריים" },
+      { property: "og:title", content: "מיכל זיו — מומחית AI בחינוך והוראת מתמטיקה" },
+      {
+        property: "og:description",
+        content:
+          "מובילת פיתוח פדגוגי דיגיטלי, מומחית לשילוב בינה מלאכותית בחינוך, הדרכות AI לחדרי מורים וכלי STEM.",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "מיכל זיו — מומחית AI בחינוך" },
+      {
+        name: "twitter:description",
+        content: "הדרכות AI לחדרי מורים, כלי STEM וחדשנות פדגוגית.",
+      },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      { rel: "canonical", href: "https://michal-stem.lovable.app/" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "מיכל זיו",
+          jobTitle: "מומחית AI בחינוך, מורה למתמטיקה ומובילת פיתוח פדגוגי דיגיטלי",
+          description:
+            "מורה למתמטיקה בחטיבת הביניים עם 14 שנות ניסיון, מובילת חדשנות פדגוגית ומומחית לשילוב בינה מלאכותית בחינוך.",
+          url: "https://michal-stem.lovable.app/",
+          knowsAbout: [
+            "בינה מלאכותית בחינוך",
+            "הוראת מתמטיקה",
+            "STEM",
+            "פיתוח פדגוגי דיגיטלי",
+            "ChatGPT למורים",
+            "כלי AI להוראה",
+          ],
+        }),
       },
     ],
   }),
@@ -56,7 +99,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="he" dir="rtl">
       <head>
         <HeadContent />
       </head>

@@ -7,10 +7,19 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 export const Route = createFileRoute("/principals")({
   head: () => ({
     meta: [
-      { title: "למנהלי חטיבות — מיכל זיו" },
-      { name: "description", content: "מודל Hybrid App: הפתרון לדיווח STEM בבתי ספר" },
-      { property: "og:title", content: "למנהלי חטיבות — מיכל זיו" },
-      { property: "og:description", content: "מודל Hybrid App: הפתרון לדיווח STEM בבתי ספר" },
+      { title: "למנהלי חטיבות ביניים — מודל Hybrid App לדיווח STEM | מיכל זיו" },
+      {
+        name: "description",
+        content:
+          "פתרון למנהלי בתי ספר: מודל Hybrid App להזנקת מדדי STEM ואוריינות מתמטית. מותאם למשו״ב, Moodle והערכות PISA.",
+      },
+      { name: "keywords", content: "מנהלי בתי ספר, דיווח STEM, חטיבות ביניים, PISA, ניהול חינוכי, Hybrid App" },
+      { property: "og:title", content: "למנהלי חטיבות — מודל Hybrid App | מיכל זיו" },
+      {
+        property: "og:description",
+        content: "פתרון לדיווח STEM ושיפור מדדי אוריינות מתמטית בבתי ספר.",
+      },
+      { property: "og:url", content: "https://michal-stem.lovable.app/principals" },
     ],
   }),
   component: PrincipalsPage,
