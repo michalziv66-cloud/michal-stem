@@ -24,7 +24,11 @@ export const Route = createFileRoute("/contact")({
 
 const WHATSAPP_NUMBER = "972509017802";
 const WHATSAPP_MESSAGE = "שלום מיכל, פניתי אליך מהאתר ואשמח לקבל פרטים נוספים.";
-const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+const EMAIL_ADDRESS = "michalziv66@gmail.com";
+const EMAIL_SUBJECT = "פנייה מהאתר";
+const EMAIL_BODY = "שלום מיכל,\n\nפניתי אליך מהאתר ואשמח לקבל פרטים נוספים.\n\nתודה,";
+const MAILTO_URL = `mailto:${EMAIL_ADDRESS}?subject=${encodeURIComponent(EMAIL_SUBJECT)}&body=${encodeURIComponent(EMAIL_BODY)}`;
 
 function ContactPage() {
   const ctaRef = useScrollReveal();
