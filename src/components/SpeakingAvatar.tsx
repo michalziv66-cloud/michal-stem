@@ -30,12 +30,10 @@ export function SpeakingAvatar() {
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       setIsSupported(false);
+      return;
     }
-    return () => {
-      if (typeof window !== "undefined" && "speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
+    // Pre-load voices (Chrome needs an early call to populate the list)
+    window.speechSynthesis.getVoices();
   }, []);
 
   // Stop speaking when navigating to a new page
