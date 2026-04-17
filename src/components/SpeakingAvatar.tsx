@@ -49,39 +49,74 @@ export function SpeakingAvatar() {
     const voices = window.speechSynthesis.getVoices();
     if (!voices.length) return null;
 
+    // Known male voices to explicitly avoid (across browsers/OS)
+    const knownMaleNames = [
+      "asaf", // hebrew male on macOS
+      "daniel",
+      "alex",
+      "fred",
+      "tom",
+      "george",
+      "james",
+      "david",
+      "mark",
+      "diego",
+      "jorge",
+      "thomas",
+      "rishi",
+      "aaron",
+    ];
+
+    // Known female voices (high priority)
+    const knownFemaleNames = [
+      "carmit", // hebrew female on macOS/iOS — top priority
+      "samantha",
+      "victoria",
+      "karen",
+      "moira",
+      "tessa",
+      "fiona",
+      "veena",
+      "zira",
+      "hazel",
+      "susan",
+      "kate",
+      "serena",
+      "allison",
+      "ava",
+      "female",
+      "woman",
+    ];
+
+    const isKnownMale = (name: string) => {
+      const n = name.toLowerCase();
+      return knownMaleNames.some((m) => n.includes(m));
+    };
+    const isKnownFemale = (name: string) => {
+      const n = name.toLowerCase();
+      return knownFemaleNames.some((f) => n.includes(f));
+    };
+
     const hebrewVoices = voices.filter(
       (v) =>
         v.lang?.toLowerCase().startsWith("he") ||
         v.lang?.toLowerCase().includes("iw"),
     );
 
-    // Heuristic: prefer voices whose name suggests a female speaker
-    const femaleHints = [
-      "female",
-      "woman",
-      "carmit", // common Hebrew female voice on macOS/iOS
-      "google",
-      "זוהר",
-      "שירה",
-      "מיכל",
-      "יעל",
-    ];
+    // 1. Hebrew + known female (e.g. Carmit)
+    const hebFemale = hebrewVoices.find((v) => isKnownFemale(v.name));
+    if (hebFemale) return hebFemale;
 
-    const isLikelyFemale = (name: string) => {
-      const n = name.toLowerCase();
-      if (n.includes("male") && !n.includes("female")) return false;
-      return femaleHints.some((h) => n.includes(h.toLowerCase()));
-    };
+    // 2. Hebrew + NOT known male
+    const hebNotMale = hebrewVoices.find((v) => !isKnownMale(v.name));
+    if (hebNotMale) return hebNotMale;
 
-    const femaleHebrew = hebrewVoices.find((v) => isLikelyFemale(v.name));
-    if (femaleHebrew) return femaleHebrew;
+    // 3. Any female voice in any language (better than a male Hebrew voice)
+    const anyFemale = voices.find((v) => isKnownFemale(v.name));
+    if (anyFemale) return anyFemale;
 
-    // Fallback: any Hebrew voice
-    if (hebrewVoices[0]) return hebrewVoices[0];
-
-    // Last resort: any female-sounding voice in any language
-    const anyFemale = voices.find((v) => isLikelyFemale(v.name));
-    return anyFemale || null;
+    // 4. Last resort: first Hebrew voice
+    return hebrewVoices[0] || null;
   };
 
   const handleClick = () => {
@@ -102,7 +137,8 @@ export function SpeakingAvatar() {
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = "he-IL";
     utter.rate = 1;
-    utter.pitch = 1;
+    // Slightly higher pitch helps generic voices sound more feminine
+    utter.pitch = 1.25;
 
     const voice = pickHebrewVoice();
     if (voice) utter.voice = voice;
