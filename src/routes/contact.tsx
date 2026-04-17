@@ -38,7 +38,7 @@ function ContactPage() {
     <div className="section-container">
       <h1 className="page-enter section-title">צור קשר</h1>
       <p className="page-enter-delay-1 mt-3 text-lg text-muted-foreground">
-        נשמח לשמוע מכם! לחצו על הכפתור והודעתכם תיפתח אצלי בוואטסאפ.
+        נשמח לשמוע מכם! בחרו את הדרך הנוחה לכם — וואטסאפ או מייל.
       </p>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
