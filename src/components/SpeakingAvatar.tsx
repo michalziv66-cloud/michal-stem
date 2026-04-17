@@ -37,11 +37,16 @@ export function SpeakingAvatar() {
   }, []);
 
   // Stop speaking when navigating to a new page
+  // Stop speaking only when navigating AWAY from a page that's actively reading.
+  // Use a ref to track previous path so we don't cancel on initial mount/StrictMode double-run.
+  const prevPathRef = useRef<string | null>(null);
   useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (prevPathRef.current !== null && prevPathRef.current !== path) {
       window.speechSynthesis.cancel();
       setIsSpeaking(false);
     }
+    prevPathRef.current = path;
   }, [path]);
 
   const pickHebrewVoice = (): SpeechSynthesisVoice | null => {
