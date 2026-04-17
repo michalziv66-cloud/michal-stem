@@ -49,10 +49,18 @@ const workshops: Workshop[] = [
 function WorkshopCard({ workshop }: { workshop: Workshop }) {
   return (
     <div className="page-enter-delay-2">
-      <Card className="card-hover h-full overflow-hidden">
-        <div className="aspect-[16/9] overflow-hidden bg-primary/5">
+      <Card className="card-hover group h-full overflow-hidden">
+        <div className="relative aspect-[16/9] overflow-hidden bg-primary/5">
           {workshop.image ? (
-            <img src={workshop.image} alt={workshop.title} className="h-full w-full object-cover" />
+            <>
+              <img
+                src={workshop.image}
+                alt={workshop.title}
+                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+            </>
           ) : (
             <div className="flex h-full items-center justify-center">
               <span className="text-5xl">🎓</span>
