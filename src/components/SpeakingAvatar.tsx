@@ -129,7 +129,7 @@ export function SpeakingAvatar() {
       return;
     }
 
-    const text = extractMainText();
+    const text = scriptText;
     if (!text) return;
 
     // Cancel anything queued
@@ -164,7 +164,8 @@ export function SpeakingAvatar() {
     };
   }, [isSupported]);
 
-  if (!isSupported) return null;
+  // Hide the avatar entirely on routes that don't have a script defined
+  if (!isSupported || !scriptText) return null;
 
   return (
     <div
