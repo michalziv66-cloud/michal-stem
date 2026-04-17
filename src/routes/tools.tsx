@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import { useState } from "react";
 
 import imgAppMissions from "@/assets/tools/app-missions.jpg";
 import imgWaterBill from "@/assets/tools/water-bill.jpg";
@@ -167,53 +166,40 @@ function safeUrl(url?: string) {
     .join("/");
 }
 
-function VideoPlayer({ item }: { item: ToolItem }) {
-  const [playing, setPlaying] = useState(false);
-  const src = safeUrl(item.url);
-  const poster = safeUrl(item.image);
-
-  if (!playing) {
+function ToolCard({ item }: { item: ToolItem }) {
+  if (item.isVideo) {
     return (
-      <button
-        type="button"
-        onClick={() => setPlaying(true)}
-        className="group relative block aspect-video w-full overflow-hidden rounded-lg bg-muted"
-        aria-label={`הפעל סרטון: ${item.title}`}
-      >
-        {poster && (
-          <img
-            src={poster}
-            alt={item.title}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        )}
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors group-hover:bg-black/40">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/95 shadow-lg transition-transform group-hover:scale-110">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="ml-1 h-7 w-7 text-primary">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-      </button>
+      <Card className="card-hover overflow-hidden">
+        <CardHeader>
+          <div className="mb-2 text-2xl">{item.icon}</div>
+          <CardTitle className="font-display text-lg">{item.title}</CardTitle>
+          <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <video
+            src={safeUrl(item.url)}
+            poster={safeUrl(item.image)}
+            controls
+            playsInline
+            preload="metadata"
+            className="aspect-video w-full rounded-lg bg-muted object-cover"
+          >
+            <a href={safeUrl(item.url)} target="_blank" rel="noopener noreferrer">
+              פתחי את הסרטון
+            </a>
+          </video>
+          <a
+            href={safeUrl(item.url)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="story-link inline-flex text-sm text-primary"
+          >
+            פתיחה ישירה של הסרטון
+          </a>
+        </CardContent>
+      </Card>
     );
   }
-
-  return (
-    <video
-      src={src}
-      poster={poster}
-      controls
-      autoPlay
-      playsInline
-      muted
-      preload="auto"
-      className="aspect-video w-full rounded-lg bg-black"
-    />
-  );
-}
-
-function ToolCard({ item }: { item: ToolItem }) {
   if (item.isVideo) {
     return (
       <Card className="card-hover overflow-hidden">
