@@ -283,8 +283,8 @@ function TeacherTrainingPage() {
               {comparisonRows.map((row) => (
                 <TableRow key={row.label}>
                   <TableCell className="font-semibold">{row.label}</TableCell>
-                  {row.values.map((value) => (
-                    <TableCell key={`${row.label}-${value}`}>{value}</TableCell>
+                  {row.values.map((value, idx) => (
+                    <TableCell key={`${row.label}-${idx}`}>{value}</TableCell>
                   ))}
                 </TableRow>
               ))}
