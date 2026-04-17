@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import profileImage from "@/assets/michal-profile.png";
+import profileImage from "@/assets/michal-singing-math.png";
 import artisticImage from "@/assets/michal-vr-bridge.png";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
