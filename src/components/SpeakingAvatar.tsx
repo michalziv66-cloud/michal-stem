@@ -170,16 +170,16 @@ export function SpeakingAvatar() {
       data-speaking-avatar
       onMouseEnter={() => setShowHint(true)}
       onMouseLeave={() => setShowHint(false)}
-      className="fixed bottom-5 right-5 z-[100]"
+      className="relative shrink-0"
     >
-      {/* Hint bubble — absolutely positioned so it doesn't shift the button */}
+      {/* Hint bubble */}
       {showHint && !isSpeaking && (
         <div
           role="tooltip"
-          className="pointer-events-none absolute bottom-full right-0 mb-2 animate-fade-in rounded-2xl rounded-br-sm bg-card border border-gold/30 px-4 py-2 text-sm shadow-lg w-[200px]"
+          className="pointer-events-none absolute top-full right-0 mt-2 animate-fade-in rounded-2xl rounded-tr-sm bg-card border border-gold/30 px-3 py-2 text-xs shadow-lg w-[180px] z-50"
         >
           <p className="font-medium text-foreground">היי! 👋</p>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <p className="text-[11px] text-muted-foreground mt-0.5">
             לחצי עליי ואקריא את העמוד
           </p>
         </div>
@@ -192,9 +192,9 @@ export function SpeakingAvatar() {
         onBlur={() => setShowHint(false)}
         aria-label={isSpeaking ? "עצור הקראה" : "הקרא את תוכן העמוד"}
         className={cn(
-          "group relative flex h-20 w-20 items-center justify-center rounded-full",
+          "group relative flex h-12 w-12 items-center justify-center rounded-full",
           "bg-gradient-to-br from-gold/20 to-primary/10 border-2 border-gold/40",
-          "shadow-xl hover:shadow-2xl transition-all duration-300",
+          "shadow-md hover:shadow-lg transition-all duration-300",
           "hover:scale-110 active:scale-95",
           "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-gold/40",
           isSpeaking && "ring-4 ring-gold/50",
@@ -203,8 +203,8 @@ export function SpeakingAvatar() {
         <img
           src={avatarImage}
           alt="אוואטר של מיכל זיו"
-          width={80}
-          height={80}
+          width={48}
+          height={48}
           loading="lazy"
           className="h-full w-full rounded-full object-cover object-top"
         />
@@ -212,15 +212,15 @@ export function SpeakingAvatar() {
         {/* Status badge */}
         <span
           className={cn(
-            "absolute -top-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full",
-            "bg-gold text-gold-foreground shadow-md",
+            "absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full",
+            "bg-gold text-gold-foreground shadow-md ring-2 ring-card",
             "transition-transform group-hover:scale-110",
           )}
         >
           {isSpeaking ? (
-            <Square className="h-3.5 w-3.5 fill-current" />
+            <Square className="h-2.5 w-2.5 fill-current" />
           ) : (
-            <Volume2 className="h-3.5 w-3.5" />
+            <Volume2 className="h-2.5 w-2.5" />
           )}
         </span>
 
