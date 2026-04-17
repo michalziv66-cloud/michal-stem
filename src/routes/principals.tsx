@@ -45,7 +45,7 @@ function PrincipalsPage() {
         <img
           src={principalsHero}
           alt="מנהלת מציגה מדד STEM TTM בחדר ישיבות"
-          className="h-auto w-full object-cover"
+          className="animate-ken-burns h-auto w-full object-cover"
           loading="eager"
         />
       </div>
