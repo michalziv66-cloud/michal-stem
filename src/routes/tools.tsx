@@ -200,20 +200,6 @@ function ToolCard({ item }: { item: ToolItem }) {
       </Card>
     );
   }
-  if (item.isVideo) {
-    return (
-      <Card className="card-hover overflow-hidden">
-        <CardHeader>
-          <div className="mb-2 text-2xl">{item.icon}</div>
-          <CardTitle className="font-display text-lg">{item.title}</CardTitle>
-          <CardDescription className="text-sm leading-relaxed">{item.description}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <VideoPlayer item={item} />
-        </CardContent>
-      </Card>
-    );
-  }
 
   const card = (
     <Card className="card-hover h-full overflow-hidden">
