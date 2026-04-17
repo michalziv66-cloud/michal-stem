@@ -199,3 +199,107 @@
     animation: shimmer 4s linear infinite;
   }
 }
+
+/* ===========================
+   Accessibility (a11y) widget
+   =========================== */
+
+:root {
+  --a11y-font-scale: 1;
+}
+
+html {
+  font-size: calc(16px * var(--a11y-font-scale, 1));
+}
+
+/* Skip to main content link */
+.a11y-skip-link {
+  position: fixed;
+  top: -100px;
+  right: 1rem;
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.a11y-skip-link:focus {
+  top: 1rem;
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Always-visible focus ring for keyboard users */
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode */
+.a11y-high-contrast {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.15 0 0);
+  --accent: oklch(0.9 0 0);
+  --accent-foreground: oklch(0 0 0);
+  --border: oklch(0 0 0);
+  --input: oklch(0 0 0);
+  --ring: oklch(0 0 0);
+}
+.a11y-high-contrast img,
+.a11y-high-contrast video {
+  filter: contrast(1.15);
+}
+
+/* Grayscale mode */
+.a11y-grayscale {
+  filter: grayscale(1);
+}
+
+/* Underline all links */
+.a11y-underline-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+/* Pause animations + transitions */
+.a11y-pause-animations *,
+.a11y-pause-animations *::before,
+.a11y-pause-animations *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* Readable font (override display + sans) */
+.a11y-readable-font,
+.a11y-readable-font * {
+  font-family: 'Arial', 'Helvetica', sans-serif !important;
+  letter-spacing: 0.01em;
+}
+
+/* Respect reduced-motion users automatically */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
