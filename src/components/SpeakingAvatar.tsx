@@ -118,7 +118,7 @@ export function SpeakingAvatar() {
     return hebrewVoices[0] || null;
   };
 
-  const speak = (text: string) => {
+  const speak = (text: string, useDefaultVoice = false) => {
     const synth = window.speechSynthesis;
 
     // Build utterance SYNCHRONOUSLY inside user gesture
@@ -128,16 +128,29 @@ export function SpeakingAvatar() {
     utter.pitch = 1.25;
     utter.volume = 1;
 
-    const voice = pickHebrewVoice();
-    if (voice) {
-      utter.voice = voice;
-      utter.lang = voice.lang;
+    // First attempt: hand-picked Hebrew/female voice.
+    // Retry attempt: let the browser pick its default voice.
+    if (!useDefaultVoice) {
+      const voice = pickHebrewVoice();
+      if (voice) {
+        utter.voice = voice;
+        utter.lang = voice.lang;
+      }
     }
 
     utter.onstart = () => setIsSpeaking(true);
     utter.onend = () => setIsSpeaking(false);
     utter.onerror = (e) => {
-      console.error("[SpeakingAvatar] speech error:", e.error);
+      console.error("[SpeakingAvatar] speech error:", e.error, {
+        usedVoice: utter.voice?.name,
+        lang: utter.lang,
+      });
+      // Retry once with the browser default voice if the picked voice failed
+      if (!useDefaultVoice && e.error === "synthesis-failed") {
+        console.warn("[SpeakingAvatar] retrying with default voice...");
+        setTimeout(() => speak(text, true), 50);
+        return;
+      }
       setIsSpeaking(false);
     };
 
@@ -145,7 +158,7 @@ export function SpeakingAvatar() {
     synth.speak(utter);
     setIsSpeaking(true);
 
-    // Chrome bug workaround: speech can stall after ~15s, ping resume periodically
+    // Chrome workaround: speech can stall after ~15s, ping resume periodically
     const keepAlive = setInterval(() => {
       if (!synth.speaking) {
         clearInterval(keepAlive);
