@@ -175,32 +175,54 @@ export function SpeakingAvatar() {
   };
 
   const handleClick = () => {
-    if (!isSupported) return;
+    console.log("[SpeakingAvatar] === click ===", {
+      isSupported,
+      isSpeaking,
+      hasScript: !!scriptText,
+      path,
+    });
+    if (!isSupported) {
+      console.warn("[SpeakingAvatar] speechSynthesis not supported");
+      return;
+    }
 
     const synth = window.speechSynthesis;
+    const allVoices = synth.getVoices();
+    console.log(
+      "[SpeakingAvatar] voices available:",
+      allVoices.length,
+      allVoices.map((v) => `${v.name} (${v.lang})`),
+    );
 
     if (isSpeaking || synth.speaking) {
+      console.log("[SpeakingAvatar] currently speaking — cancelling");
       synth.cancel();
       setIsSpeaking(false);
       return;
     }
 
     const text = scriptText;
-    if (!text) return;
+    if (!text) {
+      console.warn("[SpeakingAvatar] no script text for path", path);
+      return;
+    }
 
     // If voices haven't loaded yet, wait for them (Chrome async voice loading)
-    if (synth.getVoices().length === 0) {
+    if (allVoices.length === 0) {
+      console.log("[SpeakingAvatar] voices not loaded yet, waiting...");
       const onVoices = () => {
         synth.removeEventListener("voiceschanged", onVoices);
+        console.log("[SpeakingAvatar] voiceschanged fired, retrying speak");
         speak(text);
       };
       synth.addEventListener("voiceschanged", onVoices);
-      // Trigger voice load
       synth.getVoices();
-      // Fallback timeout in case event never fires
       setTimeout(() => {
         synth.removeEventListener("voiceschanged", onVoices);
-        if (!synth.speaking) speak(text);
+        if (!synth.speaking) {
+          console.log("[SpeakingAvatar] timeout — speaking anyway");
+          speak(text);
+        }
       }, 500);
       return;
     }
