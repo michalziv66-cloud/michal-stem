@@ -16,6 +16,16 @@ export function SpeakingAvatar() {
   const [isSupported, setIsSupported] = useState(true);
   const [showHint, setShowHint] = useState(false);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const location = useLocation();
+
+  // Normalize the path: strip trailing slash (except root)
+  const path = (() => {
+    const p = location.pathname || "/";
+    if (p.length > 1 && p.endsWith("/")) return p.slice(0, -1);
+    return p;
+  })();
+
+  const scriptText = avatarScripts[path];
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) {
@@ -28,24 +38,13 @@ export function SpeakingAvatar() {
     };
   }, []);
 
-  const extractMainText = (): string => {
-    const main = document.getElementById("main-content") || document.querySelector("main");
-    if (!main) return "";
-
-    const elements = main.querySelectorAll("h1, h2, p");
-    const parts: string[] = [];
-
-    elements.forEach((el) => {
-      // Skip elements inside our own avatar UI
-      if (el.closest("[data-speaking-avatar]")) return;
-      const text = el.textContent?.trim();
-      if (text && text.length > 1) {
-        parts.push(text);
-      }
-    });
-
-    return parts.join(". ");
-  };
+  // Stop speaking when navigating to a new page
+  useEffect(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+    }
+  }, [path]);
 
   const pickHebrewVoice = (): SpeechSynthesisVoice | null => {
     const voices = window.speechSynthesis.getVoices();
