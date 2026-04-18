@@ -38,16 +38,16 @@ function AboutPage() {
       <div className="mt-10 grid gap-10 lg:grid-cols-5">
         <div ref={contentRef} className="scroll-reveal lg:col-span-3 space-y-5 text-lg leading-relaxed text-foreground/90">
           <p>
-            שמי <strong className="text-primary">מיכל זיו</strong>, מורה למתמטיקה בחטיבת הביניים עם <strong>14 שנות ניסיון</strong> בהוראה במסגרת משרד החינוך.
+            שמי <strong className="text-primary">מיכל זיו</strong>, מורה למתמטיקה בחטיבת הביניים. התחלתי את דרכי המקצועית במשרד החינוך, ואני מלמדת היום לאחר מסע ארוך ועשיר בין שני עולמות — חינוך וניהול.
           </p>
           <p>
             אני מאמינה שמתמטיקה היא הרבה יותר מנוסחאות ותרגילים — היא דרך חשיבה, כלי להבנת העולם. מתוך אמונה זו פיתחתי את הגישה שאני מכנה <strong className="text-primary">״מתמטיקה מחוץ לסוגריים״</strong>: למידה שמתחילה מהשאלות האמיתיות של התלמידים, ומגיעה לתובנות מתמטיות עמוקות דרך חקר, ניסוי וטעייה.
           </p>
           <p>
-            בשנים האחרונות אני מובילת פיתוח פדגוגי דיגיטלי במתמטיקה — בונה <strong>כלי AI ומיקרו-אפליקציות אינטראקטיביות</strong> לתלמידי חטיבת הביניים. העבודה שלי שזורה ברפורמת <strong>״ישראל ריאלית 2026״</strong>, הכוללת גם את תחום אי הוודאות — תחום חדש שנוסף לתוכנית הלימודים במתמטיקה, ומציב בפני המורים והתלמידים אתגרים ואפשרויות חדשות.
+            <strong>הדרך שלי לא הייתה ליניארית:</strong> התחלתי בהוראה במשרד החינוך, לימדתי <strong>9 שנים</strong> מתמטיקה — ואז יצאתי לשבתון. חודשיים אחר כך התקבלתי לתוכנית הכשרת המנהלים של <strong>בנק לאומי</strong>, שם עבדתי <strong>17 שנים</strong> כמנהלת סניפים מסחריים. במקביל, לאורך כל השנים, <strong className="text-primary">הדרכתי במרכז ההדרכה הארגוני של הבנק — יום הדרכה שבועי קבוע</strong>, הכשרת סגלים ניהוליים והובלת הטמעת מערכות. לאחר פרישה מוקדמת, <strong>חזרתי להוראה ב-2021</strong>, אחרי הקורונה — עם כל הניסיון, ועם בערה מחודשת לכיתה.
           </p>
           <p>
-            לפני שנכנסתי לחינוך במשרה מלאה, ניהלתי סניפים מסחריים ב<strong>בנק לאומי</strong> וליוויתי צוותים בקבלת החלטות מבוססת נתונים. במקביל, לאורך כל השנים, <strong className="text-primary">הדרכתי במרכז ההדרכה הארגוני של הבנק — יום הדרכה שבועי קבוע</strong>, הכשרת סגלים ניהוליים והובלת הטמעת מערכות. משם הבאתי איתי את מה שהכי חשוב לי היום: היכולת להעביר ידע מורכב בצורה שעובדת בשטח — בין אם מול מנהלי סניפים ובין אם מול חדר מורים.
+            בשנים האחרונות אני מובילת פיתוח פדגוגי דיגיטלי במתמטיקה — בונה <strong>כלי AI ומיקרו-אפליקציות אינטראקטיביות</strong> לתלמידי חטיבת הביניים. העבודה שלי שזורה ברפורמת <strong>״ישראל ריאלית 2026״</strong>, הכוללת גם את תחום אי הוודאות — תחום חדש שנוסף לתוכנית הלימודים במתמטיקה.
           </p>
           <p className="rounded-lg bg-gold/10 p-4 font-medium text-primary">
             💡 החזון שלי: תלמיד שיוצא מהכיתה עם כלים לחשוב, לחקור ולפתור בעיות בעצמו — בדיוק מה שישראל ריאלית 2026 מבקשת.
@@ -82,21 +82,27 @@ function AboutPage() {
             <ol className="relative space-y-4 border-r-2 border-gold/40 pr-4">
               <li className="relative">
                 <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold ring-4 ring-background" />
-                <p className="text-xs font-semibold text-gold">היום</p>
+                <p className="text-xs font-semibold text-gold">היום (מ-2021)</p>
                 <p className="text-sm font-bold text-foreground">הדרכת חדרי מורים והכשרות AI</p>
                 <p className="text-xs text-foreground/70">משרד החינוך · ליווי פדגוגי</p>
               </li>
               <li className="relative">
-                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/70 ring-4 ring-background" />
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/80 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">17 שנים</p>
+                <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
+                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+              </li>
+              <li className="relative">
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/60 ring-4 ring-background" />
                 <p className="text-xs font-semibold text-gold">3 שנים</p>
                 <p className="text-sm font-bold text-foreground">מדריכה מחוזית — תקשוב</p>
                 <p className="text-xs text-foreground/70">מחוז צפון · עשרות מורים</p>
               </li>
               <li className="relative">
-                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/50 ring-4 ring-background" />
-                <p className="text-xs font-semibold text-gold">15+ שנים</p>
-                <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
-                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/40 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">9 שנים</p>
+                <p className="text-sm font-bold text-foreground">מורה למתמטיקה — משרד החינוך</p>
+                <p className="text-xs text-foreground/70">תחילת הדרך · כיתות מחוננים</p>
               </li>
             </ol>
           </div>
