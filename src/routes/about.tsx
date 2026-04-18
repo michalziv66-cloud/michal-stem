@@ -46,6 +46,9 @@ function AboutPage() {
           <p>
             בשנים האחרונות אני מובילת פיתוח פדגוגי דיגיטלי במתמטיקה — בונה <strong>כלי AI ומיקרו-אפליקציות אינטראקטיביות</strong> לתלמידי חטיבת הביניים. העבודה שלי שזורה ברפורמת <strong>״ישראל ריאלית 2026״</strong>, הכוללת גם את תחום אי הוודאות — תחום חדש שנוסף לתוכנית הלימודים במתמטיקה, ומציב בפני המורים והתלמידים אתגרים ואפשרויות חדשות.
           </p>
+          <p>
+            לפני שנכנסתי לחינוך במשרה מלאה, ניהלתי סניפים מסחריים ב<strong>בנק לאומי</strong> וליוויתי צוותים בקבלת החלטות מבוססת נתונים. במקביל, לאורך כל השנים, <strong className="text-primary">הדרכתי במרכז ההדרכה הארגוני של הבנק — יום הדרכה שבועי קבוע</strong>, הכשרת סגלים ניהוליים והובלת הטמעת מערכות. משם הבאתי איתי את מה שהכי חשוב לי היום: היכולת להעביר ידע מורכב בצורה שעובדת בשטח — בין אם מול מנהלי סניפים ובין אם מול חדר מורים.
+          </p>
           <p className="rounded-lg bg-gold/10 p-4 font-medium text-primary">
             💡 החזון שלי: תלמיד שיוצא מהכיתה עם כלים לחשוב, לחקור ולפתור בעיות בעצמו — בדיוק מה שישראל ריאלית 2026 מבקשת.
           </p>
@@ -61,13 +64,41 @@ function AboutPage() {
               "פיתוח פדגוגי דיגיטלי",
               "כלי AI ל-STEM",
               "הטמעת טכנולוגיה בכיתה",
-              "הכשרת מורים",
+              "הכשרת מורים וסגלים ניהוליים",
+              "ניהול מבוסס נתונים (BI)",
             ].map((item) => (
               <div key={item} className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-gold" />
                 <span className="text-sm">{item}</span>
               </div>
             ))}
+          </div>
+
+          <div className="mt-6 rounded-xl border-2 border-gold/30 bg-gradient-to-br from-gold/10 to-accent/30 p-6">
+            <div className="mb-4 flex items-baseline gap-2">
+              <span className="font-display text-3xl font-bold text-primary">30+</span>
+              <h3 className="font-display text-base font-bold text-primary">שנות הדרכה</h3>
+            </div>
+            <ol className="relative space-y-4 border-r-2 border-gold/40 pr-4">
+              <li className="relative">
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">היום</p>
+                <p className="text-sm font-bold text-foreground">הדרכת חדרי מורים והכשרות AI</p>
+                <p className="text-xs text-foreground/70">משרד החינוך · ליווי פדגוגי</p>
+              </li>
+              <li className="relative">
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/70 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">3 שנים</p>
+                <p className="text-sm font-bold text-foreground">מדריכה מחוזית — תקשוב</p>
+                <p className="text-xs text-foreground/70">מחוז צפון · עשרות מורים</p>
+              </li>
+              <li className="relative">
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/50 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">15+ שנים</p>
+                <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
+                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+              </li>
+            </ol>
           </div>
         </div>
       </div>
