@@ -30,8 +30,8 @@ function AboutPage() {
   return (
     <div className="section-container">
       <div className="page-enter flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
-        <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg">
-          <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
+        <div className="h-40 w-40 sm:h-48 sm:w-48 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg animate-scale-in transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+          <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover transition-transform duration-500 hover:scale-110" />
         </div>
         <div>
           <h1 className="section-title">מיכל זיו</h1>
