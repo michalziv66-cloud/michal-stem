@@ -82,21 +82,27 @@ function AboutPage() {
             <ol className="relative space-y-4 border-r-2 border-gold/40 pr-4">
               <li className="relative">
                 <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold ring-4 ring-background" />
-                <p className="text-xs font-semibold text-gold">היום</p>
+                <p className="text-xs font-semibold text-gold">היום (מ-2021)</p>
                 <p className="text-sm font-bold text-foreground">הדרכת חדרי מורים והכשרות AI</p>
                 <p className="text-xs text-foreground/70">משרד החינוך · ליווי פדגוגי</p>
               </li>
               <li className="relative">
-                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/70 ring-4 ring-background" />
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/80 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">17 שנים</p>
+                <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
+                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+              </li>
+              <li className="relative">
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/60 ring-4 ring-background" />
                 <p className="text-xs font-semibold text-gold">3 שנים</p>
                 <p className="text-sm font-bold text-foreground">מדריכה מחוזית — תקשוב</p>
                 <p className="text-xs text-foreground/70">מחוז צפון · עשרות מורים</p>
               </li>
               <li className="relative">
-                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/50 ring-4 ring-background" />
-                <p className="text-xs font-semibold text-gold">15+ שנים</p>
-                <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
-                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+                <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/40 ring-4 ring-background" />
+                <p className="text-xs font-semibold text-gold">9 שנים</p>
+                <p className="text-sm font-bold text-foreground">מורה למתמטיקה — משרד החינוך</p>
+                <p className="text-xs text-foreground/70">תחילת הדרך · כיתות מחוננים</p>
               </li>
             </ol>
           </div>
