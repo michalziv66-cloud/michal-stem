@@ -90,7 +90,7 @@ function AboutPage() {
                 <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/80 ring-4 ring-background" />
                 <p className="text-xs font-semibold text-gold">17 שנים</p>
                 <p className="text-sm font-bold text-foreground">מרכז ההדרכה הארגוני, בנק לאומי</p>
-                <p className="text-xs text-foreground/70">יום הדרכה שבועי · הכשרת סגלים ניהוליים</p>
+                <p className="text-xs text-foreground/70">הכשרת סגלים ניהוליים</p>
               </li>
               <li className="relative">
                 <span className="absolute -right-[22px] top-1 h-3 w-3 rounded-full bg-gold/60 ring-4 ring-background" />
