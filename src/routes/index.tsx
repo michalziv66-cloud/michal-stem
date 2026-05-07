@@ -42,7 +42,15 @@ function HomePage() {
         <div className="relative mx-auto max-w-4xl px-4 py-24 text-center sm:py-32 lg:py-40">
           <div className="hero-avatar mx-auto mb-8 h-48 w-48 overflow-hidden rounded-full border-4 border-gold/40 shadow-xl sm:h-56 sm:w-56 lg:h-64 lg:w-64">
             <div className="shimmer-border absolute inset-0 rounded-full" />
-            <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
+            <video
+              src="/michal-hero.mp4"
+              poster={profileImage}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="h-full w-full object-cover"
+            />
           </div>
           <BrandLogo theme="dark" variant="hero" className="hero-logo mx-auto mb-6" />
           <p className="hero-subtitle mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-foreground/80 sm:text-lg">
