@@ -37,7 +37,7 @@ function EntrepreneurshipPage() {
       {/* Header */}
       <div className="page-enter flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-6">
         <div className="h-32 w-32 shrink-0 overflow-hidden rounded-xl border-2 border-gold/30 shadow-lg">
-          <img src={profileImage} alt="מיכל זיו" className="h-full w-full object-cover" />
+          <video src="/michal-entrepreneurship.mp4" poster={profileImage} autoPlay loop muted playsInline className="h-full w-full object-cover" />
         </div>
         <div>
           <h1 className="section-title">מודל יישומי להזנקת מדדי STEM ואוריינות בחטיבת הביניים</h1>
